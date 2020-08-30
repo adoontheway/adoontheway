@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"adoontheway.gitee.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="20个有用的Java开源库，万一哪一天用上了呢">
+<meta name="keywords" content="java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="20个有用的Java开源库">
+<meta property="og:url" content="https://adoontheway.gitee.io/2019/05/16/javeopensourcelibs/index.html">
+<meta property="og:site_name" content="Ados">
+<meta property="og:description" content="20个有用的Java开源库，万一哪一天用上了呢">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-08-26T06:16:59.089Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="20个有用的Java开源库">
+<meta name="twitter:description" content="20个有用的Java开源库，万一哪一天用上了呢">
+
+<link rel="canonical" href="https://adoontheway.gitee.io/2019/05/16/javeopensourcelibs/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>20个有用的Java开源库 | Ados</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Ados</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">a fullstack game worker</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://adoontheway.gitee.io/2019/05/16/javeopensourcelibs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="ado">
+      <meta itemprop="description" content="me, robot.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ados">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          20个有用的Java开源库
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-05-16 16:00:14" itemprop="dateCreated datePublished" datetime="2019-05-16T16:00:14+08:00">2019-05-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-26 14:16:59" itemprop="dateModified" datetime="2020-08-26T14:16:59+08:00">2020-08-26</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+            <div class="post-description">20个有用的Java开源库，万一哪一天用上了呢</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>今天看阮一峰的博文看到一些关于Java的知识，点击去看了下。</p>
+<p>虽然原文里面很多推荐收费课程的广告，但是还是备忘起来，万一哪一天用上了也不好说。</p>
+<h2 id="原文"><a href="#原文" class="headerlink" title="原文"></a>原文</h2><p><a href="https://javarevisited.blogspot.com/2018/01/top-20-libraries-and-apis-for-java-programmers.html" rel="external nofollow noopener noreferrer" target="_blank">20 Useful Open Source libraties for Java Programmers</a></p>
+<h1 id="Tables"><a href="#Tables" class="headerlink" title="Tables"></a>Tables</h1><h2 id="1-日志库"><a href="#1-日志库" class="headerlink" title="1. 日志库"></a>1. 日志库</h2><ul>
+<li>Log4j</li>
+<li>SLF4j</li>
+<li>LogBack</li>
+</ul>
+<p>其他： <a href="http://javarevisited.blogspot.sg/2013/08/why-use-sl4j-over-log4j-for-logging-in.html#axzz53OYtIChK" rel="external nofollow noopener noreferrer" target="_blank">为何SLF4j比纯Log4j好</a></p>
+<h2 id="2-JSON-库"><a href="#2-JSON-库" class="headerlink" title="2. JSON 库"></a>2. JSON 库</h2><ul>
+<li>Jackson</li>
+<li>Gson</li>
+</ul>
+<h2 id="3-单元测试库"><a href="#3-单元测试库" class="headerlink" title="3. 单元测试库"></a>3. 单元测试库</h2><ul>
+<li>JUnit</li>
+<li>Mockito</li>
+<li>PowerMock</li>
+<li>Cucumber</li>
+<li>Robot</li>
+</ul>
+<h2 id="4-通用库"><a href="#4-通用库" class="headerlink" title="4. 通用库"></a>4. 通用库</h2><ul>
+<li>Apache Commons</li>
+<li>Google Guava</li>
+</ul>
+<h2 id="5-Http库"><a href="#5-Http库" class="headerlink" title="5. Http库"></a>5. Http库</h2><ul>
+<li>Apache HttpClient/HttpCore</li>
+</ul>
+<h2 id="6-XML解析库"><a href="#6-XML解析库" class="headerlink" title="6. XML解析库"></a>6. XML解析库</h2><ul>
+<li>Xerces，作者强烈推荐的</li>
+<li>JAXB</li>
+<li>JAXP</li>
+<li>Dom4j</li>
+<li>Xstream</li>
+</ul>
+<h2 id="7-Excel-读取库"><a href="#7-Excel-读取库" class="headerlink" title="7. Excel 读取库"></a>7. Excel 读取库</h2><ul>
+<li>Apache POI</li>
+</ul>
+<h2 id="8-字节码库"><a href="#8-字节码库" class="headerlink" title="8. 字节码库"></a>8. 字节码库</h2><ul>
+<li>Javassist</li>
+<li>Cglib Nodep</li>
+</ul>
+<h2 id="9-数据库连接池库"><a href="#9-数据库连接池库" class="headerlink" title="9. 数据库连接池库"></a>9. 数据库连接池库</h2><ul>
+<li>Commons Pool</li>
+<li>DBCP</li>
+</ul>
+<h2 id="10-消息库"><a href="#10-消息库" class="headerlink" title="10. 消息库"></a>10. 消息库</h2><ul>
+<li>JMS</li>
+<li>Tibco RV</li>
+</ul>
+<h2 id="11-PDF-库"><a href="#11-PDF-库" class="headerlink" title="11. PDF 库"></a>11. PDF 库</h2><ul>
+<li>iText</li>
+<li>Apache FOP</li>
+</ul>
+<h2 id="12-日期和时间库"><a href="#12-日期和时间库" class="headerlink" title="12. 日期和时间库"></a>12. 日期和时间库</h2><ul>
+<li>JodaTime：仅限JDK8以前的版本</li>
+</ul>
+<h2 id="13-集合库"><a href="#13-集合库" class="headerlink" title="13. 集合库"></a>13. 集合库</h2><ul>
+<li>Trove</li>
+<li>FastUtil</li>
+</ul>
+<h2 id="14-邮件库"><a href="#14-邮件库" class="headerlink" title="14. 邮件库"></a>14. 邮件库</h2><ul>
+<li>javax.mail</li>
+<li>Apache Commons Email</li>
+</ul>
+<h2 id="15-HTML解析库"><a href="#15-HTML解析库" class="headerlink" title="15. HTML解析库"></a>15. HTML解析库</h2><ul>
+<li>JSoup</li>
+</ul>
+<h2 id="16-加密库"><a href="#16-加密库" class="headerlink" title="16. 加密库"></a>16. 加密库</h2><ul>
+<li>Apache Commons Codec</li>
+</ul>
+<h2 id="17-嵌入式SQL数据库库"><a href="#17-嵌入式SQL数据库库" class="headerlink" title="17. 嵌入式SQL数据库库"></a>17. 嵌入式SQL数据库库</h2><ul>
+<li>H2：作者强推</li>
+<li>Apache Derby</li>
+<li>HSQL</li>
+</ul>
+<h2 id="18-JDBC-错误定位库"><a href="#18-JDBC-错误定位库" class="headerlink" title="18. JDBC 错误定位库"></a>18. JDBC 错误定位库</h2><ul>
+<li>P6spy</li>
+</ul>
+<h2 id="19-序列化库"><a href="#19-序列化库" class="headerlink" title="19. 序列化库"></a>19. 序列化库</h2><ul>
+<li>Google Protobuf</li>
+</ul>
+<h2 id="20-网络库"><a href="#20-网络库" class="headerlink" title="20. 网络库"></a>20. 网络库</h2><ul>
+<li>Netty</li>
+<li>Mina</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/java/" rel="tag"># java</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/05/15/gomodule/" rel="prev" title="cannot find main module">
+      <i class="fa fa-chevron-left"></i> cannot find main module
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/05/16/gomethodbench/" rel="next" title="Golang的方法的测试">
+      Golang的方法的测试 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preface"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#原文"><span class="nav-number">1.1.</span> <span class="nav-text">原文</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Tables"><span class="nav-number">2.</span> <span class="nav-text">Tables</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-日志库"><span class="nav-number">2.1.</span> <span class="nav-text">1. 日志库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-JSON-库"><span class="nav-number">2.2.</span> <span class="nav-text">2. JSON 库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-单元测试库"><span class="nav-number">2.3.</span> <span class="nav-text">3. 单元测试库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-通用库"><span class="nav-number">2.4.</span> <span class="nav-text">4. 通用库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-Http库"><span class="nav-number">2.5.</span> <span class="nav-text">5. Http库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-XML解析库"><span class="nav-number">2.6.</span> <span class="nav-text">6. XML解析库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-Excel-读取库"><span class="nav-number">2.7.</span> <span class="nav-text">7. Excel 读取库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-字节码库"><span class="nav-number">2.8.</span> <span class="nav-text">8. 字节码库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-数据库连接池库"><span class="nav-number">2.9.</span> <span class="nav-text">9. 数据库连接池库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-消息库"><span class="nav-number">2.10.</span> <span class="nav-text">10. 消息库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-PDF-库"><span class="nav-number">2.11.</span> <span class="nav-text">11. PDF 库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-日期和时间库"><span class="nav-number">2.12.</span> <span class="nav-text">12. 日期和时间库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-集合库"><span class="nav-number">2.13.</span> <span class="nav-text">13. 集合库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-邮件库"><span class="nav-number">2.14.</span> <span class="nav-text">14. 邮件库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15-HTML解析库"><span class="nav-number">2.15.</span> <span class="nav-text">15. HTML解析库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-加密库"><span class="nav-number">2.16.</span> <span class="nav-text">16. 加密库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#17-嵌入式SQL数据库库"><span class="nav-number">2.17.</span> <span class="nav-text">17. 嵌入式SQL数据库库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#18-JDBC-错误定位库"><span class="nav-number">2.18.</span> <span class="nav-text">18. JDBC 错误定位库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#19-序列化库"><span class="nav-number">2.19.</span> <span class="nav-text">19. 序列化库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#20-网络库"><span class="nav-number">2.20.</span> <span class="nav-text">20. 网络库</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">ado</p>
+  <div class="site-description" itemprop="description">me, robot.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">68</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ado</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

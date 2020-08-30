@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"adoontheway.gitee.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="在Windows上安装和调试mongocxx">
+<meta name="keywords" content="c++,mongo,boost">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VS2017 调试 Mongocxx">
+<meta property="og:url" content="https://adoontheway.gitee.io/2019/06/29/winmongocxx/index.html">
+<meta property="og:site_name" content="Ados">
+<meta property="og:description" content="在Windows上安装和调试mongocxx">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-08-26T06:16:59.102Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="VS2017 调试 Mongocxx">
+<meta name="twitter:description" content="在Windows上安装和调试mongocxx">
+
+<link rel="canonical" href="https://adoontheway.gitee.io/2019/06/29/winmongocxx/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>VS2017 调试 Mongocxx | Ados</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Ados</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">a fullstack game worker</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://adoontheway.gitee.io/2019/06/29/winmongocxx/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="ado">
+      <meta itemprop="description" content="me, robot.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ados">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          VS2017 调试 Mongocxx
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-06-29 18:45:16" itemprop="dateCreated datePublished" datetime="2019-06-29T18:45:16+08:00">2019-06-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-26 14:16:59" itemprop="dateModified" datetime="2020-08-26T14:16:59+08:00">2020-08-26</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+            <div class="post-description">在Windows上安装和调试mongocxx</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>今天遇到了个问题，需要调试mongocxx</p>
+<h1 id="Prerequirement"><a href="#Prerequirement" class="headerlink" title="Prerequirement"></a>Prerequirement</h1><h2 id="安装-mongo-c-driver"><a href="#安装-mongo-c-driver" class="headerlink" title="安装 mongo-c-driver"></a>安装 mongo-c-driver</h2><ul>
+<li><p>通过 <u>git clone <a href="https://github.com/mongodb/mongo-c-driver.git" rel="external nofollow noopener noreferrer" target="_blank">https://github.com/mongodb/mongo-c-driver.git</a></u> 克隆mongo-c-driver 源代码</p>
+</li>
+<li><p>checkout 最新的<strong>tag 1.14.0</strong></p>
+</li>
+<li><p>在代码的根目录下新建目录cmake-build</p>
+</li>
+<li><p>在其中运行 </p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cmake -G <span class="string">"Visual Studio 15 2017 Win64"</span> \</span><br><span class="line">  <span class="string">"-DCMAKE_INSTALL_PREFIX=C:\mongo-c-driver"</span> \</span><br><span class="line">  <span class="string">"-DCMAKE_PREFIX_PATH=C:\mongo-c-driver"</span> \</span><br><span class="line">  ..</span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是，将VS 的版版本调整到当前系统安装的 VS，不然会找不到 MSBuild.exe。</p>
+<p>成功的话会最后会提示以下信息:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-- Compiling against Windows SSPI</span><br><span class="line">-- Configuring <span class="keyword">done</span></span><br><span class="line">-- Generating <span class="keyword">done</span></span><br><span class="line">-- Build files have been written to: F:/workspace/mongo-c-driver/cmake-build</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用 VS 打开 <strong>cmake-build/ALL-BUILD.vcxproj</strong>，生成</p>
+</li>
+<li><p>生成成功之后，找到 VS 的安装目录：<em>D:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\amd64</em> ，这里是<strong>MSBuild</strong>的目录，当然，需要注意区分<em>32bit/64bit</em></p>
+</li>
+<li><p>将以上路径加入到环境变量Path中，这样就可以在命令行中直接使用<strong>MSBuild</strong>了。</p>
+</li>
+<li><p><code>MSBuild.exe INSTALL.vcxproj</code></p>
+</li>
+<li><p>成功后会发现系统盘根目录下多了一个目录： <em>mongo-c-driver</em></p>
+</li>
+</ul>
+<p>至此，mongo-c-driver 在windows上基本安装成功。</p>
+<h3 id="Refer"><a href="#Refer" class="headerlink" title="Refer"></a>Refer</h3><p><a href="http://mongoc.org/libmongoc/current/installing.html#building-windows" rel="external nofollow noopener noreferrer" target="_blank">Installing the MongoDB C Driver (libmongoc) and BSON library (libbson)</a></p>
+<h2 id="安装boost"><a href="#安装boost" class="headerlink" title="安装boost"></a>安装boost</h2><ul>
+<li><p>git clone <a href="https://github.com/boostorg/boost.git" rel="external nofollow noopener noreferrer" target="_blank">https://github.com/boostorg/boost.git</a></p>
+</li>
+<li><p>git chekout boost-1.66.0</p>
+</li>
+<li><p>git submodule update –init : 这个花了好长时间</p>
+</li>
+<li><p>.\bootstrap.bat</p>
+</li>
+<li><p>.\b2.exe ： 这个也花了好长时间</p>
+</li>
+<li><p>安装成功后会提醒</p>
+<blockquote>
+<p>The following directory should be added to compiler include paths:</p>
+<pre><code>xx\boost</code></pre><p>The following directory should be added to linker library paths:</p>
+<pre><code>xx\boost\stage\lib</code></pre></blockquote>
+</li>
+</ul>
+<p>以上步骤就说明安装成功了，只要在VS里面引入include和库路径就可以了。</p>
+<h3 id="Refer-1"><a href="#Refer-1" class="headerlink" title="Refer"></a>Refer</h3><p><a href="https://github.com/boostorg/boost/wiki/Getting-Started" rel="external nofollow noopener noreferrer" target="_blank">Installing Boost</a></p>
+<h2 id="安装-mongocxx"><a href="#安装-mongocxx" class="headerlink" title="安装 mongocxx"></a>安装 mongocxx</h2><p>windows上 mongocxx 需要依赖VS 14（2015）以及boost1.6.0：</p>
+<table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="left">Linux</th>
+<th align="left">macOS</th>
+<th>Windows</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">clang</td>
+<td align="left">3.8</td>
+<td align="left">7.0 (Apple)</td>
+<td>-</td>
+</tr>
+<tr>
+<td align="left">gcc</td>
+<td align="left">4.8, 5.4</td>
+<td align="left">-</td>
+<td>-</td>
+</tr>
+<tr>
+<td align="left">VS</td>
+<td align="left">n/a</td>
+<td align="left">n/a</td>
+<td>14 (2015) Update 3</td>
+</tr>
+<tr>
+<td align="left">boost</td>
+<td align="left">-</td>
+<td align="left">1.5.3</td>
+<td>1.6.0</td>
+</tr>
+</tbody></table>
+<p>直接编译：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cmake -G <span class="string">"Visual Studio 15 2017 Win64"</span> -DCMAKE_INSTALL_PREFIX=C:\mongo-cxx-driver -DCMAKE_PREFIX_PATH=C:\mongo-c-driver -DCMAKE_CXX_STANDARD=17 -DCMAK</span><br><span class="line">E_CXX_FLAGS=<span class="string">"/Zc:__cplusplus"</span> -DCMAKE_BUILD_TYPE=Release ..</span><br></pre></td></tr></table></figure>
+
+<p>发生了错误：</p>
+<blockquote>
+<p>– Auto-configuring bsoncxx to use C++17 std library polyfills since C++17 is active and user didn’t specify otherwise<br>CMake Error at src/bsoncxx/CMakeLists.txt:81 (find_package):<br>  Could not find a configuration file for package “libbson-1.0” that is<br>  compatible with requested version “1.13.0”.</p>
+<p>  The following configuration files were considered but not accepted:</p>
+<pre><code>C:/mongo-c-driver/lib/cmake/libbson-1.0/libbson-1.0-config.cmake, version: 0.0.0</code></pre></blockquote>
+<p>libson的版本有问题。</p>
+<p>感觉是编译mongo-c-driver不成功，查看mongo-c-driver的目录下的 VERSION_CUIRRENT 的时候，发现其中的版本是 0.0.0 ，于是删除这个文件，删除mongo-c-dirver的cmake-build文件夹下的所有内容，重新编译的时候发现：</p>
+<blockquote>
+<p>– Found PythonInterp: D:/Python27/python.exe (found version “2.7.16”)<br>Traceback (most recent call last):<br>  File “build/calc_release_version.py”, line 29, in <module><br>    from git import Git, Repo # pip install GitPython<br>ImportError: No module named git<br>CMake Warning at CMakeLists.txt:10 (_message):<br>  BUILD_VERSION not specified and could not be calculated (script invocation<br>  failed); setting library version to 0.0.0<br>Call Stack (most recent call first):<br>  CMakeLists.txt:97 (message)</module></p>
+<p>storing BUILD_VERSION 0.0.0 in file VERSION_CURRENT for later use<br>  – Using bundled libbson<br>libbson version (from VERSION_CURRENT file): 0.0.0</p>
+</blockquote>
+<p>这个在mongodb.orb 的官方论坛发现在 1.15.0 版本才修复了用 python 获取版本号的bug。</p>
+<p>解决方案是直接将 python 生成的 VERSION_CURRENT 文件中的内容改为当前版本，也就是1.14.0，然后重新编译。</p>
+<p>重新编译居然报错了：</p>
+<blockquote>
+<h3 id="fatal-error-C1017-无效的整数常量表达式"><a href="#fatal-error-C1017-无效的整数常量表达式" class="headerlink" title="fatal error C1017: 无效的整数常量表达式"></a>fatal error C1017: 无效的整数常量表达式</h3></blockquote>
+<p>报错的地方是 bson-config.h, line131:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> * Define to <span class="number">1</span> <span class="keyword">if</span> you want extra aligned types in libbson</span><br><span class="line"> */</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BSON_EXTRA_ALIGN </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> BSON_EXTRA_ALIGN != 1</span></span><br><span class="line"><span class="meta"># <span class="meta-keyword">undef</span> BSON_EXTRA_ALIGN</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+<p>只需要在 <code>#define BSON_EXTRA_ALIGN</code> 后面给个值就可以了，我给了个 0 。</p>
+<p><strong>ALL_BUILD</strong> 成功之后生成一下 <strong>INSTALL</strong> 就可以了。</p>
+<p>成功之后检查 <em>C:\mongo-c-driver\lib\cmake\libbson-1.0\libbson-1.0-config.cmake</em> ，发现版本号已经是1.14.0了：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> (BSON_MAJOR_VERSION <span class="number">1</span>)</span><br><span class="line"><span class="keyword">set</span> (BSON_MINOR_VERSION <span class="number">14</span>)</span><br><span class="line"><span class="keyword">set</span> (BSON_MICRO_VERSION <span class="number">0</span>)</span><br><span class="line"><span class="keyword">set</span> (BSON_VERSION <span class="number">1.14</span>.<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+<p>此时再去运行 mongocxx 的 cmake 命令，已经不会报错了。</p>
+<p>根据cmake成功最后的提示：</p>
+<blockquote>
+<p>– Generating done<br>– Build files have been written to: F:/workspace/mongo-cxx-driver/build</p>
+</blockquote>
+<p>进入这个目录下，通过MSbuild .exe依次运行 ALL_BUILD.vcxproj和INSTALL.vcxproj；或者直接通过VS 打开ALL_BUILD.vcxproj，然后点击生成。</p>
+<blockquote>
+<p>Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include\type_traits(1271): error C2338: You’ve instantiated std::aligned_storage&lt;Len, Align&gt; with a<br>n extended alignment (in other words, Align &gt; alignof(max_align_t)). Before VS 2017 15.8, the member type would non-conformingly have an alignment of only alignof(max_align_t). VS 2017 15.8<br> was fixed to handle this correctly, but the fix inherently changes layout and breaks binary compatibility (<em>only</em> for uses of aligned_storage with extended alignments). Please define eithe<br>r (1) _ENABLE_EXTENDED_ALIGNED_STORAGE to acknowledge that you understand this message and that you actually want a type with an extended alignment, or (2) _DISABLE_EXTENDED_ALIGNED_STORAGE<br> to silence this message and get the old non-conformant behavior. [workspace\mongo-cxx-driver\build\src\bsoncxx\bsoncxx.vcxproj]</p>
+</blockquote>
+<p>我的VS 版本是 15.9.7 ，所以是可以用 <code>_ENABLE_EXTENDED_ALIGNED_STORAGE</code>  的。</p>
+<p>在CMakeLists.txt 中加入:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span>(CMAKE_CXX_FLAGS <span class="string">"$&#123;CMAKE_CXX_FLAGS&#125; -D _ENABLE_EXTENDED_ALIGNED_STORAGE"</span>)</span><br></pre></td></tr></table></figure>
+
+<p>接着All_Build，还在报错。。。</p>
+<p>算了，Windows真不友好…..</p>
+<h3 id="Refer-2"><a href="#Refer-2" class="headerlink" title="Refer"></a>Refer</h3><p><a href="http://mongocxx.org/mongocxx-v3/installation/" rel="external nofollow noopener noreferrer" target="_blank">Installing the mongocxx driver</a></p>
+<p><a href="https://jira.mongodb.org/browse/CDRIVER-3022" rel="external nofollow noopener noreferrer" target="_blank">mongo-c-driver-1.14.0: wrong version in pkg-config files</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/c/" rel="tag"># c++</a>
+              <a href="/tags/mongo/" rel="tag"># mongo</a>
+              <a href="/tags/boost/" rel="tag"># boost</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/06/26/helloflutter/" rel="prev" title="Hello, Flutter">
+      <i class="fa fa-chevron-left"></i> Hello, Flutter
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/07/09/aesandrsa/" rel="next" title="cryptjs vs crypto++ 加解密(上篇)">
+      cryptjs vs crypto++ 加解密(上篇) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preface"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Prerequirement"><span class="nav-number">2.</span> <span class="nav-text">Prerequirement</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-mongo-c-driver"><span class="nav-number">2.1.</span> <span class="nav-text">安装 mongo-c-driver</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Refer"><span class="nav-number">2.1.1.</span> <span class="nav-text">Refer</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装boost"><span class="nav-number">2.2.</span> <span class="nav-text">安装boost</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Refer-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">Refer</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-mongocxx"><span class="nav-number">2.3.</span> <span class="nav-text">安装 mongocxx</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#fatal-error-C1017-无效的整数常量表达式"><span class="nav-number">2.3.1.</span> <span class="nav-text">fatal error C1017: 无效的整数常量表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Refer-2"><span class="nav-number">2.3.2.</span> <span class="nav-text">Refer</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">ado</p>
+  <div class="site-description" itemprop="description">me, robot.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">68</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ado</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

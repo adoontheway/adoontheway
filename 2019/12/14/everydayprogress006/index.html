@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"adoontheway.gitee.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="今天尝试在windows上搭建etcd集群环境">
+<meta name="keywords" content="etcd">
+<meta property="og:type" content="article">
+<meta property="og:title" content="每天进步一点点006-etcd windows集群环境">
+<meta property="og:url" content="https://adoontheway.gitee.io/2019/12/14/everydayprogress006/index.html">
+<meta property="og:site_name" content="Ados">
+<meta property="og:description" content="今天尝试在windows上搭建etcd集群环境">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://adoontheway.gitee.io/2019/12/14/everydayprogress006/etcd1.png">
+<meta property="og:image" content="https://adoontheway.gitee.io/2019/12/14/everydayprogress006/etcd2.png">
+<meta property="og:updated_time" content="2020-08-26T06:16:59.070Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="每天进步一点点006-etcd windows集群环境">
+<meta name="twitter:description" content="今天尝试在windows上搭建etcd集群环境">
+<meta name="twitter:image" content="https://adoontheway.gitee.io/2019/12/14/everydayprogress006/etcd1.png">
+
+<link rel="canonical" href="https://adoontheway.gitee.io/2019/12/14/everydayprogress006/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>每天进步一点点006-etcd windows集群环境 | Ados</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Ados</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">a fullstack game worker</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://adoontheway.gitee.io/2019/12/14/everydayprogress006/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="ado">
+      <meta itemprop="description" content="me, robot.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ados">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          每天进步一点点006-etcd windows集群环境
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-12-14 20:58:53" itemprop="dateCreated datePublished" datetime="2019-12-14T20:58:53+08:00">2019-12-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-26 14:16:59" itemprop="dateModified" datetime="2020-08-26T14:16:59+08:00">2020-08-26</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+            <div class="post-description">今天尝试在windows上搭建etcd集群环境</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>之前的环境比较复杂：我主机是windows，centos是vmware里面的虚拟机，docker又是centos里面的。<br>之前是打算在基于centos的docker搭建一个etcd本地集群来开发用，用作测试分布式服务发现，当然也可以用作分布式数据存储。<br>分布式数据存储也可以使用redis，在分布式数据存储这一点上etcd和redis各自的优缺点是啥，需要后面调查和验证一下。<br>在此略过。</p>
+<h1 id="Contents"><a href="#Contents" class="headerlink" title="Contents"></a>Contents</h1><p>分布式服务最少都是3个起步，都是奇数个，以匹配raft选举策略，所以需要配置3个服务。</p>
+<h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><p>以下分别是1，2，3号etcd服务的配置文件：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">etcd01</span></span><br><span class="line"><span class="attr">data-dir:</span> <span class="string">.\data\etcd01</span> </span><br><span class="line"><span class="attr">advertise-client-urls:</span> <span class="string">http://127.0.0.1:2379</span> </span><br><span class="line"><span class="attr">listen-client-urls:</span> <span class="string">http://127.0.0.01:2379</span> </span><br><span class="line"><span class="attr">listen-peer-urls:</span> <span class="string">http://127.0.0.1:2380</span> </span><br><span class="line"><span class="attr">initial-advertise-peer-urls:</span> <span class="string">http://127.0.0.1:2380</span> </span><br><span class="line"><span class="attr">initial-cluster-token:</span> <span class="string">etcd-cluster-1</span> </span><br><span class="line"><span class="attr">initial-cluster:</span> <span class="string">etcd01=http://127.0.0.1:2380,etcd02=http://127.0.0.1:2381,etcd03=http://127.0.0.1:2382</span> </span><br><span class="line"><span class="attr">initial-cluster-state:</span> <span class="string">new</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">etcd02</span></span><br><span class="line"><span class="attr">data-dir:</span> <span class="string">.\data\etcd02</span> </span><br><span class="line"><span class="attr">advertise-client-urls:</span> <span class="string">http://127.0.0.1:3379</span> </span><br><span class="line"><span class="attr">listen-client-urls:</span> <span class="string">http://127.0.0.01:3379</span> </span><br><span class="line"><span class="attr">listen-peer-urls:</span> <span class="string">http://127.0.0.1:2381</span> </span><br><span class="line"><span class="attr">initial-advertise-peer-urls:</span> <span class="string">http://127.0.0.1:2381</span> </span><br><span class="line"><span class="attr">initial-cluster-token:</span> <span class="string">etcd-cluster-1</span> </span><br><span class="line"><span class="attr">initial-cluster:</span> <span class="string">etcd01=http://127.0.0.1:2380,etcd02=http://127.0.0.1:2381,etcd03=http://127.0.0.1:2382</span> </span><br><span class="line"><span class="attr">initial-cluster-state:</span> <span class="string">new</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">etcd03</span></span><br><span class="line"><span class="attr">data-dir:</span> <span class="string">.\data\etcd03</span> </span><br><span class="line"><span class="attr">advertise-client-urls:</span> <span class="string">http://127.0.0.1:4379</span> </span><br><span class="line"><span class="attr">listen-client-urls:</span> <span class="string">http://127.0.0.01:4379</span> </span><br><span class="line"><span class="attr">listen-peer-urls:</span> <span class="string">http://127.0.0.1:2382</span> </span><br><span class="line"><span class="attr">initial-advertise-peer-urls:</span> <span class="string">http://127.0.0.1:2382</span> </span><br><span class="line"><span class="attr">initial-cluster-token:</span> <span class="string">etcd-cluster-1</span> </span><br><span class="line"><span class="attr">initial-cluster:</span> <span class="string">etcd01=http://127.0.0.1:2380,etcd02=http://127.0.0.1:2381,etcd03=http://127.0.0.1:2382</span> </span><br><span class="line"><span class="attr">initial-cluster-state:</span> <span class="string">new</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="启动脚本"><a href="#启动脚本" class="headerlink" title="启动脚本"></a>启动脚本</h2><figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">etcd --config-file=F:/software/etcd-v3.<span class="number">4</span>.<span class="number">0</span>-windows-amd64/etcd01.yml</span><br><span class="line"><span class="built_in">pause</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="启动结果"><a href="#启动结果" class="headerlink" title="启动结果"></a>启动结果</h2><p><img src="./etcd1.png" alt="启动结果1"><br>查看一下结果：<br><img src="./etcd2.png" alt="启动结果2"><br>最后一个false是啥意思:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">etcdctl <span class="built_in">help</span> member list</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>NAME:<br>        member list - Lists all members in the cluster<br>USAGE:<br>        etcdctl member list [flags]<br>DESCRIPTION:<br>        When –write-out is set to simple, this command prints out comma-separated member lists for each endpoint.<br>        The items in the lists are ID, Status, Name, Peer Addrs, Client Addrs, Is Learner.</p>
+</blockquote>
+<p>最后那个boolean值得代表的意思是是否是learner,learner是区别与master与follower的角色，具体干啥的可以参考下面的参考连接。  </p>
+<h1 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h1><p>整个过程不是很顺利，首先是按照官方的文档进行操作，windows会有奇怪的问题，于是改成了配置文件操作；<br>接着是windows的权限问题，整得很头疼；<br>现在是3个etcd服务器都跑起来了，但是etcdctl又用不了，第二天换成windows cmd line又可以了，当时用的是git bash；  </p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
+<li><a href="https://etcd.io/docs/v3.3.12/learning/learner/" rel="external nofollow noopener noreferrer" target="_blank">etcd/learner</a></li>
+<li><a href="https://github.com/etcd-io/etcd/tree/master/etcdctl" rel="external nofollow noopener noreferrer" target="_blank">etcdctl</a></li>
+<li><a href="https://blog.csdn.net/god_wot/article/details/77854093" rel="external nofollow noopener noreferrer" target="_blank">ETCD集群安装配置及简单应用</a></li>
+<li><a href="http://kailing.pub/article/index/arcid/253.html" rel="external nofollow noopener noreferrer" target="_blank">Windows下安装Etcd集群及etcd-viewer</a></li>
+</ul>
+<h1 id="Update"><a href="#Update" class="headerlink" title="Update"></a>Update</h1><h2 id="关于etcd与redis数据存储方面的疑问"><a href="#关于etcd与redis数据存储方面的疑问" class="headerlink" title="关于etcd与redis数据存储方面的疑问"></a>关于etcd与redis数据存储方面的疑问</h2><p>etcd是分布式存储，强调是是节点之间的通信与同步，确保个节点上数据和事务的一致性，本身的单节点写入能力不强。<br>redis节点之间强调的是数据的一致性，并不在乎事务，所以读写能力很强，且支持的存储数据结构比较丰富，以及提供了例如incr，排序之类的东西。</p>
+<h2 id="关于redis的问题"><a href="#关于redis的问题" class="headerlink" title="关于redis的问题"></a>关于redis的问题</h2><p>redis主从之间的数据同步会有延迟，前不久遇到有人用redis替代rocketmq来做某些东西。<br>正式放到外网的时候出现了bug，多方研究发现内网是单节点redis，外网是redis cluster，连接到的sential数据有一定的几率数据更新不及时。</p>
+<ul>
+<li><a href="https://www.v2ex.com/t/520367" rel="external nofollow noopener noreferrer" target="_blank">在微服务架构中是否可用 redis 代替 etcd?</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/etcd/" rel="tag"># etcd</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/12/07/everydayprogress005/" rel="prev" title="每天进步一点点005-mongocxx嵌套数组中插入文档">
+      <i class="fa fa-chevron-left"></i> 每天进步一点点005-mongocxx嵌套数组中插入文档
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/12/16/everydayprogress007/" rel="next" title="每天进步一点点007-golang中使用etcd">
+      每天进步一点点007-golang中使用etcd <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preface"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Contents"><span class="nav-number">2.</span> <span class="nav-text">Contents</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置文件"><span class="nav-number">2.1.</span> <span class="nav-text">配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动脚本"><span class="nav-number">2.2.</span> <span class="nav-text">启动脚本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动结果"><span class="nav-number">2.3.</span> <span class="nav-text">启动结果</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Conclusion"><span class="nav-number">3.</span> <span class="nav-text">Conclusion</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Update"><span class="nav-number">5.</span> <span class="nav-text">Update</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于etcd与redis数据存储方面的疑问"><span class="nav-number">5.1.</span> <span class="nav-text">关于etcd与redis数据存储方面的疑问</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于redis的问题"><span class="nav-number">5.2.</span> <span class="nav-text">关于redis的问题</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">ado</p>
+  <div class="site-description" itemprop="description">me, robot.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">68</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ado</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"adoontheway.gitee.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="MongoDB使用过程中遇到的问题，不限语言">
+<meta name="keywords" content="mongo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MongoDB 使用过程中遇到的问题">
+<meta property="og:url" content="https://adoontheway.gitee.io/2019/06/05/mongoissue/index.html">
+<meta property="og:site_name" content="Ados">
+<meta property="og:description" content="MongoDB使用过程中遇到的问题，不限语言">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-08-26T06:16:59.091Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MongoDB 使用过程中遇到的问题">
+<meta name="twitter:description" content="MongoDB使用过程中遇到的问题，不限语言">
+
+<link rel="canonical" href="https://adoontheway.gitee.io/2019/06/05/mongoissue/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>MongoDB 使用过程中遇到的问题 | Ados</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Ados</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">a fullstack game worker</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://adoontheway.gitee.io/2019/06/05/mongoissue/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="ado">
+      <meta itemprop="description" content="me, robot.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ados">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MongoDB 使用过程中遇到的问题
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-06-05 10:15:44" itemprop="dateCreated datePublished" datetime="2019-06-05T10:15:44+08:00">2019-06-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-26 14:16:59" itemprop="dateModified" datetime="2020-08-26T14:16:59+08:00">2020-08-26</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+            <div class="post-description">MongoDB使用过程中遇到的问题，不限语言</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>Reserved</p>
+<h1 id="Content"><a href="#Content" class="headerlink" title="Content"></a>Content</h1><h2 id="MongoDB-C-驱动查询参数遇到的问题"><a href="#MongoDB-C-驱动查询参数遇到的问题" class="headerlink" title="MongoDB C++ 驱动查询参数遇到的问题"></a>MongoDB C++ 驱动查询参数遇到的问题</h2><blockquote>
+<p>bsoncxx/builder/stream/value_context.hpp:69: error: call of overloaded ‘append(unsigned int&amp;)’ is ambiguous<br>         _core-&gt;append(std::forward<t>(t));</t></p>
+</blockquote>
+<p>这是MongoDB C++ driver：mongocxx 设计上是一个问题，int类型只支持int32和int64类型，而我们使用了unsigned int的一个别名，所以导致了报错，转型int就可以了。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> bsoncxx::builder::stream::document;</span><br><span class="line"><span class="keyword">using</span> bsoncxx::builder::stream::finalize;</span><br><span class="line"></span><br><span class="line">bsoncxx::document::value query_value = document&#123;&#125; &lt;&lt; <span class="string">"a"</span> &lt;&lt; (<span class="keyword">int</span>)a &lt;&lt; <span class="string">"b"</span> &lt;&lt; (<span class="keyword">int</span>)b &lt;&lt; finalize;</span><br></pre></td></tr></table></figure>
+
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://jira.mongodb.org/browse/CXX-617" rel="external nofollow noopener noreferrer" target="_blank">bsoncxx::builder::core::append of unsigned int</a></p>
+<h2 id="expected-element-type-k-int32"><a href="#expected-element-type-k-int32" class="headerlink" title="expected element type k_int32"></a>expected element type k_int32</h2><p>MongDB 中存放的 NumberLong 对应的是 int64；</p>
+<p>普通整型对应的是 int32；</p>
+<p>如果使用 get_int32/int64 去取不对应的数据的话，会导致报以上错误。</p>
+<h2 id="mongorestore"><a href="#mongorestore" class="headerlink" title="mongorestore"></a>mongorestore</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongorestore /h 192.168.2.160 /port 27017 /dir currentdir -d targetdatabase /bypassDocumentValidation</span><br></pre></td></tr></table></figure>
+
+<p>这个是Windows上面的操作，具体的可以参考:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongorestore --<span class="built_in">help</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="mongoshell-执行js脚本"><a href="#mongoshell-执行js脚本" class="headerlink" title="mongoshell 执行js脚本"></a>mongoshell 执行js脚本</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongo 192.168.0.200/<span class="built_in">test</span> e:/test.js</span><br></pre></td></tr></table></figure>
+
+<p>这个是不带验证的，验证的要另加。</p>
+<p>以下是一段数据整理的脚本，数据量多的话可以利用 <strong>cursor</strong> 的分页功能:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> s = db.getMongo().startSession()</span><br><span class="line">s.startTransaction()</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">	<span class="keyword">var</span> cursor = db.coll.find(&#123;&#125;);</span><br><span class="line">	<span class="keyword">var</span> total = cursor.count()</span><br><span class="line">	<span class="keyword">var</span> operated = <span class="number">0</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">each</span>(<span class="params">x</span>)</span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(x.time &gt; ISODate(<span class="string">"2019-05-05T05:00:00.00+00:00"</span>))<span class="comment">//如果这个字段大于这个时间</span></span><br><span class="line">		&#123;</span><br><span class="line">			print(x.time)</span><br><span class="line">			db.coll.update(&#123;<span class="attr">_id</span>:x._id&#125;, &#123;<span class="string">"$set"</span>:&#123;<span class="string">"a"</span>:a,<span class="attr">b</span>:c&#125;&#125;,<span class="literal">true</span>)</span><br><span class="line">		&#125;</span><br><span class="line">		operated++;</span><br><span class="line">		print((operated*<span class="number">100</span>/total).toFixed(<span class="number">2</span>)+<span class="string">"%"</span>)</span><br><span class="line">	&#125; </span><br><span class="line">	cursor.forEach(each);</span><br><span class="line">	s.commitTransaction();</span><br><span class="line">&#125;<span class="keyword">catch</span>(e)&#123;</span><br><span class="line">	print(e);</span><br><span class="line">	s.abortTransaction();</span><br><span class="line">&#125;</span><br><span class="line">print(<span class="string">"Finished"</span>)</span><br></pre></td></tr></table></figure>
+
+<p>以下是建库建集合的脚本：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> conn = <span class="keyword">new</span> Mongo(<span class="string">'192.168.0.200:27017'</span>);</span><br><span class="line"><span class="keyword">var</span> db = conn.getDB(<span class="string">'newdb'</span>);</span><br><span class="line">db.createCollection(<span class="string">'new_coll'</span>);</span><br><span class="line">db.game_replay.ensureIndex(&#123;<span class="attr">hehe</span>:<span class="number">1</span>&#125;);</span><br><span class="line">db.game_replay.insertOne(&#123;<span class="attr">hehe</span>:<span class="string">'test0000000000000'</span>&#125;);</span><br><span class="line">print(<span class="string">'Please clean test data in newbd.new_coll and grant user to write/read this database'</span>);</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/mongo/" rel="tag"># mongo</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/06/01/cryptppaes/" rel="prev" title="Crypto++ AES加解密">
+      <i class="fa fa-chevron-left"></i> Crypto++ AES加解密
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/06/08/rocketmqprac/" rel="next" title="Hello,RocketMQ">
+      Hello,RocketMQ <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preface"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Content"><span class="nav-number">2.</span> <span class="nav-text">Content</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MongoDB-C-驱动查询参数遇到的问题"><span class="nav-number">2.1.</span> <span class="nav-text">MongoDB C++ 驱动查询参数遇到的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">2.1.1.</span> <span class="nav-text">参考</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#expected-element-type-k-int32"><span class="nav-number">2.2.</span> <span class="nav-text">expected element type k_int32</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mongorestore"><span class="nav-number">2.3.</span> <span class="nav-text">mongorestore</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mongoshell-执行js脚本"><span class="nav-number">2.4.</span> <span class="nav-text">mongoshell 执行js脚本</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">ado</p>
+  <div class="site-description" itemprop="description">me, robot.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">68</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ado</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

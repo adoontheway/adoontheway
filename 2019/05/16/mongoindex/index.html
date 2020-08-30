@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"adoontheway.gitee.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="mongodb 和 MongoDB权威指南 的相关笔记">
+<meta name="keywords" content="mongo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mongo相关">
+<meta property="og:url" content="https://adoontheway.gitee.io/2019/05/16/mongoindex/index.html">
+<meta property="og:site_name" content="Ados">
+<meta property="og:description" content="mongodb 和 MongoDB权威指南 的相关笔记">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://adobeattheworld.github.io/images/objidtime.png">
+<meta property="og:updated_time" content="2020-08-26T06:16:59.090Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mongo相关">
+<meta name="twitter:description" content="mongodb 和 MongoDB权威指南 的相关笔记">
+<meta name="twitter:image" content="https://adobeattheworld.github.io/images/objidtime.png">
+
+<link rel="canonical" href="https://adoontheway.gitee.io/2019/05/16/mongoindex/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>mongo相关 | Ados</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Ados</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">a fullstack game worker</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://adoontheway.gitee.io/2019/05/16/mongoindex/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="ado">
+      <meta itemprop="description" content="me, robot.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ados">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          mongo相关
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-05-16 20:41:16" itemprop="dateCreated datePublished" datetime="2019-05-16T20:41:16+08:00">2019-05-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-26 14:16:59" itemprop="dateModified" datetime="2020-08-26T14:16:59+08:00">2020-08-26</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+            <div class="post-description">mongodb 和 MongoDB权威指南 的相关笔记</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>这里是 <strong>mongodb</strong> 日常和读 <strong>MongoDB权威指南</strong> 记笔记的地方</p>
+<h1 id="Content"><a href="#Content" class="headerlink" title="Content"></a>Content</h1><h2 id="1-基本知识"><a href="#1-基本知识" class="headerlink" title="1. 基本知识"></a>1. 基本知识</h2><ul>
+<li><a href="http://www.runoob.com/mongodb/mongodb-tutorial.html" rel="external nofollow noopener noreferrer" target="_blank">MongoDB 教程</a></li>
+<li><a href="https://docs.mongodb.com/manual/" rel="external nofollow noopener noreferrer" target="_blank">MongoDB Manual</a></li>
+<li>ObjectID :  0-3 时间戳 4-6 机器标识码 7-8 进程id 9-12 随机数，单位：字节<img src="https://adobeattheworld.github.io/images/objidtime.png" alt="objid"></li>
+<li><strong>find</strong> 语法 <code>db.users.find({},{&quot;username&quot;:1,&quot;email&quot;:0})</code> 只需要返回 <em>username</em> 不需要返回 <em>email</em> 。</li>
+<li>batchInsert 已经废弃了，直接使用 insert 传入数组可以插入多条数据</li>
+</ul>
+<h2 id="2-性能优化"><a href="#2-性能优化" class="headerlink" title="2. 性能优化"></a>2. 性能优化</h2><h3 id="2-0-索引"><a href="#2-0-索引" class="headerlink" title="2.0 索引"></a>2.0 索引</h3><p><strong>mongodb</strong> 建索引的方法:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.collection_name.createIndex(&#123;<span class="string">'key0'</span>:<span class="number">1</span>,<span class="string">'key1'</span>:<span class="number">1</span>,<span class="string">'key2'</span>:<span class="number">-1</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>以上是建联合索引，当然也可以单独给每个字段建索引</p>
+<p>参考 ：</p>
+<p><a href="https://www.jianshu.com/p/a0e3e18ace77" rel="external nofollow noopener noreferrer" target="_blank">mongodb 索引优化</a></p>
+<blockquote>
+<p>db.collection_name.drop() 之后需要重新建索引，</p>
+<p>目前是没有办法在创建集合的时候一起创建索引的。</p>
+</blockquote>
+<h2 id="3-启动脚本"><a href="#3-启动脚本" class="headerlink" title="3. 启动脚本"></a>3. 启动脚本</h2><p>创建一个 <strong>.mongorc.js</strong> ，可以在其中加入一些内容，例如，添加全局变量，为太场的名字创建简短的别名。最常见的用途是移除那些比较危险的<strong>shell</strong>辅助函数，例如<em>dropDatabase</em> 或者 <em>deleteIndexes</em>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> no = functio () &#123;</span><br><span class="line">    print(<span class="string">"Not on my watch."</span>);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//禁用数据库删除</span></span><br><span class="line">db.dropDatabase = DB.prototype.dropDatabase = no;</span><br><span class="line"><span class="comment">//禁用集合删除</span></span><br><span class="line">DBCollection.prototype.drop = no;</span><br><span class="line"><span class="comment">//禁用索引删除</span></span><br><span class="line">DBCollection.prototype.dropIndex = no;</span><br></pre></td></tr></table></figure>
+
+<p>启动 <strong>shell</strong> 时可以指定 <em>–norc</em> 参数来禁止加载 <strong>.mongorc.js</strong> 的加载。</p>
+<h2 id="4-can’t-save-a-DBQuery-object"><a href="#4-can’t-save-a-DBQuery-object" class="headerlink" title="4. can’t save a DBQuery object"></a>4. can’t save a DBQuery object</h2><p><em>db.coll.find({})</em> 查询出来的结果是一组数据，直接用于更新或者插入操作可能会出现上面的报错，要使用的话需要在后面加个索引，当然你还是需要判断里面有没有数据，或者使用 <em>db.coll.findOne({})</em> 。</p>
+<h2 id="5-条件"><a href="#5-条件" class="headerlink" title="5. 条件"></a>5. 条件</h2><ul>
+<li>$ne : not equal !=</li>
+<li>$addToSet : 保证添加元素的唯一</li>
+<li>$push :  配合 $each 和 $slice用于对数组添加元素</li>
+<li>$each : 对每个元素进行操作</li>
+<li>$slice :  必须是负整数，保证数组长度不大于，可配合 $sort 使用</li>
+<li>$pop : 删除一个元素， {“$pop”:{“key”:1}}从末尾删除一个元素，-1则从头部删除一个元素</li>
+<li>$pull :  删除特定元素</li>
+<li>$inc : 自加，可以接受负数</li>
+<li>$set : 设值</li>
+<li>$setOnInsert : 字段只会在文档插入的时候更新，之后所有更新操作这个字段都不会改变。 <code>db.users.update({},{&quot;$setOnInsert&quot;:{&quot;createdAt&quot;:newDate}},true)</code></li>
+<li>$lt : less than  &lt;</li>
+<li>$lte : less than or equal &lt;=</li>
+<li>$gt : greater than &gt;</li>
+<li>$gte : greater than or equal &gt;=</li>
+<li>$in : 查询一个键的多个值 <code>db.raffle.find({&quot;ticket_no&quot;:{&quot;$in&quot;:[1,2,3,4]}})</code></li>
+<li>$nin: not in</li>
+<li>$and : </li>
+<li>$nor : </li>
+<li>$or : 在多个键中查询任意的给定值 <code>db.raffle.find(&quot;$or&quot;: [{&quot;ticket_no&quot;:555}, {&quot;winner&quot;:true}])</code> 或者可以和 <strong>$in</strong>组合使用：<code>db.raffle.find({&quot;$or&quot; : [{&quot;ticket_no&quot;:{&quot;$in&quot;:[555,.666,777]}},{&quot;winner&quot;:true}]})</code></li>
+<li>$not :  对下面取反只要用这个替换就可以了 <code>{&quot;$not&quot;:{&quot;$mod&quot;:[5,1]}}</code>， $not 可以与正则表达式联用。</li>
+<li>$mod : 取模运算 <code>db.users.find({&quot;id_num&quot;:{&quot;$mod&quot;:[5,1]}})</code>查询 <strong>id_num</strong> <u>对5取模余数为1</u> 的文档。</li>
+<li>$exists : <code>db.c.find({&quot;z&quot;:{&quot;$in&quot;:[null],&quot;$exists&quot;:true}})</code> 匹配键值为null，且存在的元素</li>
+<li>$size : 匹配数组尺寸 <code>db.food.find({&quot;fruit&quot;: {&quot;$size&quot;:3}})</code></li>
+<li>$elemMatch : 匹配数组元素</li>
+<li>$where :  终极查询语句，<u>应该严格限制或者消除 $where 的使用。禁止任何终端用户使用任意的 $where 语句</u>。并且查询速度也很慢。</li>
+<li>$maxscan : 指定本次查询扫描文档数量的上限。</li>
+<li>$min :  查询的开始条件。 再这样的查询中，文档必须与索引的键完全匹配，再内部使用时，通常应该使用 $gt 代替 $min 。可以使用 $min 强制指定一次索引扫描的下边界。</li>
+<li>$max : 查询的结束条件。与上面相反。</li>
+<li>$showDiskLoc : 再查询结果中添加这个用于显示该条结果再磁盘上的位置。 <code>db.foo.find()._addSpecial(&#39;$showDickloc&#39;,true)</code>，<strong>cursor</strong> 有对应的方法 <a href="https://docs.mongodb.com/manual/reference/operator/meta/showDiskLoc/index.html" rel="external nofollow noopener noreferrer" target="_blank">showDiskLoc()</a>。</li>
+<li>$natural : {“$natural”:1} 强制数据库做全表扫描。<code>db.entries.find({&quot;created_at&quot;:{&quot;$lt&quot;:horAgo}}).hint({&quot;$natural&quot;:1})</code> 副作用是返回的结果是按照磁盘上的顺序排列的。</li>
+</ul>
+<h2 id="6-文档移动"><a href="#6-文档移动" class="headerlink" title="6. 文档移动"></a>6. 文档移动</h2><p>改变某些属性值会导致文档移动，例如：数组添加元素，字符串设置为更长的值得。某些是不会导致文档移动的，例如：对一个数字类型的元素进行运算设值。</p>
+<p>集合预留的填充因子 <strong>padding factor</strong> 可以通过 <em>db.coll.stats()</em> 查看。</p>
+<p>设置 usePowerOf2Sizes 为 true 可以让分配的空间得到的块空间大小都是2的幂。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.runCommand(<span class="string">"collMod"</span>:collectionName, <span class="string">"usePowerOf2Sizes"</span>:<span class="literal">true</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-Upsert"><a href="#7-Upsert" class="headerlink" title="7. Upsert"></a>7. Upsert</h2><p><strong>upsert</strong>设置为<em>true</em>可以免去<strong>query</strong>查询是否存在，不存在的话会创建一个：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.collectionname.update(query,update, upsert);</span><br></pre></td></tr></table></figure>
+
+<p>这样具备原子性且效率更高。</p>
+<h2 id="8-findAndModify"><a href="#8-findAndModify" class="headerlink" title="8. findAndModify"></a>8. findAndModify</h2><p>getLastError 可以返回上一次更新的有关信息：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.runCommand(&#123;<span class="attr">getLastError</span>:<span class="number">1</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>如果有多个线程在查询和更新同一个文档的话，可以用 findAndModify 来避免这类问题，他会返回一个匹配结果并且进行更新，然后返回修改之前的结果。</p>
+<p>这个接口很重要，还可以用来安全的删除和新建。</p>
+<blockquote>
+<p>可用指令： query, sort,update,remove,new,fields,upsert</p>
+<p>其中，update 和 remove 必须有且只能有一个，否则会报错。</p>
+</blockquote>
+<h2 id="9-slice"><a href="#9-slice" class="headerlink" title="9. $slice"></a>9. $slice</h2><p><code>db.blog.posts.findOne(criteria, {&quot;comments&quot;:{$slice : -10 }})</code></p>
+<p>找到匹配的数据并且选取 <strong>comments</strong> 里面倒数 <strong>10</strong> 条数据。</p>
+<p><code>db.blog.posts.findOne(criteria, {&quot;comments&quot;:{$slice:[3,5]}})</code></p>
+<p>找到匹配项并且选取 <strong>comments</strong> 里面索引 【4】 开始的 【5】 个数据。</p>
+<h2 id="10-启动参数"><a href="#10-启动参数" class="headerlink" title="10. 启动参数"></a>10. 启动参数</h2><p>启动加入 <em>–noscripting</em> 参数可以完全关闭服务端 <strong>JavaScript</strong> 的执行。</p>
+<h2 id="11-游标"><a href="#11-游标" class="headerlink" title="11. 游标"></a>11. 游标</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> cursor = db.test.find();</span><br><span class="line"><span class="comment">//use case 1</span></span><br><span class="line">cursor.forEach( <span class="function"><span class="keyword">function</span>(<span class="params">x</span>) </span>&#123;...&#125;)</span><br><span class="line"><span class="comment">//use case 2</span></span><br><span class="line"><span class="keyword">while</span>(cursor.hasNext()) &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>调用 find 时，shell不会立即查询数据库，二十等待真正开始要求获取结果的时候才发送查询，这样在执行之前可以给查询附加额外的选项。几乎游标对象的每个方法都返回游标本身，这样就可以按任意顺序组成方法链。例如，一下三个是等价的：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> cursor = db.foo.find().sort(&#123;<span class="attr">x</span>:<span class="number">1</span>&#125;).limit(<span class="number">1</span>).skip(<span class="number">10</span>);</span><br><span class="line"><span class="keyword">var</span> cursor = db.foo.find().limit(<span class="number">1</span>).sort(&#123;<span class="attr">x</span>:<span class="number">1</span>&#125;).skip(<span class="number">10</span>);</span><br><span class="line"><span class="keyword">var</span> cursor = db.foo.find().skip(<span class="number">10</span>).sort(&#123;<span class="attr">x</span>:<span class="number">1</span>&#125;).limit(<span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+
+<p><em>hasNext</em> 会有<strong>4MB</strong>数据的限制，如果请求的下一份数据超过 <strong>4MB</strong> 那么只会返回 <strong>4MB</strong> 的数据。</p>
+<h2 id="12-比较顺序"><a href="#12-比较顺序" class="headerlink" title="12. 比较顺序"></a>12. 比较顺序</h2><p>如果一个键可能有多个类型的值，默认的排序顺序由小到大：</p>
+<ol>
+<li>最小值</li>
+<li>null</li>
+<li>数字：整型，长整形，双精度</li>
+<li>字符串</li>
+<li>对象/文档</li>
+<li>数组</li>
+<li>二进制数据</li>
+<li>对象ID</li>
+<li>布尔型</li>
+<li>日期型</li>
+<li>时间戳</li>
+<li>正则</li>
+<li>最大值</li>
+</ol>
+<h2 id="13-Skip-略过大量结果"><a href="#13-Skip-略过大量结果" class="headerlink" title="13. Skip 略过大量结果"></a>13. Skip 略过大量结果</h2><p>skip 略过过多的话会变得很慢，因为要找到需要被略过的数据，然后再抛弃这些数据。所以，尽量不要使用skip对结果分页。</p>
+<p>可以根据具体逻辑来保存上一个查询最后的一个结果来获取下一页。</p>
+<h2 id="14-随机选取文档的技巧"><a href="#14-随机选取文档的技巧" class="headerlink" title="14. 随机选取文档的技巧"></a>14. 随机选取文档的技巧</h2><p>可以预先给文档设计一个 random 值，然后查询的时候随机一个数并根据这个数查询就可以了。</p>
+<h2 id="15-快照-snapshot"><a href="#15-快照-snapshot" class="headerlink" title="15. 快照 snapshot"></a>15. 快照 snapshot</h2><p>对整个文档进行查询和处理的时候，由于文件大小变更，可能导致文档进行了移位，从而导致多次处理同一个文档，这个时候需要使用快照来处理。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.foo.find().snapshot()</span><br></pre></td></tr></table></figure>
+
+<p><strong>mongodump</strong> 默认是在快照上使用查询。</p>
+<p>当然，快照会使查询变慢。</p>
+<h2 id="16-命令"><a href="#16-命令" class="headerlink" title="16. 命令"></a>16. 命令</h2><ul>
+<li>db.rumCommand</li>
+<li>db.adminCommand</li>
+</ul>
+<p>命令名称必须是命令中的第一个字段。</p>
+<h2 id="17-hint"><a href="#17-hint" class="headerlink" title="17. hint"></a>17. hint</h2><p>强制使用指定索引</p>
+<p><code>db.users.find({age:{&quot;$get&quot;:21,&quot;$lte&quot;:30}}).sort({username:1}).hint({username:1,age:1}).explain()</code></p>
+<h2 id="18-explain"><a href="#18-explain" class="headerlink" title="18. explain()"></a>18. explain()</h2><p>explain可以传入一个参数，参数的枚举值： </p>
+<ul>
+<li>queryPlanner : 这个是默认参数，MongoDB 运行查询优化器选择评估后胜出的计划，返回评估方法的 查询规划器(queryPlanner) 的信息。</li>
+<li>executionStats :  MongoDB 运行查询优化器选择获胜的计划，执行胜出的计划，然后返回胜出计划的统计信息以展示计划的执行。返回的是 查询规划器(queryPlanner) 和 执行统计信息(executionStats:stats 是statistic的简写，不是状态)。但是，他不提供被放弃使用的查询执行信息。想要获取运行时的执行时间可以使用这个。</li>
+<li>allPlansExecution : MongoDB返回描述获胜计划的执行以及对其候选人统计计划选择方案时捕获的统级。</li>
+</ul>
+<p>可以参考文档 ： <a href="https://docs.mongodb.com/manual/reference/method/cursor.explain/" rel="external nofollow noopener noreferrer" target="_blank">MongoDB DOC: cursor.explain()</a></p>
+<h2 id="19-Profiling"><a href="#19-Profiling" class="headerlink" title="19. Profiling"></a>19. Profiling</h2><ul>
+<li><p>db.setProfilingLevel(0-2) : 设置profile等级，0，默认；1，只记录慢查询，也可以传入第二个值定义时间超过多少的要记录，默认是100ms；2 记录所有命令。</p>
+</li>
+<li><p>db.getProfilingLevel() ： 获取profile 等级</p>
+</li>
+</ul>
+<p>也可以通过启动 MongoDB 的时候加上 -profile=n 来设置级别。</p>
+<p>开启之后，所有信息都会被记录到 system.profile 集合里。这个集合可以想普通集合一样查询：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//普通查询</span><br><span class="line">db.system.profile.find()</span><br><span class="line">//查询执行时间超过 50ms 的记录</span><br><span class="line">db.system.profile.find(&#123;millis:&#123;$gt:50&#125;&#125;)</span><br><span class="line">//查询最新的3条Profile记录</span><br><span class="line">db.system.profile.find().sort(&#123;$natural:-1&#125;).limit(3)</span><br><span class="line">//查询关于某个集合的慢查询记录</span><br><span class="line">db.system.profile.find(&#123;ns:'mydb.students'&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>参考： <a href="https://www.jianshu.com/p/31554ab4442c" rel="external nofollow noopener noreferrer" target="_blank">MongoDB查询耗时记录方法</a></p>
+<h2 id="20-索引"><a href="#20-索引" class="headerlink" title="20. 索引"></a>20. 索引</h2><h3 id="索引类型"><a href="#索引类型" class="headerlink" title="索引类型"></a>索引类型</h3><ul>
+<li>唯一索引： <code>db.users.ensureIndex({username:1},{unique:true})</code>，可以保证文档里面 username 都是唯一值。文档默认都有一个唯一索引 _id, 除了 _id 的唯一索引不能被删除外，其他的唯一索引都可以被删除。</li>
+<li>复合唯一索引 </li>
+<li>创建索引的时候传入 dropDups 可以删除重复的值，保留第一个值。 <code>db.ensureIndex({username:1},{unique:true, dropDups:true})</code></li>
+<li>稀疏索引 ： sparse index。唯一索引会把null当作值二导致缺少这个索引字段的文档插入集合中。如果有一个可能存在也可能不存在的字段，当它存在的时候必须唯一，这个时候就可以将 unique 和 sparse 选项组合一起使用。 <code>db.ensureIndex({&quot;email&quot;:1},{&quot;unique&quot;:true, &quot;sparse&quot;:true})</code>。稀疏索引不必是唯一的，所以这里的 unique 去掉就是非唯一的稀疏索引。</li>
+</ul>
+<h3 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h3><ul>
+<li><p>所有的数据库索引信息都存储在 <strong>system.indexex</strong> 集合中，这是一个保留集合，不能插入和删除文档。只能通过提供的 <strong>ensureIndex</strong> 或者 <strong>dropIndexes</strong> 对他进行操作。</p>
+</li>
+<li><p>可以通过  <code>db.coll.getIndexes()</code> 来查看索引信息。</p>
+</li>
+<li><p><em>db.coll.ensureIndex({…},{“name”:”alphabet”})</em> 创建索引的时候可以指定索引名字。</p>
+</li>
+<li><p>db.coll.dropIndex(name) : 删除索引，name 是索引描述信息里的name字段。</p>
+</li>
+<li><p>应当尽快的创建索引，对已有数据的文档创建索引的时候会耗费比较多的时间，会导致阻塞。当然，可以在创建索引的时候指定 background 选项，但是仍然会有比较大的影响。后台创建索引会比前台创建索引慢得多。</p>
+</li>
+</ul>
+<h2 id="21-固定集合"><a href="#21-固定集合" class="headerlink" title="21. 固定集合"></a>21. 固定集合</h2><p>固定集合有固定大小，当新集合插入的时候超过大小会删除最老的文档。</p>
+<p>固定集合被顺序写入磁盘上的固定空间，所以写入速度非常快。</p>
+<p>但是固定集合不能被分片。</p>
+<p>固定集合需要显示的去创建： <code>db.createCollection(&quot;my_coll&quot;,{&quot;capped&quot;:true, &quot;size&quot;:10000})</code> 这里size的单位是字节。</p>
+<p>还可以传入参数 <strong>max</strong> 来指定文档数量。固定集合创建之后就不能更改了。</p>
+<p>还可以用： db.runCommand({“convertToCapped”:”test”, “size”:10000}); 来转换已有集合为固定集合。</p>
+<p>固定集合可以进行自然排序，因为他在磁盘上的顺序是固定的。</p>
+<h2 id="22-聚合"><a href="#22-聚合" class="headerlink" title="22. 聚合"></a>22. 聚合</h2><p>例子：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">db.coll.aggregate(&#123;"$project":&#123;"author":1&#125;&#125;, </span><br><span class="line">	&#123;"$group":&#123;"_id":"$author", "count":&#123;"$sum":1&#125;&#125;,</span><br><span class="line">	&#123;"$sort" : &#123;"count" : -1&#125;&#125;&#125;,</span><br><span class="line">	&#123;"$limit" : 5&#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>{&quot;$project&quot;:{&quot;author&quot;:1}}</code> : 投射每个文档的 <strong>author</strong>，投射结果只会在内存中存在。</li>
+<li><code>{&quot;$group&quot; : { &quot;_id&quot;: &quot;$author&quot;, &quot;count&quot;:{&quot;$sum&quot;:1}}}</code> ，将 <strong>author</strong> 按名字排序，名字没出现一次，<strong>count</strong>就+1</li>
+<li><code>{&quot;$sort&quot;: {&quot;count&quot;:-1}}</code> : 对结果根据 <strong>count</strong> 进行降序排序</li>
+<li><code>{&quot;$limit&quot;:5}</code> :  返回最前面的5个文档</li>
+</ul>
+<p>聚合的这种传递时管道操作，上一个操作完的结果传递给下一个操作，如果聚合遇到问题，可以逐个排查，例如先去掉除了 project 之外的其他聚合操作，然后逐个调试添加。</p>
+<h3 id="聚合操作符"><a href="#聚合操作符" class="headerlink" title="聚合操作符"></a>聚合操作符</h3><ul>
+<li>match : 用于对文档集合进行筛选，可以使用常规的查询操作符。尽可能的将 $match 放在管道的前面位置。这样就可以快速的将不i需要的文档过滤掉，以减少管道的工作量；如果在投射和分组之前执行 match ，查询可以使用索引。</li>
+<li>project : </li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/mongo/" rel="tag"># mongo</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/05/16/gomethodbench/" rel="prev" title="Golang的方法的测试">
+      <i class="fa fa-chevron-left"></i> Golang的方法的测试
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/05/20/goserverfromscratch/" rel="next" title="一步一坑的搭建Golang游戏服务器">
+      一步一坑的搭建Golang游戏服务器 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preface"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Content"><span class="nav-number">2.</span> <span class="nav-text">Content</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-基本知识"><span class="nav-number">2.1.</span> <span class="nav-text">1. 基本知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-性能优化"><span class="nav-number">2.2.</span> <span class="nav-text">2. 性能优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-0-索引"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.0 索引</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-启动脚本"><span class="nav-number">2.3.</span> <span class="nav-text">3. 启动脚本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-can’t-save-a-DBQuery-object"><span class="nav-number">2.4.</span> <span class="nav-text">4. can’t save a DBQuery object</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-条件"><span class="nav-number">2.5.</span> <span class="nav-text">5. 条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-文档移动"><span class="nav-number">2.6.</span> <span class="nav-text">6. 文档移动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-Upsert"><span class="nav-number">2.7.</span> <span class="nav-text">7. Upsert</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-findAndModify"><span class="nav-number">2.8.</span> <span class="nav-text">8. findAndModify</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-slice"><span class="nav-number">2.9.</span> <span class="nav-text">9. $slice</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-启动参数"><span class="nav-number">2.10.</span> <span class="nav-text">10. 启动参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-游标"><span class="nav-number">2.11.</span> <span class="nav-text">11. 游标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-比较顺序"><span class="nav-number">2.12.</span> <span class="nav-text">12. 比较顺序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-Skip-略过大量结果"><span class="nav-number">2.13.</span> <span class="nav-text">13. Skip 略过大量结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-随机选取文档的技巧"><span class="nav-number">2.14.</span> <span class="nav-text">14. 随机选取文档的技巧</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15-快照-snapshot"><span class="nav-number">2.15.</span> <span class="nav-text">15. 快照 snapshot</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-命令"><span class="nav-number">2.16.</span> <span class="nav-text">16. 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#17-hint"><span class="nav-number">2.17.</span> <span class="nav-text">17. hint</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#18-explain"><span class="nav-number">2.18.</span> <span class="nav-text">18. explain()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#19-Profiling"><span class="nav-number">2.19.</span> <span class="nav-text">19. Profiling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#20-索引"><span class="nav-number">2.20.</span> <span class="nav-text">20. 索引</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#索引类型"><span class="nav-number">2.20.1.</span> <span class="nav-text">索引类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#知识点"><span class="nav-number">2.20.2.</span> <span class="nav-text">知识点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#21-固定集合"><span class="nav-number">2.21.</span> <span class="nav-text">21. 固定集合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#22-聚合"><span class="nav-number">2.22.</span> <span class="nav-text">22. 聚合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#聚合操作符"><span class="nav-number">2.22.1.</span> <span class="nav-text">聚合操作符</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">ado</p>
+  <div class="site-description" itemprop="description">me, robot.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">68</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ado</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

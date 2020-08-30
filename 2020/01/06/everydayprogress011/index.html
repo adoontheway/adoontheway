@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"adoontheway.gitee.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="利用 Samba 在 Centos 与 Windows 之间共享文件">
+<meta name="keywords" content="samba,vmware">
+<meta property="og:type" content="article">
+<meta property="og:title" content="每天进步一点点011 - Samba在Centos与Windows之间共享文件">
+<meta property="og:url" content="https://adoontheway.gitee.io/2020/01/06/everydayprogress011/index.html">
+<meta property="og:site_name" content="Ados">
+<meta property="og:description" content="利用 Samba 在 Centos 与 Windows 之间共享文件">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://adoontheway.gitee.io/2020/01/06/everydayprogress011/1.png">
+<meta property="og:updated_time" content="2020-08-26T06:16:59.081Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="每天进步一点点011 - Samba在Centos与Windows之间共享文件">
+<meta name="twitter:description" content="利用 Samba 在 Centos 与 Windows 之间共享文件">
+<meta name="twitter:image" content="https://adoontheway.gitee.io/2020/01/06/everydayprogress011/1.png">
+
+<link rel="canonical" href="https://adoontheway.gitee.io/2020/01/06/everydayprogress011/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>每天进步一点点011 - Samba在Centos与Windows之间共享文件 | Ados</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Ados</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">a fullstack game worker</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://adoontheway.gitee.io/2020/01/06/everydayprogress011/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="ado">
+      <meta itemprop="description" content="me, robot.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ados">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          每天进步一点点011 - Samba在Centos与Windows之间共享文件
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-01-06 14:30:14" itemprop="dateCreated datePublished" datetime="2020-01-06T14:30:14+08:00">2020-01-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-26 14:16:59" itemprop="dateModified" datetime="2020-08-26T14:16:59+08:00">2020-08-26</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+            <div class="post-description">利用 Samba 在 Centos 与 Windows 之间共享文件</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>主机是 <strong>Windows 10</strong> , <strong>Linux</strong> 是 <strong>vmware</strong> 中的 <strong>Centos</strong>。</p>
+<p>由于最近 <strong>VMWare</strong> 的剪切板共享经常出现问题，所以在考虑 <strong>linux</strong> 与 <strong>windows</strong> 之间的文件共享解决方案，很快就找到了 <strong>Samba</strong>。</p>
+<h1 id="Contents"><a href="#Contents" class="headerlink" title="Contents"></a>Contents</h1><h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><h3 id="iptables"><a href="#iptables" class="headerlink" title="iptables"></a>iptables</h3><p>先确保防火墙装了没有，没有的话装一下</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install iptables-services</span><br></pre></td></tr></table></figure>
+
+<h3 id="selinux"><a href="#selinux" class="headerlink" title="selinux"></a>selinux</h3><p>通过以下命令查看<strong>selinux</strong>状态，如果是<strong>Disable</strong>的话继续，如果不是的话禁用一下 <strong>selinux</strong></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getenforce</span><br></pre></td></tr></table></figure>
+
+<h3 id="samba"><a href="#samba" class="headerlink" title="samba"></a>samba</h3><p>通过以下命令安装<strong>samba</strong></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install samba samba-client samba-swat</span><br></pre></td></tr></table></figure>
+
+<h3 id="samba-conf"><a href="#samba-conf" class="headerlink" title="samba.conf"></a>samba.conf</h3><p>通过以下命令添加共享配置：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/samba/smb.conf</span><br></pre></td></tr></table></figure>
+
+<p>新增的共享配置如下</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[tmp]</span></span><br><span class="line">        path=/home/hehe/share</span><br><span class="line">        browseable=yes</span><br><span class="line">        writeable=yes</span><br><span class="line">        valid users = hehe</span><br></pre></td></tr></table></figure>
+
+<h3 id="添加账号"><a href="#添加账号" class="headerlink" title="添加账号"></a>添加账号</h3><p>首先要保证以上<strong>valid user</strong>是一个 有效的系统账号，不是的话需要添加一下，我直接用的系统账号，所以不需要添加</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">groupadd <span class="built_in">test</span> -g 6000</span><br><span class="line">useradd <span class="built_in">test</span> -u 6000 -g 6000 -s /sbin/nologin -d /dev/null</span><br></pre></td></tr></table></figure>
+
+<h3 id="添加-Samba-账号"><a href="#添加-Samba-账号" class="headerlink" title="添加 Samba 账号"></a>添加 Samba 账号</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo smbpasswd -a hehe</span><br></pre></td></tr></table></figure>
+
+<p>通过以上命令添加 <strong>samba</strong> 账号和密码</p>
+<h3 id="共享文件夹"><a href="#共享文件夹" class="headerlink" title="共享文件夹"></a>共享文件夹</h3><p>建立上面的共享文件夹，并设置好权限</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir /home/hehe/share</span><br><span class="line">sudo chmod 777 /home/hehe/share</span><br></pre></td></tr></table></figure>
+
+<h3 id="重启所有服务"><a href="#重启所有服务" class="headerlink" title="重启所有服务"></a>重启所有服务</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">service smb restart </span><br><span class="line">service iptables stop</span><br></pre></td></tr></table></figure>
+
+<h2 id="Windows-10"><a href="#Windows-10" class="headerlink" title="Windows 10"></a>Windows 10</h2><ul>
+<li><p><em>Win+E</em> 打开资源管理器</p>
+</li>
+<li><p>点击左上角的计算机</p>
+</li>
+<li><p>点击【<em>映射网络驱动器</em>】</p>
+</li>
+<li><p>在文件夹中输入：【\\linux ip\share】</p>
+</li>
+<li><p>点击完成</p>
+</li>
+<li><p>输入前面的 <strong>samba</strong> 账号和密码</p>
+</li>
+<li><p>完成</p>
+</li>
+</ul>
+<h2 id="预览"><a href="#预览" class="headerlink" title="预览"></a>预览</h2><p>此时，可以在 Windows 上看到共享的文件夹了。  </p>
+<p><img src="./1.png" alt="效果图"></p>
+<h1 id="Attentions"><a href="#Attentions" class="headerlink" title="Attentions"></a>Attentions</h1><ul>
+<li><strong>Linux</strong>上操作基本上都要用 <strong>sudo</strong> 操作，不然会报其他的问题</li>
+<li><strong>smbpasswd</strong> 添加用户需要是一个有效的系统用户</li>
+</ul>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
+<li><a href="https://blog.csdn.net/u012322925/article/details/51388159" rel="external nofollow noopener noreferrer" target="_blank">CentOS下搭建samba服务器与Windows进行共享服务</a></li>
+<li><a href="https://blog.csdn.net/minenamewj/article/details/17356703" rel="external nofollow noopener noreferrer" target="_blank">samba用户提示Failed to add entry for user</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/samba/" rel="tag"># samba</a>
+              <a href="/tags/vmware/" rel="tag"># vmware</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/01/02/everydayprogress010/" rel="prev" title="每天进步一点点010 - LeetCode 数组中间值">
+      <i class="fa fa-chevron-left"></i> 每天进步一点点010 - LeetCode 数组中间值
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/01/06/everydayprogress012/" rel="next" title="每天进步一点点012 - Locust 压测">
+      每天进步一点点012 - Locust 压测 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preface"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Contents"><span class="nav-number">2.</span> <span class="nav-text">Contents</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux"><span class="nav-number">2.1.</span> <span class="nav-text">Linux</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#iptables"><span class="nav-number">2.1.1.</span> <span class="nav-text">iptables</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#selinux"><span class="nav-number">2.1.2.</span> <span class="nav-text">selinux</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#samba"><span class="nav-number">2.1.3.</span> <span class="nav-text">samba</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#samba-conf"><span class="nav-number">2.1.4.</span> <span class="nav-text">samba.conf</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加账号"><span class="nav-number">2.1.5.</span> <span class="nav-text">添加账号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加-Samba-账号"><span class="nav-number">2.1.6.</span> <span class="nav-text">添加 Samba 账号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#共享文件夹"><span class="nav-number">2.1.7.</span> <span class="nav-text">共享文件夹</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重启所有服务"><span class="nav-number">2.1.8.</span> <span class="nav-text">重启所有服务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Windows-10"><span class="nav-number">2.2.</span> <span class="nav-text">Windows 10</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预览"><span class="nav-number">2.3.</span> <span class="nav-text">预览</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Attentions"><span class="nav-number">3.</span> <span class="nav-text">Attentions</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">ado</p>
+  <div class="site-description" itemprop="description">me, robot.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">68</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ado</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"adoontheway.gitee.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="在windows上通过golang连接rocketmq">
+<meta name="keywords" content="go,rocketmq">
+<meta property="og:type" content="article">
+<meta property="og:title" content="每天进步一点点009 - Windows上golang+rocketmq开发">
+<meta property="og:url" content="https://adoontheway.gitee.io/2019/12/16/everydayprogress009/index.html">
+<meta property="og:site_name" content="Ados">
+<meta property="og:description" content="在windows上通过golang连接rocketmq">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://adoontheway.gitee.io/2019/12/16/everydayprogress009/boost1.png">
+<meta property="og:image" content="https://adoontheway.gitee.io/2019/12/16/everydayprogress009/jsoncppbuild.png">
+<meta property="og:updated_time" content="2020-08-26T06:16:59.077Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="每天进步一点点009 - Windows上golang+rocketmq开发">
+<meta name="twitter:description" content="在windows上通过golang连接rocketmq">
+<meta name="twitter:image" content="https://adoontheway.gitee.io/2019/12/16/everydayprogress009/boost1.png">
+
+<link rel="canonical" href="https://adoontheway.gitee.io/2019/12/16/everydayprogress009/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>每天进步一点点009 - Windows上golang+rocketmq开发 | Ados</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Ados</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">a fullstack game worker</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://adoontheway.gitee.io/2019/12/16/everydayprogress009/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="ado">
+      <meta itemprop="description" content="me, robot.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ados">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          每天进步一点点009 - Windows上golang+rocketmq开发
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-12-16 17:27:24" itemprop="dateCreated datePublished" datetime="2019-12-16T17:27:24+08:00">2019-12-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-26 14:16:59" itemprop="dateModified" datetime="2020-08-26T14:16:59+08:00">2020-08-26</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+            <div class="post-description">在windows上通过golang连接rocketmq</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>今天已经改一篇，发一篇了，现在是准备第三篇。<br>上一篇笔记里面测试的时候发现 <strong>rocketmq-python</strong> 无法在 <em>Windows</em> 上使用，最后是在 <em>vmware</em> 里的 <em>centos</em> 上运行的测试用例。<br>这一篇是调查 <em>Windows</em> 使用 <strong>golang</strong> 连接 <strong>rocketmq</strong> 的笔记。</p>
+<h1 id="Content"><a href="#Content" class="headerlink" title="Content"></a>Content</h1><p>按照官方文档，这个包是 <strong>rocketmq-client-cpp</strong> 的一个轻量级的封装，所以需要先从 <strong>librocketmq</strong> 开始。</p>
+<h2 id="下载-rocketmq-client-cpp-源代码"><a href="#下载-rocketmq-client-cpp-源代码" class="headerlink" title="下载 rocketmq-client-cpp 源代码"></a>下载 rocketmq-client-cpp 源代码</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/apache/rocketmq-client-cpp.git</span><br></pre></td></tr></table></figure>
+
+<p>按照文档上Windows上编译的部分，需要编译工具如下：</p>
+<ul>
+<li>vsd2015:libevent,jsoncpp,zlib,boost,rocket-client</li>
+<li>git<br>又来到了 <strong>boost</strong> 了，之前本机没装成功过，加之我电脑上装的软件基本都是社区版，vs装的是2017社区版，版本有出入。<br>算了，走一步是一步吧，windows挺麻烦的，对于某些类型的开发来说。<br>所幸官方提供了一个脚本用于下载和安装这些插件： <strong>win32_build.bat</strong>  <h2 id="编译-boost"><a href="#编译-boost" class="headerlink" title="编译 boost"></a>编译 boost</h2><h3 id="第一次编译"><a href="#第一次编译" class="headerlink" title="第一次编译"></a>第一次编译</h3>编译 <strong>boost</strong> 的时候，找不到 <em>cl</em> ，找到 <em>vs2017</em> 安装目录下的 <em>cl</em> 对应路径，将此路径方到 <strong>PATH</strong> 中，重编。</li>
+</ul>
+<h3 id="第二次编译"><a href="#第二次编译" class="headerlink" title="第二次编译"></a>第二次编译</h3><blockquote>
+<p>fatal error C1034: ctype.h: 不包括路径集 compile.c</p>
+</blockquote>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">if</span> "<span class="variable">%programfiles%</span>"=="" ("<span class="built_in">set</span> programfiles=E:\Program Files (x86)")</span><br><span class="line"><span class="keyword">call</span> "<span class="variable">%ProgramFiles(x86)%</span>\Microsoft Visual Studio <span class="number">14</span>.<span class="number">0</span>\Common7\Tools\vsvars32.bat"</span><br><span class="line">:: amd64</span><br><span class="line"></span><br><span class="line">::<span class="keyword">call</span> ""E:\Program Files (x86)\Microsoft Visual Studio <span class="number">14</span>.<span class="number">0</span>\VC\vcvarsall.bat"" amd64</span><br></pre></td></tr></table></figure>
+
+<p>读了一下 <em>win32_build.bat*，发现 *vs</em> 路径以及对应的 <strong>vsvars32.bat</strong> 路径都错了，当然，也包括版本，这也是第一次编译的时候 <strong>cl</strong> 找不到的根因，因为 <strong>cl</strong> 编译前需要主动调用一下这个文件。<br>修正一下 <em>vs</em> 的安装路径，以及在 <em>vs2017</em> 中 <strong>vsvars32.bat</strong> 中正确的名字，接着编。</p>
+<h3 id="第三次编译"><a href="#第三次编译" class="headerlink" title="第三次编译"></a>第三次编译</h3><blockquote>
+<p>2019/12/18 编译  </p>
+</blockquote>
+<p>按下 <strong>win</strong> 按钮，键入 <strong>cmd</strong> ，找到 <em>vs2017的x86_x64交叉工具命令提示符</em>，定位到 <strong>rocketmq-client-cpp</strong> 的 <strong>thirdparty/boost_1_58_0</strong> ,重新编译的时候才会清理这里。<br>在其中输入：</p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bootstrap.bat</span><br></pre></td></tr></table></figure>
+
+<p>此时查看 <strong><em>bootstrap.log</em></strong> 会发现编译成功了，打开 <strong>project-config.jam</strong>，将内容改为如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import option ; </span><br><span class="line"> </span><br><span class="line">using msvc : 14.0 : &quot;D:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.27023\bin\HostX64\x64\cl.exe&quot;; </span><br><span class="line"> </span><br><span class="line">option.set keep-going : false ;</span><br></pre></td></tr></table></figure>
+
+<p>也就是添加我的 <strong>vs2017</strong> 的 <strong>cl</strong> 路径。<br>继续在命令行中输入：</p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">b2 toolset=msvc-<span class="number">14</span>.<span class="number">0</span> address-model=<span class="number">64</span></span><br></pre></td></tr></table></figure>
+
+<p>回车之后需要等待一段时间了，感觉这次编译是不会报错了。</p>
+<blockquote>
+<p>Unknown compiler version - please run the configure tests and report the results<br> 马蛋，编译器版本对不上。</p>
+</blockquote>
+<h3 id="第四次编译"><a href="#第四次编译" class="headerlink" title="第四次编译"></a>第四次编译</h3><blockquote>
+<p>2019/12/20 编译 </p>
+</blockquote>
+<p> 下载最新版本的 <strong>boost 1.72.0</strong> ，进入这个目录下。<br> 根据 <strong>rocketmq-client-cpp</strong> 里面的 <strong>win32_build.bat</strong> 的  <code>:build64 --build all project</code> 部分一步一步编译。<br> <figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span>  ZLIB_SOURCE="E:\workbench\rocketmq-client-cpp\thirdparty\zlib-<span class="number">1</span>.<span class="number">2</span>.<span class="number">3</span>-src\src\zlib\<span class="number">1</span>.<span class="number">2</span>.<span class="number">3</span>\zlib-<span class="number">1</span>.<span class="number">2</span>.<span class="number">3</span>"</span><br><span class="line"><span class="built_in">set</span>  ZLIB_INCLUDE="E:\workbench\rocketmq-client-cpp\thirdparty\zlib-<span class="number">1</span>.<span class="number">2</span>.<span class="number">3</span>-src\src\zlib\<span class="number">1</span>.<span class="number">2</span>.<span class="number">3</span>\zlib-<span class="number">1</span>.<span class="number">2</span>.<span class="number">3</span>"</span><br></pre></td></tr></table></figure></p>
+<p>调用当前目录下的 <strong>bootstrap.bat</strong> ,成功后调用：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">b2 -j8 --with-serialization --with-atomic --with-log --with-locale --with-iostreams --with-system --with-regex --with-thread --with-date_time --with-chrono --with-filesystem --build-<span class="built_in">type</span>=complete address-model=<span class="number">64</span></span><br></pre></td></tr></table></figure>
+
+<p>编译64bit的boost，漫长的等待后，总算成功了。<br><img src="./boost1.png" alt="boost1">  </p>
+<h2 id="编译jsoncpp"><a href="#编译jsoncpp" class="headerlink" title="编译jsoncpp"></a>编译jsoncpp</h2><p>接着编译 <strong>jsoncpp</strong>,   </p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> jsoncpp-<span class="number">0</span>.<span class="number">10</span>.<span class="number">6</span></span><br><span class="line">devenv ./jsoncpp_lib_static.vcxproj  /Build "Release|x64" /out log.txt</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p> error MSB8020: 无法找到 v140 的生成工具(平台工具集 =“v140”)。若要使用 v140 生成工具进行生成，请安装 v140 生 成工具。或者，可以升级到当前 Visual Studio 工具，方式是通过选择“项目”菜单或右键单击该解决方案，然后选择“重定解决方案目标”</p>
+</blockquote>
+<p>阿西吧！！！</p>
+<p><em>rocketmq-client-cpp</em> 使用的 <em>jsoncpp</em> 版本是 <strong>0.10.6</strong> , 支持的 <strong>cpp</strong> 版本比较老，用 <em>vs2017</em> 去强行升级和编译会有奇怪的问题。<br>索性下载个新版来编译好了。</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/open-source-parsers/jsoncpp.git</span><br></pre></td></tr></table></figure>
+
+<p>切换到最新的稳定版本 <strong>1.9.2</strong>。<br>下载和安装好 <a href="https://github-production-release-asset-2e65be.s3.amazonaws.com/537699/d71dbd80-2250-11ea-94d5-dad49037009b?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20191221%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20191221T025313Z&X-Amz-Expires=300&X-Amz-Signature=94f8f388e05941eb3cfd08d7f91c2532de9daa90bd4e01865eba8f1ecde6cc60&X-Amz-SignedHeaders=host&actor_id=1528180&response-content-disposition=attachment%3B%20filename%3Dcmake-3.16.2-win64-x64.msi&response-content-type=application%2Foctet-stream" rel="external nofollow noopener noreferrer" target="_blank">cmake x64</a>。<br>启动 <em>vs2017 x86_64交叉编译环境</em> ，进入到 <strong>jsoncpp</strong> 目录，</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p build/debug</span><br><span class="line"><span class="built_in">cd</span> build/debug</span><br><span class="line">cmake -DCMAKE_BUILD_TYPE=release -DBUILD_STATIC_LIBS=OFF -DBUILD_SHARED_LIBS=ON  -DCMAKE_INSTALL_INCLUDEDIR=include -DARCHIVE_INSTALL_DIR=. ..</span><br></pre></td></tr></table></figure>
+
+<p>编译成功会出现如下画面：<br><img src="./jsoncppbuild.png" alt="jsoncpp build">  </p>
+<p>此时，<em>build/debug</em> 下面已经填满了。</p>
+<p>打开 <strong>JSONCPP</strong> 解决方案，全部生成会有一部分报错，管他呢，我只需要生成 <strong>jsoncpp_lib</strong> 就可以了。  </p>
+<h2 id="编译libevent"><a href="#编译libevent" class="headerlink" title="编译libevent"></a>编译libevent</h2><p>下载最新的 <strong>libevent</strong> ，切换到最新的稳定版本 <strong>release-2.1.11-stable</strong>。  </p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> build &amp;&amp; <span class="built_in">cd</span> build</span><br><span class="line">cmake -G "Visual Studio <span class="number">10</span>" ..</span><br><span class="line">cmake --build . --config Release</span><br></pre></td></tr></table></figure>
+
+<h2 id="apache-rocketmq-client-go"><a href="#apache-rocketmq-client-go" class="headerlink" title="apache/rocketmq-client-go"></a>apache/rocketmq-client-go</h2><p>这个是 <strong>apache</strong> 官方提供的 <strong>rocketmq-client-go</strong>，纯 <strong>golang</strong> 目前只发布了 <strong><em>alpha</em></strong> 版本；<br>但是文档里面写着 <em>Alibaba</em> 对他进行了一些调整，在集团内部使用超过了3年以上，所以他的撸棒性也因此得到了验证。<br>这个客户端是通过 <strong>cgo</strong> 来调用 <strong>rocketmq-client-cpp</strong> 的。  </p>
+<h2 id="Finally-2019-12-27"><a href="#Finally-2019-12-27" class="headerlink" title="Finally 2019/12/27"></a>Finally 2019/12/27</h2><p>最后切换到 <strong>rocketmq-client-go native</strong> 版本完事，不折腾了。<br>现在用这个没有别的问题，就是 <strong>rocketmq</strong> 搭建在 <strong>docker+centos</strong> 上，<br>而 <strong>host</strong> 连接到 <em>nameserver</em> 的时候，连不到 <em>broker</em> ，<br>因为 <em>broker</em> 的 <strong>ip</strong> docker的 <strong>ip</strong>，而不是 <em>centos</em> 的 <strong>ip</strong> 。</p>
+<p>妈蛋，散了。</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
+<li><a href="https://github.com/apache/rocketmq-client-go/blob/master/doc/Introduction.md" rel="external nofollow noopener noreferrer" target="_blank">apache/rocketmq-client-go</a></li>
+<li><a href="https://github.com/apache/rocketmq-client-cpp" rel="external nofollow noopener noreferrer" target="_blank">apache/rocketmq-client-cpp</a></li>
+<li><a href="https://stackoverflow.com/questions/41464356/build-boost-with-msvc-14-1-vs2017-rc" rel="external nofollow noopener noreferrer" target="_blank">Build boost with msvc 14.1</a></li>
+<li><a href="https://www.twblogs.net/a/5d03dc09bd9eee47d34bbd44/zh-cn" rel="external nofollow noopener noreferrer" target="_blank">windows下编译jsoncpp 1.y.z</a></li>
+<li><a href="https://github.com/libevent/libevent" rel="external nofollow noopener noreferrer" target="_blank">libevent</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/go/" rel="tag"># go</a>
+              <a href="/tags/rocketmq/" rel="tag"># rocketmq</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/12/16/everydayprogress008/" rel="prev" title="每天进步一点点008 - rocketmq/docker">
+      <i class="fa fa-chevron-left"></i> 每天进步一点点008 - rocketmq/docker
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/01/02/everydayprogress010/" rel="next" title="每天进步一点点010 - LeetCode 数组中间值">
+      每天进步一点点010 - LeetCode 数组中间值 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preface"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Content"><span class="nav-number">2.</span> <span class="nav-text">Content</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#下载-rocketmq-client-cpp-源代码"><span class="nav-number">2.1.</span> <span class="nav-text">下载 rocketmq-client-cpp 源代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译-boost"><span class="nav-number">2.2.</span> <span class="nav-text">编译 boost</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#第一次编译"><span class="nav-number">2.2.1.</span> <span class="nav-text">第一次编译</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二次编译"><span class="nav-number">2.2.2.</span> <span class="nav-text">第二次编译</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第三次编译"><span class="nav-number">2.2.3.</span> <span class="nav-text">第三次编译</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第四次编译"><span class="nav-number">2.2.4.</span> <span class="nav-text">第四次编译</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译jsoncpp"><span class="nav-number">2.3.</span> <span class="nav-text">编译jsoncpp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译libevent"><span class="nav-number">2.4.</span> <span class="nav-text">编译libevent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#apache-rocketmq-client-go"><span class="nav-number">2.5.</span> <span class="nav-text">apache/rocketmq-client-go</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Finally-2019-12-27"><span class="nav-number">2.6.</span> <span class="nav-text">Finally 2019/12/27</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">ado</p>
+  <div class="site-description" itemprop="description">me, robot.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">68</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ado</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"adoontheway.gitee.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="使用Crypto进行AES加解密遇到的一些问题的笔记">
+<meta name="keywords" content="c++,aes">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Crypto++ AES加解密">
+<meta property="og:url" content="https://adoontheway.gitee.io/2019/06/01/cryptppaes/index.html">
+<meta property="og:site_name" content="Ados">
+<meta property="og:description" content="使用Crypto进行AES加解密遇到的一些问题的笔记">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-08-26T06:16:59.063Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Crypto++ AES加解密">
+<meta name="twitter:description" content="使用Crypto进行AES加解密遇到的一些问题的笔记">
+
+<link rel="canonical" href="https://adoontheway.gitee.io/2019/06/01/cryptppaes/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Crypto++ AES加解密 | Ados</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Ados</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">a fullstack game worker</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://adoontheway.gitee.io/2019/06/01/cryptppaes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="ado">
+      <meta itemprop="description" content="me, robot.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ados">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Crypto++ AES加解密
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-06-01 16:20:21" itemprop="dateCreated datePublished" datetime="2019-06-01T16:20:21+08:00">2019-06-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-26 14:16:59" itemprop="dateModified" datetime="2020-08-26T14:16:59+08:00">2020-08-26</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+            <div class="post-description">使用Crypto进行AES加解密遇到的一些问题的笔记</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>之前遇到的 js-CryptoJS 与 c++ 进行AES加解密出现问题，今天再来试一下了。</p>
+<h1 id="Content"><a href="#Content" class="headerlink" title="Content"></a>Content</h1><h2 id="Cryptopp"><a href="#Cryptopp" class="headerlink" title="Cryptopp"></a>Cryptopp</h2><p>嗯，放弃了openssl 的 aes 加解密接口，转而使用 Cryptopp 也就是 Ctypro++</p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>先从 <a href="https://github.com/weidai11/cryptopp" rel="external nofollow noopener noreferrer" target="_blank">cryptopp On github</a> 上下载源代码，然后再源代码目录下的 GNUmakefile 中第 75 行添加如下代码：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CXXFLAGS += -pipe -fPIC</span><br></pre></td></tr></table></figure>
+
+<p>先执行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make libcryptopp.a libcryptopp.so cryptest.exe</span><br></pre></td></tr></table></figure>
+
+<p>成功的话，再执行：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make install PREFIX=/usr/<span class="built_in">local</span></span><br></pre></td></tr></table></figure>
+
+<p>确保自己是 su 或者使用了 sudo。</p>
+<p>确保起见，第二个命令执行成功之后再执行一下：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ldconfig</span><br></pre></td></tr></table></figure>
+
+<p>这样， Cryptopp 就成功的在系统里面安装了。</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://www.lwlwq.com/post-cryptopp.html" rel="external nofollow noopener noreferrer" target="_blank">centos 64bit编译cryptopp</a></p>
+<p><a href="https://www.cryptopp.com/wiki/Linux" rel="external nofollow noopener noreferrer" target="_blank">cryptoppwiki</a></p>
+<h3 id="制作测试项目"><a href="#制作测试项目" class="headerlink" title="制作测试项目"></a>制作测试项目</h3><p>在 Qt Creator 中新建一个项目，最好是纯 c++ 控制台项目。</p>
+<p>在 .pro 中添加：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">LIBS += /usr/local/lib/libcryptopp.a</span><br><span class="line"></span><br><span class="line">LIBS += -lcurl -lcryptopp  -lsnappy  -lrt -lm -lz -ldl</span><br><span class="line"></span><br><span class="line">INCLUDEPATH += /usr/local/include/cryptopp</span><br></pre></td></tr></table></figure>
+
+<p>测试代码 main.cpp 如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="comment">// cryptopp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iomanip&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;modes.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;aes.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;filters.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">string</span> keyStr = <span class="string">"0123456789abcdef"</span>;</span><br><span class="line">    <span class="built_in">string</span> ivStr = <span class="string">"abcdefghjklmnopq"</span>;</span><br><span class="line">    CryptoPP::byte key[CryptoPP::AES::DEFAULT_KEYLENGTH],iv[CryptoPP::AES::BLOCKSIZE];</span><br><span class="line">    <span class="built_in">memcpy</span>(key, keyStr.c_str(),CryptoPP::AES::DEFAULT_KEYLENGTH);</span><br><span class="line">    <span class="built_in">memcpy</span>(iv, ivStr.c_str(), CryptoPP::AES::BLOCKSIZE);</span><br><span class="line"><span class="comment">//    memset(key,0x00,CryptoPP::AES::DEFAULT_KEYLENGTH);</span></span><br><span class="line"><span class="comment">//    memset(iv,0x00,CryptoPP::AES::BLOCKSIZE);</span></span><br><span class="line">    <span class="built_in">string</span> plaintext = <span class="string">"123456boy"</span>;</span><br><span class="line">    <span class="built_in">string</span> ciphertext;</span><br><span class="line">    <span class="built_in">string</span> decryptedtext;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Plain Text ("</span> &lt;&lt; plaintext.size() &lt;&lt; <span class="string">") bytes"</span>&lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; plaintext;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    CryptoPP::<span class="function">AES::Encryption <span class="title">aesEncryption</span><span class="params">(key, CryptoPP::AES::DEFAULT_KEYLENGTH)</span></span>;</span><br><span class="line">    CryptoPP::<span class="function">CBC_Mode_ExternalCipher::Encryption <span class="title">cbcEncryption</span><span class="params">(aesEncryption, iv)</span></span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function">CryptoPP::StreamTransformationFilter <span class="title">stfEncryptor</span><span class="params">(cbcEncryption, <span class="keyword">new</span> CryptoPP::StringSink(ciphertext))</span></span>;</span><br><span class="line">    stfEncryptor.Put(<span class="keyword">reinterpret_cast</span>&lt;<span class="keyword">const</span> <span class="keyword">unsigned</span> <span class="keyword">char</span>*&gt;(plaintext.c_str()),plaintext.length());</span><br><span class="line">    stfEncryptor.MessageEnd();</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Cipher text ("</span> &lt;&lt; ciphertext.size() &lt;&lt; <span class="string">") bytes"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; ciphertext.size(); i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"0x"</span> &lt;&lt; <span class="built_in">std</span>::hex &lt;&lt; (<span class="number">0xff</span> &amp; <span class="keyword">static_cast</span>&lt;CryptoPP::byte&gt;(ciphertext[i])) &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    CryptoPP::<span class="function">AES::Decryption <span class="title">aesDecryption</span><span class="params">(key, CryptoPP::AES::DEFAULT_KEYLENGTH)</span></span>;</span><br><span class="line">    CryptoPP::<span class="function">CBC_Mode_ExternalCipher::Decryption <span class="title">cbcDecryption</span><span class="params">(aesDecryption, iv)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">CryptoPP::StreamTransformationFilter <span class="title">stfDecryptor</span><span class="params">(cbcDecryption, <span class="keyword">new</span> CryptoPP::StringSink(decryptedtext))</span></span>;</span><br><span class="line">    stfDecryptor.Put(<span class="keyword">reinterpret_cast</span>&lt;<span class="keyword">const</span> <span class="keyword">unsigned</span> <span class="keyword">char</span>*&gt;(ciphertext.c_str()),ciphertext.size());</span><br><span class="line">    stfDecryptor.MessageEnd();</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Decrypted Text :"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; decryptedtext;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Build -&gt; Run, 结果如下：</p>
+<blockquote>
+<p>Plain Text (9) bytes<br>123456boy</p>
+<p>Cipher text (16) bytes<br>0xa5 0xf3 0x7e 0xb0 0x81 0x55 0xa7 0x8b 0x88 0x99 0x44 0xca 0x48 0xfd 0x87 0x14 </p>
+<p>Decrypted Text :<br>123456boy</p>
+</blockquote>
+<h3 id="参考-1"><a href="#参考-1" class="headerlink" title="参考"></a>参考</h3><p><a href="https://stackoverflow.com/questions/12306956/example-of-aes-using-crypto" rel="external nofollow noopener noreferrer" target="_blank">example-of-aes-using-crypto:Stackoverflow</a></p>
+<h2 id="CryptoJS"><a href="#CryptoJS" class="headerlink" title="CryptoJS"></a>CryptoJS</h2><h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> CryptoJS = <span class="built_in">require</span>(<span class="string">"crypto-js"</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test1</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> str = <span class="string">"123456boy"</span>;</span><br><span class="line">    <span class="keyword">var</span> key = <span class="string">"0123456789abcdef"</span>;</span><br><span class="line">    <span class="keyword">var</span> iv = <span class="string">"abcdefghjklmnopq"</span>;</span><br><span class="line">    key = CryptoJS.enc.Latin1.parse(key);</span><br><span class="line">    iv = CryptoJS.enc.Latin1.parse(iv);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> options = &#123;</span><br><span class="line">        iv : iv,</span><br><span class="line">        mode : CryptoJS.mode.CBC,</span><br><span class="line">        padding : CryptoJS.pad.Pkcs7</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> encrypted = CryptoJS.AES.encrypt(str, key, options);</span><br><span class="line">    encrypted = encrypted.toString();</span><br><span class="line">    <span class="built_in">console</span>.log(encrypted);</span><br><span class="line">&#125;</span><br><span class="line">test1();</span><br></pre></td></tr></table></figure>
+
+<p>调试的时候，可以跟进 <code>encrypted = encrypted.toString();</code> 这段代码，跟进到 enc-base64.js 文件里面：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">stringify: <span class="function"><span class="keyword">function</span> (<span class="params">wordArray</span>) </span>&#123;</span><br><span class="line">	            <span class="comment">// Shortcuts</span></span><br><span class="line">	            <span class="keyword">var</span> words = wordArray.words;</span><br><span class="line">	            <span class="keyword">var</span> sigBytes = wordArray.sigBytes;</span><br><span class="line">	            <span class="keyword">var</span> map = <span class="keyword">this</span>._map;</span><br><span class="line"></span><br><span class="line">	            <span class="comment">// Clamp excess bits</span></span><br><span class="line">	            wordArray.clamp();</span><br><span class="line"></span><br><span class="line">	            <span class="comment">// Convert</span></span><br><span class="line">	            <span class="keyword">var</span> base64Chars = [];</span><br><span class="line">	            <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; sigBytes; i += <span class="number">3</span>) &#123;</span><br><span class="line">	                <span class="keyword">var</span> byte1 = (words[i &gt;&gt;&gt; <span class="number">2</span>]       &gt;&gt;&gt; (<span class="number">24</span> - (i % <span class="number">4</span>) * <span class="number">8</span>))       &amp; <span class="number">0xff</span>;</span><br><span class="line">	                <span class="keyword">var</span> byte2 = (words[(i + <span class="number">1</span>) &gt;&gt;&gt; <span class="number">2</span>] &gt;&gt;&gt; (<span class="number">24</span> - ((i + <span class="number">1</span>) % <span class="number">4</span>) * <span class="number">8</span>)) &amp; <span class="number">0xff</span>;</span><br><span class="line">	                <span class="keyword">var</span> byte3 = (words[(i + <span class="number">2</span>) &gt;&gt;&gt; <span class="number">2</span>] &gt;&gt;&gt; (<span class="number">24</span> - ((i + <span class="number">2</span>) % <span class="number">4</span>) * <span class="number">8</span>)) &amp; <span class="number">0xff</span>;</span><br><span class="line"></span><br><span class="line">	                <span class="keyword">var</span> triplet = (byte1 &lt;&lt; <span class="number">16</span>) | (byte2 &lt;&lt; <span class="number">8</span>) | byte3;</span><br><span class="line"></span><br><span class="line">	                <span class="keyword">for</span> (<span class="keyword">var</span> j = <span class="number">0</span>; (j &lt; <span class="number">4</span>) &amp;&amp; (i + j * <span class="number">0.75</span> &lt; sigBytes); j++) &#123;</span><br><span class="line">	                    base64Chars.push(map.charAt((triplet &gt;&gt;&gt; (<span class="number">6</span> * (<span class="number">3</span> - j))) &amp; <span class="number">0x3f</span>));</span><br><span class="line">	                &#125;</span><br><span class="line">	            &#125;</span><br><span class="line"></span><br><span class="line">	            <span class="comment">// Add padding</span></span><br><span class="line">	            <span class="keyword">var</span> paddingChar = map.charAt(<span class="number">64</span>);</span><br><span class="line">	            <span class="keyword">if</span> (paddingChar) &#123;</span><br><span class="line">	                <span class="keyword">while</span> (base64Chars.length % <span class="number">4</span>) &#123;</span><br><span class="line">	                    base64Chars.push(paddingChar);</span><br><span class="line">	                &#125;</span><br><span class="line">	            &#125;</span><br><span class="line"></span><br><span class="line">	            <span class="keyword">return</span> base64Chars.join(<span class="string">''</span>);</span><br><span class="line">	        &#125;,</span><br></pre></td></tr></table></figure>
+
+<p>会发现，这里的 byte1,byte2,byte3  就是 Cryptopp 上面输出的：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0xa5 0xf3 0x7e 0xb0 0x81 0x55 0xa7 0x8b 0x88 0x99 0x44 0xca 0x48 0xfd 0x87 0x14</span><br></pre></td></tr></table></figure>
+
+<h2 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h2><p>说明 CryptoJS 与 C++ Cryptopp 是可以相互之间加解密的。</p>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><h3 id="Error-in-home-workspace-bin-MyTest’-double-free-or-corruption-fasttop-0x00000000025c3160"><a href="#Error-in-home-workspace-bin-MyTest’-double-free-or-corruption-fasttop-0x00000000025c3160" class="headerlink" title="*** Error in `/home/workspace/bin/MyTest’: double free or corruption (fasttop): 0x00000000025c3160 ***"></a>*** Error in `/home/workspace/bin/MyTest’: double free or corruption (fasttop): 0x00000000025c3160 ***</h3><p>运行上面的例子的时候出现这个报错，字面意思： 两次释放或者崩溃</p>
+<h2 id="Update"><a href="#Update" class="headerlink" title="Update"></a>Update</h2><p>由于之前不小心删掉了git上clone下来的cryptpp代码，且怀疑double free可能是使用了master版本所致，所以重新clone了分支，然后在目录下运行：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo make uninstall</span><br></pre></td></tr></table></figure>
+
+<p>来清理当前版本，成功之后，切换到最新的tag分支：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout CRYPTOPP_8_2_0</span><br></pre></td></tr></table></figure>
+
+<p>之后按上次正常的流程安装。</p>
+<p>跑上次的aes例子之后，果然没有报错了。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/c/" rel="tag"># c++</a>
+              <a href="/tags/aes/" rel="tag"># aes</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/05/26/goaes/" rel="prev" title="Golang AES遇到的问题">
+      <i class="fa fa-chevron-left"></i> Golang AES遇到的问题
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/06/05/mongoissue/" rel="next" title="MongoDB 使用过程中遇到的问题">
+      MongoDB 使用过程中遇到的问题 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preface"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Content"><span class="nav-number">2.</span> <span class="nav-text">Content</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Cryptopp"><span class="nav-number">2.1.</span> <span class="nav-text">Cryptopp</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-number">2.1.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">2.1.2.</span> <span class="nav-text">参考</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#制作测试项目"><span class="nav-number">2.1.3.</span> <span class="nav-text">制作测试项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考-1"><span class="nav-number">2.1.4.</span> <span class="nav-text">参考</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CryptoJS"><span class="nav-number">2.2.</span> <span class="nav-text">CryptoJS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#代码"><span class="nav-number">2.2.1.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结果"><span class="nav-number">2.3.</span> <span class="nav-text">结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题"><span class="nav-number">2.4.</span> <span class="nav-text">问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Error-in-home-workspace-bin-MyTest’-double-free-or-corruption-fasttop-0x00000000025c3160"><span class="nav-number">2.4.1.</span> <span class="nav-text">*** Error in `/home/workspace/bin/MyTest’: double free or corruption (fasttop): 0x00000000025c3160 ***</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Update"><span class="nav-number">2.5.</span> <span class="nav-text">Update</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">ado</p>
+  <div class="site-description" itemprop="description">me, robot.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">68</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ado</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

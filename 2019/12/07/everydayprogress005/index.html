@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"adoontheway.gitee.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="使用mongocxx/bsoncxx的时候遇到的在数组中嵌入文档的写法比较晦涩，所以备忘于此">
+<meta name="keywords" content="c++,mongo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="每天进步一点点005-mongocxx嵌套数组中插入文档">
+<meta property="og:url" content="https://adoontheway.gitee.io/2019/12/07/everydayprogress005/index.html">
+<meta property="og:site_name" content="Ados">
+<meta property="og:description" content="使用mongocxx/bsoncxx的时候遇到的在数组中嵌入文档的写法比较晦涩，所以备忘于此">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-08-26T06:16:59.070Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="每天进步一点点005-mongocxx嵌套数组中插入文档">
+<meta name="twitter:description" content="使用mongocxx/bsoncxx的时候遇到的在数组中嵌入文档的写法比较晦涩，所以备忘于此">
+
+<link rel="canonical" href="https://adoontheway.gitee.io/2019/12/07/everydayprogress005/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>每天进步一点点005-mongocxx嵌套数组中插入文档 | Ados</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Ados</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">a fullstack game worker</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://adoontheway.gitee.io/2019/12/07/everydayprogress005/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="ado">
+      <meta itemprop="description" content="me, robot.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ados">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          每天进步一点点005-mongocxx嵌套数组中插入文档
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-12-07 16:28:59" itemprop="dateCreated datePublished" datetime="2019-12-07T16:28:59+08:00">2019-12-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-26 14:16:59" itemprop="dateModified" datetime="2020-08-26T14:16:59+08:00">2020-08-26</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+            <div class="post-description">使用mongocxx/bsoncxx的时候遇到的在数组中嵌入文档的写法比较晦涩，所以备忘于此</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>这两天在写一个逻辑，需要向mongodb中插入一个对象，这个对象还有一个成员是一个数组，需要往这个数组中插入一些文档。<br>在此记录的原因是这里我老是会报错，报错如下：  </p>
+<blockquote>
+<p>Error Mongodb writedata error: expected a key but found none</p>
+</blockquote>
+<p>嗯，反复的弄了几遍都没有结果，在这里来求助官网了。</p>
+<h1 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h1><h2 id="Demo0"><a href="#Demo0" class="headerlink" title="Demo0"></a>Demo0</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bsoncxx/json.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bsoncxx/builder/stream/array.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bsoncxx/builder/stream/document.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bsoncxx/builder/stream/helpers.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bsoncxx/types.hpp&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> bsoncxx::builder::stream::close_array;</span><br><span class="line"><span class="keyword">using</span> bsoncxx::builder::stream::close_document;</span><br><span class="line"><span class="keyword">using</span> bsoncxx::builder::stream::document;</span><br><span class="line"><span class="keyword">using</span> bsoncxx::builder::stream::finalize;</span><br><span class="line"><span class="keyword">using</span> bsoncxx::builder::stream::open_array;</span><br><span class="line"><span class="keyword">using</span> bsoncxx::builder::stream::open_document;</span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> bsoncxx::types;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> doc = document&#123;&#125;;</span><br><span class="line">    <span class="keyword">auto</span> arr = bsoncxx::builder::stream::<span class="built_in">array</span>&#123;&#125;;</span><br><span class="line">    doc &lt;&lt; <span class="string">"myKey"</span> &lt;&lt; <span class="string">"myValue"</span>;</span><br><span class="line">    doc &lt;&lt; <span class="string">"foo"</span> &lt;&lt; b_bool&#123;<span class="literal">false</span>&#125; &lt;&lt; <span class="string">"baz"</span> &lt;&lt; b_int32&#123;<span class="number">1234</span>&#125; &lt;&lt; <span class="string">"quz"</span> &lt;&lt; b_double&#123;<span class="number">1.24</span>&#125;;</span><br><span class="line">    arr &lt;&lt; <span class="number">1</span> &lt;&lt; <span class="number">2</span> &lt;&lt; b_bool&#123;<span class="literal">true</span>&#125;;</span><br><span class="line">    doc &lt;&lt; <span class="string">"mySubDoc"</span> &lt;&lt; open_document &lt;&lt; <span class="string">"subdoc key"</span> &lt;&lt; <span class="string">"subdoc value"</span> &lt;&lt; close_document;</span><br><span class="line">    doc &lt;&lt; <span class="string">"mySubArr"</span> &lt;&lt; open_array &lt;&lt; <span class="number">1</span> &lt;&lt; b_bool&#123;<span class="literal">false</span>&#125; &lt;&lt; <span class="string">"hello"</span> &lt;&lt; close_array;</span><br><span class="line">    <span class="keyword">auto</span> doc1 = doc &lt;&lt; <span class="string">"tasks"</span> &lt;&lt; open_array;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> i : &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;)</span><br><span class="line">    &#123;</span><br><span class="line">        doc1 &lt;&lt; open_document &lt;&lt; <span class="string">"a"</span> &lt;&lt; <span class="string">"b"</span> &lt;&lt; close_document;</span><br><span class="line">    &#125;</span><br><span class="line">    doc1 &lt;&lt; close_array;</span><br><span class="line">    <span class="keyword">auto</span> myQuery = document&#123;&#125; &lt;&lt; <span class="string">"foo"</span> &lt;&lt; <span class="string">"bar"</span> &lt;&lt; finalize;</span><br><span class="line">    doc &lt;&lt; bsoncxx::builder::concatenate(myQuery.view());</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; bsoncxx::to_json(doc.view()) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上输出结果如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123; </span><br><span class="line">    <span class="attr">"myKey"</span> : <span class="string">"myValue"</span>, </span><br><span class="line">    <span class="attr">"foo"</span> : <span class="literal">false</span>, </span><br><span class="line">    <span class="attr">"baz"</span> : <span class="number">1234</span>, </span><br><span class="line">    <span class="attr">"quz"</span> : <span class="number">1.2399999999999999911</span>, </span><br><span class="line">    <span class="attr">"mySubDoc"</span> : &#123; <span class="attr">"subdoc key"</span> : <span class="string">"subdoc value"</span> &#125;, </span><br><span class="line">    <span class="attr">"mySubArr"</span> : [ <span class="number">1</span>, <span class="literal">false</span>, <span class="string">"hello"</span> ], </span><br><span class="line">    <span class="attr">"tasks"</span> : [ </span><br><span class="line">        &#123; <span class="attr">"a"</span> : <span class="string">"b"</span> &#125;, </span><br><span class="line">        &#123; <span class="attr">"a"</span> : <span class="string">"b"</span> &#125;, </span><br><span class="line">        &#123; <span class="attr">"a"</span> : <span class="string">"b"</span> &#125; </span><br><span class="line">        ], </span><br><span class="line">    <span class="attr">"foo"</span> : <span class="string">"bar"</span> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Demo1"><a href="#Demo1" class="headerlink" title="Demo1"></a>Demo1</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bsoncxx/json.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bsoncxx/builder/stream/array.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bsoncxx/builder/stream/document.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bsoncxx/builder/stream/helpers.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bsoncxx/types.hpp&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> bsoncxx::builder::stream::close_array;</span><br><span class="line"><span class="keyword">using</span> bsoncxx::builder::stream::close_document;</span><br><span class="line"><span class="keyword">using</span> bsoncxx::builder::stream::document;</span><br><span class="line"><span class="keyword">using</span> bsoncxx::builder::stream::finalize;</span><br><span class="line"><span class="keyword">using</span> bsoncxx::builder::stream::open_array;</span><br><span class="line"><span class="keyword">using</span> bsoncxx::builder::stream::open_document;</span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> bsoncxx::types;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    bsoncxx::builder::stream::document builder&#123;&#125;;</span><br><span class="line">    builder &lt;&lt; <span class="string">"a"</span> &lt;&lt; <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">auto</span> insert_value = builder &lt;&lt; <span class="string">"list1"</span> &lt;&lt; open_array;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> i : &#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>&#125;)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">auto</span> insert_value_1 = insert_value &lt;&lt; bsoncxx::builder::stream::open_document</span><br><span class="line">                &lt;&lt; <span class="string">"b"</span> &lt;&lt; <span class="number">1</span></span><br><span class="line">                 &lt;&lt; <span class="string">"c"</span> &lt;&lt; <span class="number">1</span></span><br><span class="line">                 &lt;&lt; <span class="string">"d"</span> &lt;&lt; <span class="number">1</span></span><br><span class="line">                 &lt;&lt; <span class="string">"e"</span> &lt;&lt; <span class="number">1</span></span><br><span class="line">                 &lt;&lt; <span class="string">"list2"</span> &lt;&lt; open_array;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> j : &#123;<span class="number">0</span>,<span class="number">0</span>&#125;)</span><br><span class="line">        &#123;</span><br><span class="line">            insert_value_1  &lt;&lt; bsoncxx::builder::stream::open_document</span><br><span class="line">                            &lt;&lt; <span class="string">"c"</span> &lt;&lt; <span class="number">1</span></span><br><span class="line">                            &lt;&lt; <span class="string">"d"</span> &lt;&lt; <span class="number">1</span></span><br><span class="line">                            &lt;&lt; bsoncxx::builder::stream::close_document;</span><br><span class="line">        &#125;</span><br><span class="line">        insert_value_1 &lt;&lt; close_array &lt;&lt; close_document;</span><br><span class="line">    &#125;</span><br><span class="line">    insert_value &lt;&lt; close_array;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; bsoncxx::to_json(builder.view()) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果：  </p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&#123; </span><br><span class="line">    <span class="attr">"a"</span> : <span class="number">1</span>, </span><br><span class="line">    <span class="attr">"list1"</span> : [ </span><br><span class="line">        &#123; </span><br><span class="line">            <span class="attr">"b"</span> : <span class="number">1</span>, </span><br><span class="line">            <span class="attr">"c"</span> : <span class="number">1</span>, </span><br><span class="line">            <span class="attr">"d"</span> : <span class="number">1</span>, </span><br><span class="line">            <span class="attr">"e"</span> : <span class="number">1</span>, </span><br><span class="line">            <span class="attr">"list2"</span> : [ </span><br><span class="line">                &#123; <span class="attr">"c"</span> : <span class="number">1</span>, <span class="attr">"d"</span> : <span class="number">1</span> &#125;, </span><br><span class="line">                &#123; <span class="attr">"c"</span> : <span class="number">1</span>, <span class="attr">"d"</span> : <span class="number">1</span> &#125; </span><br><span class="line">            ] </span><br><span class="line">        &#125;, </span><br><span class="line">        &#123; </span><br><span class="line">            <span class="attr">"b"</span> : <span class="number">1</span>, </span><br><span class="line">            <span class="attr">"c"</span> : <span class="number">1</span>, </span><br><span class="line">            <span class="attr">"d"</span> : <span class="number">1</span>, </span><br><span class="line">            <span class="attr">"e"</span> : <span class="number">1</span>, </span><br><span class="line">            <span class="attr">"list2"</span> : [ </span><br><span class="line">                &#123; <span class="attr">"c"</span> : <span class="number">1</span>, <span class="attr">"d"</span> : <span class="number">1</span> &#125;, </span><br><span class="line">                &#123; <span class="attr">"c"</span> : <span class="number">1</span>, <span class="attr">"d"</span> : <span class="number">1</span> &#125; </span><br><span class="line">            ] </span><br><span class="line">        &#125;, </span><br><span class="line">        &#123; </span><br><span class="line">            <span class="attr">"b"</span> : <span class="number">1</span>, </span><br><span class="line">            <span class="attr">"c"</span> : <span class="number">1</span>, </span><br><span class="line">            <span class="attr">"d"</span> : <span class="number">1</span>, </span><br><span class="line">            <span class="attr">"e"</span> : <span class="number">1</span>, </span><br><span class="line">            <span class="attr">"list2"</span> : [ </span><br><span class="line">                &#123; <span class="attr">"c"</span> : <span class="number">1</span>, <span class="attr">"d"</span> : <span class="number">1</span> &#125;, </span><br><span class="line">                &#123; <span class="attr">"c"</span> : <span class="number">1</span>, <span class="attr">"d"</span> : <span class="number">1</span> &#125; </span><br><span class="line">            ] </span><br><span class="line">        &#125; </span><br><span class="line">    ] </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Demo2-更新内嵌文档"><a href="#Demo2-更新内嵌文档" class="headerlink" title="Demo2 更新内嵌文档"></a>Demo2 更新内嵌文档</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mongocxx::collection coll = MONGODBCLIENT[<span class="string">"main"</span>][<span class="string">"task"</span>];</span><br><span class="line"><span class="comment">//set</span></span><br><span class="line">coll.update_one(bsoncxx::builder::stream::document&#123;&#125; &lt;&lt; <span class="string">"user_id"</span> &lt;&lt; userId &lt;&lt; <span class="string">"tasks.task_id"</span> &lt;&lt; taskId &lt;&lt; finalize,</span><br><span class="line">                                               bsoncxx::builder::stream::document&#123;&#125; &lt;&lt; <span class="string">"$set"</span> &lt;&lt; open_document &lt;&lt; <span class="string">"tasks.$.status"</span> &lt;&lt; <span class="number">2</span></span><br><span class="line">                                               &lt;&lt; <span class="string">"tasks.$.progress"</span> &lt;&lt; after_progress &lt;&lt; close_document &lt;&lt; finalize);</span><br><span class="line"><span class="comment">//inc</span></span><br><span class="line">user_task_coll.update_one(bsoncxx::builder::stream::document&#123;&#125; &lt;&lt; <span class="string">"user_id"</span> &lt;&lt; userId &lt;&lt; <span class="string">"tasks.task_id"</span> &lt;&lt; taskId &lt;&lt; finalize,</span><br><span class="line">                                bsoncxx::builder::stream::document&#123;&#125; &lt;&lt; <span class="string">"$inc"</span> &lt;&lt; open_document &lt;&lt; <span class="string">"tasks.$.progress"</span> &lt;&lt; progress &lt;&lt; close_document &lt;&lt; finalize);</span><br></pre></td></tr></table></figure>
+
+<p>要查询某个字段的话需要用聚合，懒，所以没去试。</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
+<li><a href="https://github.com/mongodb/mongo-cxx-driver/blob/master/examples/bsoncxx/builder_stream.cpp" rel="external nofollow noopener noreferrer" target="_blank">bsoncxx/builder_stream</a></li>
+<li><a href="https://www.cnblogs.com/gzdaijie/p/5194033.html" rel="external nofollow noopener noreferrer" target="_blank">Linux与Windows共享文件夹之samba的安装与使用（Ubuntu为例）</a></li>
+<li><a href="https://github.com/mongodb/mongo-cxx-driver/blob/master/examples/mongocxx/mongodb.com/documentation_examples.cpp" rel="external nofollow noopener noreferrer" target="_blank">mongocxx/mongodb.com/documentation_examples</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/c/" rel="tag"># c++</a>
+              <a href="/tags/mongo/" rel="tag"># mongo</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/11/29/everydayprogress004/" rel="prev" title="每天进步一点点004-httprouter middleware">
+      <i class="fa fa-chevron-left"></i> 每天进步一点点004-httprouter middleware
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/12/14/everydayprogress006/" rel="next" title="每天进步一点点006-etcd windows集群环境">
+      每天进步一点点006-etcd windows集群环境 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preface"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Demo"><span class="nav-number">2.</span> <span class="nav-text">Demo</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Demo0"><span class="nav-number">2.1.</span> <span class="nav-text">Demo0</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Demo1"><span class="nav-number">2.2.</span> <span class="nav-text">Demo1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Demo2-更新内嵌文档"><span class="nav-number">2.3.</span> <span class="nav-text">Demo2 更新内嵌文档</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">ado</p>
+  <div class="site-description" itemprop="description">me, robot.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">68</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ado</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

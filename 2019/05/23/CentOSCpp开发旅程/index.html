@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"adoontheway.gitee.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="在CentOS上开发C++应用遇到的问题和解决过程记录">
+<meta name="keywords" content="c++,linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CentOS Cpp开发之旅">
+<meta property="og:url" content="https://adoontheway.gitee.io/2019/05/23/CentOSCpp开发旅程/index.html">
+<meta property="og:site_name" content="Ados">
+<meta property="og:description" content="在CentOS上开发C++应用遇到的问题和解决过程记录">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-08-26T06:16:59.055Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CentOS Cpp开发之旅">
+<meta name="twitter:description" content="在CentOS上开发C++应用遇到的问题和解决过程记录">
+
+<link rel="canonical" href="https://adoontheway.gitee.io/2019/05/23/CentOSCpp开发旅程/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>CentOS Cpp开发之旅 | Ados</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Ados</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">a fullstack game worker</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://adoontheway.gitee.io/2019/05/23/CentOSCpp开发旅程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="ado">
+      <meta itemprop="description" content="me, robot.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ados">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CentOS Cpp开发之旅
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-05-23 00:00:00" itemprop="dateCreated datePublished" datetime="2019-05-23T00:00:00+08:00">2019-05-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-26 14:16:59" itemprop="dateModified" datetime="2020-08-26T14:16:59+08:00">2020-08-26</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+            <div class="post-description">在CentOS上开发C++应用遇到的问题和解决过程记录</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="Doxygen"><a href="#Doxygen" class="headerlink" title="Doxygen"></a>Doxygen</h2><p><strong>Doxygen</strong>的的安装需要用到 <em>cmake</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y cmake</span><br></pre></td></tr></table></figure>
+
+<p>这个命令安装的是 <em>cmake 2.x</em> 版本，<br>而<strong>doxygen</strong>依赖的是 <em>cmake 3.x</em> ，<br>所以我们要安装的是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -i cmake3</span><br></pre></td></tr></table></figure>
+
+<p><strong>doxygen</strong>源代码的编译还依赖了其他一些库:<em>flex</em>, <em>bison</em>，这些可以直接通过<em>yum</em>安装的。<br><a href="http://www.doxygen.nl/download.html" rel="external nofollow noopener noreferrer" target="_blank">官方安装教程</a></p>
+<h2 id="Issues"><a href="#Issues" class="headerlink" title="Issues"></a>Issues</h2><h3 id="“font”-is-an-unregitered-media-type"><a href="#“font”-is-an-unregitered-media-type" class="headerlink" title="“font” is an unregitered media type"></a>“font” is an unregitered media type</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo update-desktop-database</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">grep MimeType /usr/share/applications/org.gnome.font-viewer.desktop</span><br></pre></td></tr></table></figure>
+
+<p>需要重启terminal</p>
+<h3 id="安装mysql-connector-c-报错，找不到openssl"><a href="#安装mysql-connector-c-报错，找不到openssl" class="headerlink" title="安装mysql-connector-c++报错，找不到openssl"></a>安装mysql-connector-c++报错，找不到openssl</h3><p>因为没有装openssl-devel</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y openssl-devel</span><br></pre></td></tr></table></figure>
+
+<p><strong>openssl和openssl-devel的区别</strong></p>
+<ul>
+<li>openssl是执行码部分</li>
+<li>openssl-devel包含了头文件，头文件参考，某些库文件等开发相关的东西</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmake ./mysql-connector-c++-8.0.12-src -DWITH_JDBC=ON -DCMAKE_INSTALL_PREFIX=/usr/local/mysql</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmake --build . --config release --target install</span><br></pre></td></tr></table></figure>
+
+<p>还是没有用，阅读官网文件发现jdbc需要编译的话，需要去手动通过<em>git submodule</em>去更新，于是放弃了当前不知谁提供的<em>mysql-connector-c++-8.0.12src*</em>,去github上找到了对应的  <a href="https://github.com/mysql/mysql-connector-cpp.git" rel="external nofollow noopener noreferrer" target="_blank">mysql-connector-cpp on github</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/mysql/mysql-connector-cpp.git</span><br><span class="line">cd mysql-connector-app</span><br><span class="line">git checkout 8.0.12</span><br><span class="line">git submodule update --init</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum what provides libxxx*</span><br></pre></td></tr></table></figure>
+
+<p>又出了Could not find “libmysqlclient_r.a libmysqlclient.a”的问题</p>
+<p>参考:  <a href="https://dev.mysql.com/doc/connector-cpp/8.0/en/connector-cpp-source-configuration-options.html" rel="external nofollow noopener noreferrer" target="_blank">mysql-connector-cpp官网安装文档</a></p>
+<h3 id="xxxxxqconfig-pri’-has-modification-time-4711-s-in-the-future"><a href="#xxxxxqconfig-pri’-has-modification-time-4711-s-in-the-future" class="headerlink" title="xxxxxqconfig.pri’ has modification time 4711 s in the future"></a>xxxxxqconfig.pri’ has modification time 4711 s in the future</h3><p>报这个错误的原因是因为vmware镜像是别人导出来的，然后本地的一些文件修改时间早于当前时间。<br>这次遇到的主要是QT/gcc_64/mkspec下一个文件以及QT/gcc_64/mkspecs/modules下面的所有文件，<br>针对单个文件运行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch -m *.pri</span><br></pre></td></tr></table></figure>
+
+<p>文件夹下面的文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch -m *.*</span><br></pre></td></tr></table></figure>
+
+<p>qt creator运行一下clean就可以正常build了。</p>
+<h3 id="qt-no-such-file-or-directory"><a href="#qt-no-such-file-or-directory" class="headerlink" title="qt: no such file or directory"></a>qt: no such file or directory</h3><p><em>qt</em> 找不到某些头文件，但是在项目预览中明显是有的；<br>查看 <em>.pro</em> 文件，<em>HEADERS*里面也是有的；<br>但是 *INCLUDEPATH</em> 里面没有，在 <em>INCLUDEPATH</em> 里面加入相对路径之后就好了。</p>
+<h3 id="qt-creator-no-rule-to-make-target"><a href="#qt-creator-no-rule-to-make-target" class="headerlink" title="qt creator: no rule to make target"></a>qt creator: no rule to make target</h3><p>复制别的项目，修改了项目的一些文件名，<strong>build</strong> 时出现了这个错误，<strong>clean</strong> 和重启 <strong>qt</strong> 都还存在这个问题。<br>删除<strong>QT Creator</strong> 编译生成的<em>build-[xxx]-Desktop_Qt_5_10_0_GCC_64bit-Debug</em>然后重新编译就可以了，<br>这个只是一个缓存问题。</p>
+<h3 id="qt-creator断点问题"><a href="#qt-creator断点问题" class="headerlink" title="qt creator断点问题"></a>qt creator断点问题</h3><p>qt creator断点进入的代码错误，这是因为进入的是so，而so里面的共享库代码是老版本的，导致用新库去调试项目的时候进入的方法对不上。我遇到的实际情况是，本来应该是调用一个返回stuct指针的方法，返回了一个值为4的int64，从而导致这个指针的地址直接是4而导致在访问这个struct的时候内存出错。</p>
+<h3 id="cannot-open-shared-object-file-No-such-file-or-directory"><a href="#cannot-open-shared-object-file-No-such-file-or-directory" class="headerlink" title="cannot open shared object file:No  such file or directory"></a>cannot open shared object file:No  such file or directory</h3><p><a href="https://www.cnblogs.com/youxin/p/5116243.html" rel="external nofollow noopener noreferrer" target="_blank">参考</a><br>Qt Creator构建出来的可执行文件找不到一些系统里面安装了的三方库，根据参考链接的提醒，去 <em>/etc/ld.so.conf</em> 中加入so坐在的路径即可。<br>但是我看到 <em>/etc/ld.so.conf</em> 的内容是这样的:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">include ld.so.conf.d<span class="comment">/*.conf</span></span><br></pre></td></tr></table></figure>
+
+<p>也就是这个文件其实就比遍历了 <em>ld.so.conf.d</em> 下的所有文件，<br>这些文件都是三方库的路径配置文件。<br>于是我在这个文件夹下面加了我的 <em>mongo.conf</em> ,然后在其中写入我的 <em>mongocxx.so._noabi</em> 的路径，然后执行：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ldconfig</span><br></pre></td></tr></table></figure>
+
+<p>搞定。</p>
+<h3 id="was-not-declared-in-this-scope"><a href="#was-not-declared-in-this-scope" class="headerlink" title="was not declared in this scope"></a>was not declared in this scope</h3><p>经查证是形成了环形依赖</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//a.h</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"b.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//b.h</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"c.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//c.h</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"a.h"</span></span></span><br></pre></td></tr></table></figure>
+
+<h3 id="jump-to-case-label-fpermissive"><a href="#jump-to-case-label-fpermissive" class="headerlink" title="jump to case label -fpermissive"></a>jump to case label -fpermissive</h3><p>作用域问题</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span>  a 1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> b 2</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span>(hehe)&#123;</span><br><span class="line"><span class="keyword">case</span> a:</span><br><span class="line"><span class="comment">//bibobibobibo...</span></span><br><span class="line"><span class="keyword">break</span></span><br><span class="line"><span class="keyword">case</span> b:</span><br><span class="line"><span class="comment">//bibobibobibo</span></span><br><span class="line"><span class="keyword">break</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面由于case语句没有明确的大括号来标注他的作用范围，导致了很奇怪的问题，jump to case label只是其中之一，如果case语句里面有同名临时变量的话，也会产生redefined的问题，按照他的提示去掉redefined的定义后，还是会报其他错。解决方案就是把case语句的作用域用大括号包含起来，一直到break。<br>这个不像其他语言，case默认到break都是他的作用范围。</p>
+<h3 id="std-vector-reverse-vs-resize"><a href="#std-vector-reverse-vs-resize" class="headerlink" title="std::vector reverse vs resize"></a>std::vector reverse vs resize</h3><p>reverse是预留<br>resize是重新分配大小</p>
+<h3 id="vector-push-back是拷贝，不是引用传递"><a href="#vector-push-back是拷贝，不是引用传递" class="headerlink" title="vector.push_back是拷贝，不是引用传递"></a>vector.push_back是拷贝，不是引用传递</h3><p><a href="https://blog.csdn.net/u010003835/article/details/47442493" rel="external nofollow noopener noreferrer" target="_blank"><br>C++/STL_中的push_back方法与复制数据的问题</a></p>
+<h3 id="查看目录结构的插件"><a href="#查看目录结构的插件" class="headerlink" title="查看目录结构的插件"></a>查看目录结构的插件</h3><p>tree可以用来查看目录结构，但是需要安装</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum install -y tree</span><br><span class="line"></span><br><span class="line">tree -d directory..</span><br></pre></td></tr></table></figure>
+
+<h3 id="Valgrind"><a href="#Valgrind" class="headerlink" title="Valgrind"></a>Valgrind</h3><p><a href="http://senlinzhan.github.io/2017/12/31/valgrind/" rel="external nofollow noopener noreferrer" target="_blank">使用 Valgrind 检测 C++ 内存泄漏</a></p>
+<h3 id="dlopen-‘-so‘-出-发现-undefined-symbol"><a href="#dlopen-‘-so‘-出-发现-undefined-symbol" class="headerlink" title="dlopen(‘.so‘)出 发现 undefined symbol"></a>dlopen(‘<em>.so</em>‘)出 发现 undefined symbol</h3><p>打包so的时候是没有问题的，在使用dlopen加载的时候报错undefined symbol。</p>
+<p>在一个可执行的项目中将这个so以external library的方式导入进来进行编译，发现有个类的析构函数定义的，但是没有在cpp中实现。</p>
+<p>在cpp中实现此函数之后，就正常了。</p>
+<h3 id="journalctl"><a href="#journalctl" class="headerlink" title="journalctl"></a>journalctl</h3><p>journalctl 用来查询 systemd-journald 服务收集到的日志。systemd-journald 服务是 systemd init 系统提供的收集系统日志的服务。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">journalctl -ex</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/c/" rel="tag"># c++</a>
+              <a href="/tags/linux/" rel="tag"># linux</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/05/23/Docker+CentOS+Git/" rel="prev" title="Docker上安装Git">
+      <i class="fa fa-chevron-left"></i> Docker上安装Git
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/05/23/rlimitissue/" rel="next" title="setrlimit RLIMIT_NOFILE失败的问题">
+      setrlimit RLIMIT_NOFILE失败的问题 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Doxygen"><span class="nav-number">1.</span> <span class="nav-text">Doxygen</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Issues"><span class="nav-number">2.</span> <span class="nav-text">Issues</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#“font”-is-an-unregitered-media-type"><span class="nav-number">2.1.</span> <span class="nav-text">“font” is an unregitered media type</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装mysql-connector-c-报错，找不到openssl"><span class="nav-number">2.2.</span> <span class="nav-text">安装mysql-connector-c++报错，找不到openssl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xxxxxqconfig-pri’-has-modification-time-4711-s-in-the-future"><span class="nav-number">2.3.</span> <span class="nav-text">xxxxxqconfig.pri’ has modification time 4711 s in the future</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#qt-no-such-file-or-directory"><span class="nav-number">2.4.</span> <span class="nav-text">qt: no such file or directory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#qt-creator-no-rule-to-make-target"><span class="nav-number">2.5.</span> <span class="nav-text">qt creator: no rule to make target</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#qt-creator断点问题"><span class="nav-number">2.6.</span> <span class="nav-text">qt creator断点问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cannot-open-shared-object-file-No-such-file-or-directory"><span class="nav-number">2.7.</span> <span class="nav-text">cannot open shared object file:No  such file or directory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#was-not-declared-in-this-scope"><span class="nav-number">2.8.</span> <span class="nav-text">was not declared in this scope</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jump-to-case-label-fpermissive"><span class="nav-number">2.9.</span> <span class="nav-text">jump to case label -fpermissive</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#std-vector-reverse-vs-resize"><span class="nav-number">2.10.</span> <span class="nav-text">std::vector reverse vs resize</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vector-push-back是拷贝，不是引用传递"><span class="nav-number">2.11.</span> <span class="nav-text">vector.push_back是拷贝，不是引用传递</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看目录结构的插件"><span class="nav-number">2.12.</span> <span class="nav-text">查看目录结构的插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Valgrind"><span class="nav-number">2.13.</span> <span class="nav-text">Valgrind</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dlopen-‘-so‘-出-发现-undefined-symbol"><span class="nav-number">2.14.</span> <span class="nav-text">dlopen(‘.so‘)出 发现 undefined symbol</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#journalctl"><span class="nav-number">2.15.</span> <span class="nav-text">journalctl</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">ado</p>
+  <div class="site-description" itemprop="description">me, robot.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">68</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ado</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

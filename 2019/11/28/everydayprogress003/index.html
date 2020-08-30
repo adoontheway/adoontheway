@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"adoontheway.gitee.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="每天进步一点点，今天研究的是通过nginx来转发wss到ws">
+<meta name="keywords" content="nginx,ws">
+<meta property="og:type" content="article">
+<meta property="og:title" content="每天进步一点点003-nginx">
+<meta property="og:url" content="https://adoontheway.gitee.io/2019/11/28/everydayprogress003/index.html">
+<meta property="og:site_name" content="Ados">
+<meta property="og:description" content="每天进步一点点，今天研究的是通过nginx来转发wss到ws">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://adoontheway.gitee.io/2019/11/28/everydayprogress003/nginx-ssl.png">
+<meta property="og:updated_time" content="2020-08-26T06:16:59.068Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="每天进步一点点003-nginx">
+<meta name="twitter:description" content="每天进步一点点，今天研究的是通过nginx来转发wss到ws">
+<meta name="twitter:image" content="https://adoontheway.gitee.io/2019/11/28/everydayprogress003/nginx-ssl.png">
+
+<link rel="canonical" href="https://adoontheway.gitee.io/2019/11/28/everydayprogress003/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>每天进步一点点003-nginx | Ados</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Ados</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">a fullstack game worker</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://adoontheway.gitee.io/2019/11/28/everydayprogress003/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="ado">
+      <meta itemprop="description" content="me, robot.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ados">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          每天进步一点点003-nginx
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-28 14:23:27" itemprop="dateCreated datePublished" datetime="2019-11-28T14:23:27+08:00">2019-11-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-26 14:16:59" itemprop="dateModified" datetime="2020-08-26T14:16:59+08:00">2020-08-26</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+            <div class="post-description">每天进步一点点，今天研究的是通过nginx来转发wss到ws</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Contents"><a href="#Contents" class="headerlink" title="Contents"></a>Contents</h1><h2 id="在CentOS上安装nginx"><a href="#在CentOS上安装nginx" class="headerlink" title="在CentOS上安装nginx"></a>在CentOS上安装nginx</h2><p>去官网<a href="https://nginx.org" rel="external nofollow noopener noreferrer" target="_blank">nginx.org</a>按照文档安装好<strong>nginx</strong>。<br>注意，<a href="https://www.nginx.com" rel="external nofollow noopener noreferrer" target="_blank">nginx.com</a>是卖商业版nginx的。<br>安装成功之后，直接运行nginx就可以了，nginx的配置文件在 <strong>/etc/nginx</strong> 中。<br>需要注意的是 <strong>nginx</strong> 需用以超级用户是身份启动，不然的话 <strong>nginx</strong> 相关日志会报错，没有权限访问，即使改了对应文件夹的权限也没用。<br>我这里是启动失败的，输出日志是 <strong>80</strong> 端口被占用了，但是打开 <em>localhost:80</em> ，赫然显示的欢迎使用nginx，奇葩。<br>发送个停止服务的命令试试：  </p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nginx -s stop</span><br></pre></td></tr></table></figure>
+
+<p>嗯， <strong>localhost:80</strong> 访问不了了，说明是对的。</p>
+<h2 id="生成wss需要的key与证书"><a href="#生成wss需要的key与证书" class="headerlink" title="生成wss需要的key与证书"></a>生成wss需要的key与证书</h2><h3 id="生成密钥"><a href="#生成密钥" class="headerlink" title="生成密钥"></a>生成密钥</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl genrsa -out privkey.pem 2048</span><br></pre></td></tr></table></figure>
+
+<p>注意，这里不能用：  </p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl genrsa -des3 -out privkey.pem 2048</span><br></pre></td></tr></table></figure>
+
+<p>如果用了的话，再nginx验证过程中会出现读取密码错误的问题：<br><img src="./nginx-ssl.png" alt="读取密码错误">  </p>
+<h3 id="生成证书请求文件"><a href="#生成证书请求文件" class="headerlink" title="生成证书请求文件"></a>生成证书请求文件</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl req -new -key privkey.pem -out cert.csr</span><br></pre></td></tr></table></figure>
+
+<p>这里会生成一个证书请求文件，如果要正式上线的话，需要用这个去向第三方商业机构申请一个数字证书了。  </p>
+<h3 id="生成开发用的数字证书"><a href="#生成开发用的数字证书" class="headerlink" title="生成开发用的数字证书"></a>生成开发用的数字证书</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl req -new -x509 -key privkey.pem -out cacert.pem -days 1095</span><br></pre></td></tr></table></figure>
+
+<p>以上可以生成一个自己开发用的证书了。</p>
+<h3 id="完成"><a href="#完成" class="headerlink" title="完成"></a>完成</h3><p>现在就可以使用 <strong>privkey.pem</strong> 和 <strong>cacert.pem</strong> 了</p>
+<h2 id="内容提供"><a href="#内容提供" class="headerlink" title="内容提供"></a>内容提供</h2><p>将所需要的内容从git上拉取到 <strong>/usr/share/nginx/html/</strong> 下面，这样需要在nginx展示的内容都放到这个子文件夹下面，假设叫 <strong>sample</strong> 吧。  </p>
+<h2 id="conf修改"><a href="#conf修改" class="headerlink" title="conf修改"></a>conf修改</h2><p>阅读了一遍 <strong>etc/nginx/nginx.conf</strong> ，知道了log的存放地址，看到了所有其他子配置都存放在 <strong>/etc/nginx/config.d/</strong> 下面。<br>先修改 <strong>default.conf</strong> :</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">location / &#123;</span><br><span class="line">    root /usr/share/nginx/html/sample; #修改静态资源路径</span><br><span class="line">    index index.html index.htm;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="加入websocket-conf"><a href="#加入websocket-conf" class="headerlink" title="加入websocket.conf"></a>加入websocket.conf</h2><p>然后我也有新增一个 <strong>websocket.conf</strong>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">map $http_upgrade $connection_upgrade &#123;</span><br><span class="line">    default upgrade;</span><br><span class="line">    &apos;&apos; close;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">upstream websocket &#123;</span><br><span class="line">    server localhost:8282; # appserver_ip:ws_port</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">     server_name test.enzhico.net;</span><br><span class="line">     listen 443 ssl;</span><br><span class="line">     location / &#123;</span><br><span class="line">         proxy_pass http://192.168.1.110;</span><br><span class="line">         proxy_read_timeout 300s;</span><br><span class="line">         proxy_send_timeout 300s;</span><br><span class="line"></span><br><span class="line">         proxy_set_header Host $host;</span><br><span class="line">         proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line"></span><br><span class="line">         proxy_http_version 1.1;</span><br><span class="line">         proxy_set_header Upgrade $http_upgrade;</span><br><span class="line">         proxy_set_header Connection $connection_upgrade;</span><br><span class="line">     &#125;</span><br><span class="line">    ssl_certificate /home/ado/works/cacert.pem; #前面生成的证书</span><br><span class="line">    ssl_certificate_key /home/ado/works/privkey.pem; #前面生成的密钥</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h2><p>重启 <strong>nginx</strong>：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nginx -s reload</span><br></pre></td></tr></table></figure>
+
+<p>然后刷新页面就可以看到结果了。  </p>
+<h2 id="错误追踪"><a href="#错误追踪" class="headerlink" title="错误追踪"></a>错误追踪</h2><p>当然，我这个配置的过程中不是那么的顺利，nginx页面找不到的问题通过以下查看nginx的错误日志得到的：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo tail -100f /var/<span class="built_in">log</span>/nginx/error.log</span><br></pre></td></tr></table></figure>
+
+<h2 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h2><p>目前暂时就进行到这里</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
+<li><a href="http://nginx.org/en/linux_packages.html#RHEL-CentOS" rel="external nofollow noopener noreferrer" target="_blank">RHEL/CentOS上安装nginx</a>  </li>
+<li><a href="https://www.xncoding.com/2018/03/12/fullstack/nginx-websocket.html" rel="external nofollow noopener noreferrer" target="_blank">nginx反向代理WebSocket</a></li>
+<li><a href="https://nginx.org/en/docs" rel="external nofollow noopener noreferrer" target="_blank">nginx入门手册</a></li>
+<li><a href="https://blog.csdn.net/liangzhao_jay/article/details/8797423" rel="external nofollow noopener noreferrer" target="_blank">openssl生成pem数字证书</a></li>
+<li><a href="https://stackoverflow.com/questions/9380403/what-does-ssl-ctx-use-privatekey-file-problems-getting-password-error-indica" rel="external nofollow noopener noreferrer" target="_blank">what-does-ssl-ctx-use-privatekey-file-problems-getting-password-error-indica</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/nginx/" rel="tag"># nginx</a>
+              <a href="/tags/ws/" rel="tag"># ws</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/11/21/everydayprogress002/" rel="prev" title="每天进步一点点002-locust,pprof">
+      <i class="fa fa-chevron-left"></i> 每天进步一点点002-locust,pprof
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/11/29/everydayprogress004/" rel="next" title="每天进步一点点004-httprouter middleware">
+      每天进步一点点004-httprouter middleware <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Contents"><span class="nav-number">1.</span> <span class="nav-text">Contents</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#在CentOS上安装nginx"><span class="nav-number">1.1.</span> <span class="nav-text">在CentOS上安装nginx</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生成wss需要的key与证书"><span class="nav-number">1.2.</span> <span class="nav-text">生成wss需要的key与证书</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#生成密钥"><span class="nav-number">1.2.1.</span> <span class="nav-text">生成密钥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成证书请求文件"><span class="nav-number">1.2.2.</span> <span class="nav-text">生成证书请求文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成开发用的数字证书"><span class="nav-number">1.2.3.</span> <span class="nav-text">生成开发用的数字证书</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#完成"><span class="nav-number">1.2.4.</span> <span class="nav-text">完成</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内容提供"><span class="nav-number">1.3.</span> <span class="nav-text">内容提供</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#conf修改"><span class="nav-number">1.4.</span> <span class="nav-text">conf修改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#加入websocket-conf"><span class="nav-number">1.5.</span> <span class="nav-text">加入websocket.conf</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#验证"><span class="nav-number">1.6.</span> <span class="nav-text">验证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#错误追踪"><span class="nav-number">1.7.</span> <span class="nav-text">错误追踪</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结果"><span class="nav-number">1.8.</span> <span class="nav-text">结果</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">2.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">ado</p>
+  <div class="site-description" itemprop="description">me, robot.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">68</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ado</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"adoontheway.gitee.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Github Page从原先乱七八糟的方式整理成Hexo规范，且加入了Next主题。 ISSUES1. Next版本太老这个是比较老的，有一年多没有更新了，最新版本是5.1.4iissnan/hexo-theme-next这个比较新，版本是7.1.1theme-next/hexo-theme-next 2. 安装Next的Fancybox插件theme-next-fancybox3 3. bloc">
+<meta name="keywords" content="git,hexo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用Hexo管理Github page">
+<meta property="og:url" content="https://adoontheway.gitee.io/2019/05/02/gitpagesfromhexo/index.html">
+<meta property="og:site_name" content="Ados">
+<meta property="og:description" content="Github Page从原先乱七八糟的方式整理成Hexo规范，且加入了Next主题。 ISSUES1. Next版本太老这个是比较老的，有一年多没有更新了，最新版本是5.1.4iissnan/hexo-theme-next这个比较新，版本是7.1.1theme-next/hexo-theme-next 2. 安装Next的Fancybox插件theme-next-fancybox3 3. bloc">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-08-26T06:16:59.084Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="利用Hexo管理Github page">
+<meta name="twitter:description" content="Github Page从原先乱七八糟的方式整理成Hexo规范，且加入了Next主题。 ISSUES1. Next版本太老这个是比较老的，有一年多没有更新了，最新版本是5.1.4iissnan/hexo-theme-next这个比较新，版本是7.1.1theme-next/hexo-theme-next 2. 安装Next的Fancybox插件theme-next-fancybox3 3. bloc">
+
+<link rel="canonical" href="https://adoontheway.gitee.io/2019/05/02/gitpagesfromhexo/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>利用Hexo管理Github page | Ados</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Ados</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">a fullstack game worker</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://adoontheway.gitee.io/2019/05/02/gitpagesfromhexo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="ado">
+      <meta itemprop="description" content="me, robot.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ados">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          利用Hexo管理Github page
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-05-02 14:45:37" itemprop="dateCreated datePublished" datetime="2019-05-02T14:45:37+08:00">2019-05-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-26 14:16:59" itemprop="dateModified" datetime="2020-08-26T14:16:59+08:00">2020-08-26</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Github Page从原先乱七八糟的方式整理成Hexo规范，且加入了Next主题。</p>
+<h2 id="ISSUES"><a href="#ISSUES" class="headerlink" title="ISSUES"></a>ISSUES</h2><h3 id="1-Next版本太老"><a href="#1-Next版本太老" class="headerlink" title="1. Next版本太老"></a>1. Next版本太老</h3><p>这个是比较老的，有一年多没有更新了，最新版本是5.1.4<br><a href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow noopener noreferrer" target="_blank">iissnan/hexo-theme-next</a><br>这个比较新，版本是7.1.1<br><a href="https://github.com/theme-next/hexo-theme-next" rel="external nofollow noopener noreferrer" target="_blank">theme-next/hexo-theme-next</a></p>
+<h3 id="2-安装Next的Fancybox插件"><a href="#2-安装Next的Fancybox插件" class="headerlink" title="2. 安装Next的Fancybox插件"></a>2. 安装Next的Fancybox插件</h3><p><a href="https://github.com/theme-next/theme-next-fancybox3" rel="external nofollow noopener noreferrer" target="_blank">theme-next-fancybox3</a></p>
+<h3 id="3-blocked-mixed-content"><a href="#3-blocked-mixed-content" class="headerlink" title="3. blocked:mixed-content"></a>3. blocked:mixed-content</h3><p>添加<strong>Google Adsense</strong>依赖加载 <em>adsbygoogle.js</em> 的时候，在<strong>gitpage</strong>上出现 <em>blocked:mixed-content</em> 的错误。<br>据查是因为在<em>https</em>页面中引入了<em>http</em>资源所致。<br><strong>google adsense</strong>中嵌入<em>adsbygoogle.js</em>的脚本是这样子的</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">async</span> <span class="attr">src</span>=<span class="string">"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>而我却以为是漏掉了<em>http</em>误加了个<em>http:</em>在地址前面。<br>话说<em>http</em>什么时候变成这个样子了的。</p>
+<h3 id="4-修改menu不生效-update-on-2019-5-10"><a href="#4-修改menu不生效-update-on-2019-5-10" class="headerlink" title="4. 修改menu不生效 [update on 2019-5-10]"></a>4. 修改menu不生效 [update on 2019-5-10]</h3><p>突然发现是在next中修改_config.xml 才生效，想起之前似乎设置了一个覆盖属性为true</p>
+<h3 id="5-页面统计"><a href="#5-页面统计" class="headerlink" title="5. 页面统计"></a>5. 页面统计</h3><p>在<strong>next:_config.xml</strong>中，修改 <strong>busuanzi_count</strong> 中的<em>enable</em> 属性为 <em>true</em> 即可。</p>
+<h3 id="6-error-RPC-failed-curl-56-OpenSSL-SSL-read-SSL-ERROR-SYSCALL-errno-10054"><a href="#6-error-RPC-failed-curl-56-OpenSSL-SSL-read-SSL-ERROR-SYSCALL-errno-10054" class="headerlink" title="6. error: RPC failed; curl 56 OpenSSL SSL_read: SSL_ERROR_SYSCALL, errno 10054"></a>6. error: RPC failed; curl 56 OpenSSL SSL_read: SSL_ERROR_SYSCALL, errno 10054</h3><p>这个是 git 的 http 推送的缓冲区太小的问题。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global http.postBuffer 157286400</span><br></pre></td></tr></table></figure>
+
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference:"></a>Reference:</h3><p><a href="https://juejin.im/post/5acf02086fb9a028b92d8652#heading-8" rel="external nofollow noopener noreferrer" target="_blank">Github Pages部署个人博客（Hexo篇）</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/git/" rel="tag"># git</a>
+              <a href="/tags/hexo/" rel="tag"># hexo</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/04/23/syncgithubwithgitlab/" rel="prev" title="同步Gitlab项目到Github">
+      <i class="fa fa-chevron-left"></i> 同步Gitlab项目到Github
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/05/04/dockerrediscluster/" rel="next" title="Docker搭建mysql和Redis开发环境">
+      Docker搭建mysql和Redis开发环境 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ISSUES"><span class="nav-number">1.</span> <span class="nav-text">ISSUES</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Next版本太老"><span class="nav-number">1.1.</span> <span class="nav-text">1. Next版本太老</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-安装Next的Fancybox插件"><span class="nav-number">1.2.</span> <span class="nav-text">2. 安装Next的Fancybox插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-blocked-mixed-content"><span class="nav-number">1.3.</span> <span class="nav-text">3. blocked:mixed-content</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-修改menu不生效-update-on-2019-5-10"><span class="nav-number">1.4.</span> <span class="nav-text">4. 修改menu不生效 [update on 2019-5-10]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-页面统计"><span class="nav-number">1.5.</span> <span class="nav-text">5. 页面统计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-error-RPC-failed-curl-56-OpenSSL-SSL-read-SSL-ERROR-SYSCALL-errno-10054"><span class="nav-number">1.6.</span> <span class="nav-text">6. error: RPC failed; curl 56 OpenSSL SSL_read: SSL_ERROR_SYSCALL, errno 10054</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reference"><span class="nav-number">1.7.</span> <span class="nav-text">Reference:</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">ado</p>
+  <div class="site-description" itemprop="description">me, robot.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">68</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ado</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

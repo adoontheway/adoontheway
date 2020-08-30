@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"adoontheway.gitee.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="初次学习golang高级编程技巧的笔记">
+<meta name="keywords" content="go">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Golang高级编程技巧学习笔记">
+<meta property="og:url" content="https://adoontheway.gitee.io/2019/05/23/gogogo/index.html">
+<meta property="og:site_name" content="Ados">
+<meta property="og:description" content="初次学习golang高级编程技巧的笔记">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-08-26T06:16:59.086Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Golang高级编程技巧学习笔记">
+<meta name="twitter:description" content="初次学习golang高级编程技巧的笔记">
+
+<link rel="canonical" href="https://adoontheway.gitee.io/2019/05/23/gogogo/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Golang高级编程技巧学习笔记 | Ados</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Ados</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">a fullstack game worker</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://adoontheway.gitee.io/2019/05/23/gogogo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="ado">
+      <meta itemprop="description" content="me, robot.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ados">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Golang高级编程技巧学习笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-05-23 00:00:00" itemprop="dateCreated datePublished" datetime="2019-05-23T00:00:00+08:00">2019-05-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-26 14:16:59" itemprop="dateModified" datetime="2020-08-26T14:16:59+08:00">2020-08-26</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+            <div class="post-description">初次学习golang高级编程技巧的笔记</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="golang高级编程技巧"><a href="#golang高级编程技巧" class="headerlink" title="golang高级编程技巧"></a>golang高级编程技巧</h2><p><a href="https://github.com/chai2010/advanced-go-programming-book/blob/master/ch5-web/ch5-03-middleware.md" rel="external nofollow noopener noreferrer" target="_blank">https://github.com/chai2010/advanced-go-programming-book/blob/master/ch5-web/ch5-03-middleware.md</a></p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
+<li>本地包无法导入，需要将本地的路径添加为gopath，这个路径必须是标准go环境的路径，导入方式按照路径导入即可: <em>import “gogogo/dome/lib”</em><h2 id="名词"><a href="#名词" class="headerlink" title="名词"></a>名词</h2></li>
+<li>QPS : Query Per Second 每秒查询量，这个针对的是服务器上数据的读取操作</li>
+<li>TPS : Transaction Per Second 每秒事务处理量 ，这个针对的是服务器上数据的写入和修改操作</li>
+<li>这两个指标只是参考，实际还有其他参考指标，平均无故障时间，负载持续时间，以及软件的系统资源使用情况</li>
+<li>载荷处理超时时间 : 评判软件正确性的重要标准</li>
+<li>如果某个api持续承受高负载时间过长，就需要考虑api设计是否合理，软件系统是否需要拆分<br>这一部分关于软件的评判标准来自于本书地200页。</li>
+</ul>
+<h2 id="time"><a href="#time" class="headerlink" title="time"></a>time</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//计时器，timer.c:chan&lt;-是一个(chan int ,1）reset并不会清理这里的缓存，所以一定要确保接收</span></span><br><span class="line"><span class="comment">//如果没有即使清理的话会导致后续要写入的被丢弃</span></span><br><span class="line">time.NewTimer(timeout)</span><br><span class="line"><span class="comment">//阻塞当前线程直到当前定时器结束</span></span><br><span class="line">time.Sleep(time.Millisecond)</span><br><span class="line"><span class="comment">//返回timer对象，timer对象主要是使用timer.C通道来通知时间到了的</span></span><br><span class="line">time.After(timer.Second)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//方法和Timer差不多,Ticker.C会在计时器到点的时候判断缓冲区是否有数据未读取，有的话就不发送</span></span><br><span class="line"><span class="comment">//也就是超时未处理的话就不会重复通知</span></span><br><span class="line">time.Ticker</span><br></pre></td></tr></table></figure>
+
+<h2 id="chan"><a href="#chan" class="headerlink" title="chan"></a>chan</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//固定的chan接受结构，由于是阻塞的，最好不要放到主线程执行，另外独立一个routine来执行</span></span><br><span class="line"><span class="comment">//没有for的话，select只会跑一遍，所以需要for</span></span><br><span class="line"><span class="comment">//当所有select的case都满足的话，会使用伪随机一个条件进行下去，下面的做例子就每次会不一样</span></span><br><span class="line"><span class="keyword">for</span>&#123;</span><br><span class="line"><span class="keyword">select</span> &#123;</span><br><span class="line"><span class="keyword">case</span> intChan &lt;- <span class="number">1</span>:</span><br><span class="line"><span class="keyword">case</span> intChan &lt;- <span class="number">2</span>:</span><br><span class="line"><span class="keyword">case</span> intChan &lt;- <span class="number">3</span>:</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这个是阻塞的，要等到有数据进入才会走这条语句后面的语句</span></span><br><span class="line">&lt;-<span class="keyword">chan</span></span><br><span class="line"><span class="comment">//关闭chan之后其中缓存的数据还在</span></span><br><span class="line"><span class="built_in">close</span>(<span class="keyword">chan</span>)</span><br><span class="line"><span class="comment">//通常用作信号传递，是一个系统常量，多次使用并不会占用空间</span></span><br><span class="line"><span class="keyword">struct</span>&#123;&#125;&#123;&#125;</span><br><span class="line"><span class="comment">//单向chan和双向chan之间不支持强制转型，单向写和单向读也不支持相互之间的强制转型</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//引用传递传入地址</span></span><br><span class="line"><span class="keyword">var</span> mapChan = <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">map</span>[<span class="keyword">string</span>]*Counter,<span class="number">1</span>)</span><br><span class="line">countMap := nap[<span class="keyword">string</span>[*Counter&#123;</span><br><span class="line"><span class="string">"count"</span>:&amp;Counter&#123;&#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以利用 <em>(chan struct{}{},并发量)</em> 来控制并发量</p>
+<h2 id="vs-code-test-configuration"><a href="#vs-code-test-configuration" class="headerlink" title="vs code test configuration"></a>vs code test configuration</h2><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">            <span class="attr">"name"</span>: <span class="string">"Test"</span>,</span><br><span class="line">            <span class="attr">"type"</span>: <span class="string">"go"</span>,</span><br><span class="line">            <span class="attr">"request"</span>: <span class="string">"launch"</span>,</span><br><span class="line">            <span class="attr">"mode"</span>: <span class="string">"test"</span>,</span><br><span class="line">            <span class="attr">"port"</span>: <span class="number">2345</span>,</span><br><span class="line">            <span class="attr">"host"</span>:<span class="string">"127.0.0.1"</span>,</span><br><span class="line">            <span class="attr">"program"</span>: <span class="string">"$&#123;workspaceFolder&#125;/src/gogogo/loadgen/load_test.go"</span>,</span><br><span class="line">            <span class="attr">"env"</span>: &#123;&#125;,</span><br><span class="line">            <span class="attr">"args"</span>: [],</span><br><span class="line">            <span class="attr">"showLog"</span>: <span class="literal">true</span></span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="sync-WaitGroup"><a href="#sync-WaitGroup" class="headerlink" title="sync.WaitGroup"></a>sync.WaitGroup</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">waitGrou.Add(count)</span><br><span class="line">waitGroup.Done()</span><br></pre></td></tr></table></figure>
+
+<p>Done次数或者Add(负数)使wg等待次数小于0会引发运行时恐慌。</p>
+<ul>
+<li>Mutex : 互斥锁</li>
+<li>RWMutext : 读写锁 Lock/Unlock 写锁定和写解锁，RLock/RUnlock 读锁定和读解锁。Unlock会解锁因RLock而阻塞的goroutine，RUnlock只会在没有任何Lock的情况下，试图唤醒因为进行Lock而锁定的goroutine。</li>
+<li>sync.Cond : 条件变量</li>
+</ul>
+<h2 id="api-to-be-investigate"><a href="#api-to-be-investigate" class="headerlink" title="api to be investigate"></a>api to be investigate</h2><ul>
+<li>atomic</li>
+<li>context</li>
+</ul>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://github.com/chai2010/advanced-go-programming-book/blob/master/ch1-basic/ch1-04-func-method-interface.md" rel="external nofollow noopener noreferrer" target="_blank">Go语言高级编程</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/go/" rel="tag"># go</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/05/23/windows10hyperv/" rel="prev" title="Win10家庭版开启Hyper-v的脚本">
+      <i class="fa fa-chevron-left"></i> Win10家庭版开启Hyper-v的脚本
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/05/23/gobinary/" rel="next" title="Golang 字节流">
+      Golang 字节流 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#golang高级编程技巧"><span class="nav-number">1.</span> <span class="nav-text">golang高级编程技巧</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他"><span class="nav-number">2.</span> <span class="nav-text">其他</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#名词"><span class="nav-number">3.</span> <span class="nav-text">名词</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#time"><span class="nav-number">4.</span> <span class="nav-text">time</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chan"><span class="nav-number">5.</span> <span class="nav-text">chan</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vs-code-test-configuration"><span class="nav-number">6.</span> <span class="nav-text">vs code test configuration</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sync-WaitGroup"><span class="nav-number">7.</span> <span class="nav-text">sync.WaitGroup</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#api-to-be-investigate"><span class="nav-number">8.</span> <span class="nav-text">api to be investigate</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">8.1.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">ado</p>
+  <div class="site-description" itemprop="description">me, robot.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">68</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ado</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
