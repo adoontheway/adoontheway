@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"adoontheway.gitee.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="开始研读 Gin 代码">
+<meta name="keywords" content="go">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Gin学习笔记 - Context">
+<meta property="og:url" content="https://adoontheway.gitee.io/2020/09/01/gin-notes/index.html">
+<meta property="og:site_name" content="Ados">
+<meta property="og:description" content="开始研读 Gin 代码">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-09-02T03:03:42.529Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Gin学习笔记 - Context">
+<meta name="twitter:description" content="开始研读 Gin 代码">
+
+<link rel="canonical" href="https://adoontheway.gitee.io/2020/09/01/gin-notes/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Gin学习笔记 - Context | Ados</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Ados</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">a fullstack game worker</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://adoontheway.gitee.io/2020/09/01/gin-notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="ado">
+      <meta itemprop="description" content="me, robot.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ados">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Gin学习笔记 - Context
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-01 11:42:29" itemprop="dateCreated datePublished" datetime="2020-09-01T11:42:29+08:00">2020-09-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-02 11:03:42" itemprop="dateModified" datetime="2020-09-02T11:03:42+08:00">2020-09-02</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+            <div class="post-description">开始研读 Gin 代码</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>转型路很艰难，所以最近思考了一下，发现自己会的东西多，但是精通和深入的东西少。<br>后续转型只会更难。决定细心研读一款框架的代码，理解其核心会对后续大有裨益。<br><strong>golang</strong> 比较流行的 <strong><em>web</em></strong> 框架就那么几个：</p>
+<ul>
+<li>begoo</li>
+<li>gin</li>
+<li>httprouter：gin是基于此框架的</li>
+</ul>
+<p><strong>begoo</strong> 是国人的作品，但是之前了解过一下，比较重，所以选择轻量一些的 <strong>gin</strong> 作为研究对象。</p>
+<h1 id="Contents"><a href="#Contents" class="headerlink" title="Contents"></a>Contents</h1><p>研究 <strong>gin</strong> 是从他的源代码根目录开始的，第一个文件是 <strong>auth.go</strong>，在 <strong>auth.go</strong> 的第一个 <strong><em>public</em></strong> 方法 <em>BasicAuthForRealm</em> 中看到了 <em>gin.Context</em> 的使用，于是导航到 <em>gin.Context</em> 看看</p>
+<h2 id="Context"><a href="#Context" class="headerlink" title="Context"></a>Context</h2><p><strong>Context</strong> 是 <em>gin</em> 的核心之一。他是用来在中间件之间传递变量，管理流程，比如验证请求的 <strong>JSON</strong> 数据和渲染 <strong>JSON</strong> 响应。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Context <span class="keyword">struct</span> &#123;</span><br><span class="line">	writermem responseWriter<span class="comment">//定义在reponse_wirter.go中，内嵌了http.ResponseWriter，有size和status属性</span></span><br><span class="line">	Request   *http.Request<span class="comment">//当前http请求</span></span><br><span class="line">	Writer    ResponseWriter<span class="comment">//使用gin封装的ResponseWriter，不是http.ResponseWriter</span></span><br><span class="line">	Params   Params<span class="comment">//get请求中url携带的get参数，是一个k/v对，定义在tree.go中</span></span><br><span class="line">	handlers HandlersChain<span class="comment">//中间件链，是一个[]HandlerFunc类型，定义在gin.go中，HandlerFunc类型定义是 func(*Context)</span></span><br><span class="line">	index    <span class="keyword">int8</span><span class="comment">//索引，用于记录中间件的执行深度，当执行到abortIndex的时候不接着往下执行，在Context的Next方法中变更的</span></span><br><span class="line">	engine *Engine<span class="comment">//gin框架的实例，包含了muxer，中间件和各种配置的设置，通过Engine.New()/Engine.Default()来创建</span></span><br><span class="line">	Keys <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">interface</span>&#123;&#125;<span class="comment">//context专门给每个请求提供的k/v对，通过Context的Get/Set相关方法来操作</span></span><br><span class="line">	Errors errorMsgs<span class="comment">//这是一个[]*Error类型，此类型定义在errors.go中，提供给所有使用此Context的处理器/中间件来添加错误信息的</span></span><br><span class="line">	Accepted []<span class="keyword">string</span><span class="comment">//用于定义所有可接受的格式，通过Context.SetAccepted方法来操作</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="常量部分"><a href="#常量部分" class="headerlink" title="常量部分"></a>常量部分</h3><p><strong>Context.go</strong> 的代码注释和逻辑分块做的非常好，他的代码是按照逻辑进行分块的。<br>第一部分肯定是常量定义，首先声明的几个变量都是来自 <code>gin-gonic/gin/binding</code>的；<br>接着是 <strong><em>abortIndex = math.MaxInt8/2</em></strong> 也就是最大中间件深度，也就是个数；  </p>
+<h3 id="实例化相关部分"><a href="#实例化相关部分" class="headerlink" title="实例化相关部分"></a>实例化相关部分</h3><ul>
+<li>reset: 私有方法，看名字就知道是重置 <strong>Context</strong></li>
+<li>Copy: 看名字就知道是复制当前 <strong>Context</strong> ，复制的时候没有复制处理函数和中间件，以及 <strong>*writemem</strong> 的 <strong>ResponseWriter</strong>，因为如果全盘复制的话，会导致两个 <strong>Context</strong> 也就是两个请求共用一个处理链和响应用的 <strong>Writer</strong> ，会造成当前请求没法响应</li>
+<li>HandlerName: 返回主处理函数的名字</li>
+<li>Handler: 主处理函数，也就是 <strong>handlers.last</strong></li>
+</ul>
+<h3 id="流程控制部分"><a href="#流程控制部分" class="headerlink" title="流程控制部分"></a>流程控制部分</h3><ul>
+<li>Next: 只能在中间件里调用，用于执行中间件链条中下一个中间件</li>
+<li>IsAborted: 返回当前 <strong>Contexxt</strong> 是否已经中断，其实就是判断当前索引是否大于等于 <strong><em>abortIndex</em></strong></li>
+<li>Abort: 强行中断当前 <strong>Context</strong> 的执行，也就是将当前的索引设置为 <strong><em>abortIndex</em></strong></li>
+<li>AbortWithStatus: 调用 <code>Abort</code> 并将指定的状态码写入 <strong><em>header</em></strong>，例如，鉴权验证失败，立刻调用此方法并传入状态码401，也就是鉴权失败</li>
+<li>AbortWithJSON: 先调用<code>Abort</code>但后调用<code>JSON</code>，也就是将错误信息以<strong>JSON</strong>的方式响应</li>
+<li>AbortWithError: 先调用<code>AbortWithStatus</code>，然后将错误通过<code>Error</code>方法将错误信息推入<code>context.errors</code>中</li>
+</ul>
+<h3 id="错误管理部分"><a href="#错误管理部分" class="headerlink" title="错误管理部分"></a>错误管理部分</h3><ul>
+<li>Error: 将错误附加到当前 <strong>Context</strong> 中，也就是将错误推入 <strong>Context</strong> 的 <strong><em>errors</em></strong> 中，解析请求的过程中遇到的错误都可以调用此方法处理，可以制作一个中间件搜集这些错误，然后将他们一起记录到数据库中，或打印日志，或添加到 <strong>http</strong> 响应中，需要注意的是如果传入的 <strong>error</strong> 是空的话会引发 <strong><em>panic</em></strong></li>
+</ul>
+<h3 id="元数据管理部分"><a href="#元数据管理部分" class="headerlink" title="元数据管理部分"></a>元数据管理部分</h3><p>也就是对于 <strong>Context</strong> 的 <strong><em>Keys</em></strong> 的操作接口，包括： <code>Set</code>,<code>Get</code>,<code>MustGet</code>,<code>GetString</code>,<code>GetBool</code>,<code>GetInt</code>,<code>GetInt64</code>,<code>GetFloat64</code>,<code>GetTime</code>,<code>GetDuration</code>,<code>GetStringSlice</code>,<code>GetStringMap</code>,<code>GetStringMapString</code>,<code>GetStringMapStringSlice</code></p>
+<h3 id="输入数据部分"><a href="#输入数据部分" class="headerlink" title="输入数据部分"></a>输入数据部分</h3><p>也就是对<strong>URL</strong> <strong>Get</strong> 参数的处理  </p>
+<ul>
+<li>Param: 获取 <strong>Context.Params</strong> 中的数据</li>
+<li>Query: 是<code>Context.Request.URL.Query().Get(key)</code>的快捷方式，获取 <strong><em>url</em></strong> 中的指定 <strong><em>key</em></strong> 的参数，不存在的话返回<code>&quot;&quot;</code></li>
+<li>DefaultQuery: 和 <strong>Query</strong> 类似，不过查询不到的话就返回传入的默认值</li>
+<li>GetQuery: 和 <strong>Query</strong> 类似，会返回查询是否成功</li>
+<li>QueryArray: 与  <strong>GetQueryArray</strong> 都是查询指定 <strong><em>key</em></strong> 返回一个 <em>slice</em> ，不同的是 <strong>GetQueryArray</strong> 会返回查询成功与否</li>
+<li>PostForm: 返回 <em>POST</em> 数据中的值，没有的话返回空字符串<code>(&quot;&quot;)</code></li>
+<li>DefaultPostForm: 传入默认值的获取方法</li>
+<li>GetPostForm: 和 <strong>PostForm</strong> 差不多，唯一不同的是会返回查询成功与否</li>
+<li>PostFormArray: 获取 <em>POST</em> 数据中对应 <strong><em>key</em></strong> 的字符串数组, <strong>GetPostFormArray</strong> 和 <strong>PostFormArray</strong> 其实调用的就是这个方法，不过忽略了他的查询是否成功</li>
+<li>FormFile: 返回对应表格 <em>key</em> 的第一个文件</li>
+<li>MultipartForm: 是解析过的 <em>multipart form</em>，包括上传的文件</li>
+<li>SaveUploadedFile: 将上上传的文件保存到指定位置</li>
+<li>Bind: 用于检查 <strong><em>Content-Type</em></strong> 然后自动选择一个绑定的引擎，比如：<strong><em>application/json</em></strong> 对应的 <strong>JSON</strong> 绑定, <strong><em>application/xml</em></strong> 对应 ** xml** 绑定；绑定不了的话会返回错误。然后会将传入的数据解析到指定的结构体指针中。如果输入不合法的话会写入400错误然后设置 <strong><em>Content-Type</em></strong> 为 <strong>plain/text</strong></li>
+<li>BindJSON: 是 <strong>MustBindWith(obj,binding.JSON)</strong> 的快捷方式</li>
+<li>BindQuery: 是 <strong>MustBindWith(obj,bing.Query)</strong> 的快捷方式</li>
+<li>MustBindWith: 必需使用指定的绑定引擎来绑定传入的结构体指针，遇到任何问题会立刻返回 <em>400</em> 的 <em>HTTP</em> 错误码来中断请求</li>
+<li>ShouldBind: 与 <strong>Bind</strong> 功能一样，区别是此方法绑定的数据无效的时候不会推出也不会设置响应的错误为400</li>
+<li>ShouldBindJSON: 是 <strong>ShouldBindWith(obj, binding.JSON)</strong> 的快捷方式</li>
+<li>ShouldBindQuery: 是 <strong>ShouldBindWith(obj, binding.Query)</strong> 的快捷方式</li>
+<li>ShouldBindWith: 使用指定的绑定引擎绑定传入的结构体指针</li>
+<li>ClientIP: 使用最佳算法解析真实的客户端IP，通过解析 <strong>X-Real-IP</strong> 和 <strong>X-Forwarded-For</strong> 来与反转代理服务器，如 <em>nginix</em> ， <em>haproxy</em> ，有效合作，由于 <em>nginx</em> 使用 <strong>X-Real-IP</strong> 作为代理 <strong>IP</strong>，所以会优先使用 <em>X-Forwarded-IP</em></li>
+<li>ContentType: 返回请求头里面的<code>Content-Type</code></li>
+<li>IsWebsocket: 如果请求头里面有信息显示客户端已经发起来 <em>websocket</em> 握手请求，那么返回 <em>true</em></li>
+<li>requestHeader: 私有方法，返回请求头里面的信息</li>
+</ul>
+<h3 id="响应渲染部分"><a href="#响应渲染部分" class="headerlink" title="响应渲染部分"></a>响应渲染部分</h3><ul>
+<li>bodyAllowedForStatus: 是<strong>http.bodyAllowedForStatus</strong> 的不导出版本</li>
+<li>Status: 设置响应状态码</li>
+<li>Header: 添加或者设置响应头</li>
+<li>GetHeader: 返回指定的响应头值</li>
+<li>GetRawData: 返回响应体的流数据</li>
+<li>SetCookie: 在响应头里添加一个 <strong>Set-Cookie</strong> 的头信息。提供的 <strong>cookie</strong> 必需有一个有效的名字，无效的名字会静默去掉。</li>
+<li>Cookie: 返回请求里指定名字的 <strong>cookie</strong> ，找不到的时候返回 <strong>ErrNoCookie</strong> 。返回的 <strong>cookie</strong> 是 <em>unescaped</em> 。即使匹配到里多个 <em>cookie</em> ，最终他也只返回一个</li>
+<li>Render: 使用指定的渲染器和状态码来渲染响应数据</li>
+<li>HTML: <strong>HTMl</strong> 渲染指定文件名的 <strong>HTTP</strong> 模版，同时更新 <strong>HTTP</strong> 码，设置 <strong>Content-Type</strong> 为<code>text/html</code></li>
+<li>IndentedJSON: 将提供的结构体序列化为美化的 <em>JSON</em> 到响应体中，他会同时将 <strong>Content-Type</strong> 设置为 <code>application/json</code>，官方在此警告，建议仅在开发中使用此功能，因为美化 <em>JSON</em> 会耗费更多的 <em>CPU</em>，传输过程中会耗费更多的带宽。 建议在生产环境中使用 <strong>Context.JSON()</strong></li>
+<li>SecureJSON: 将给定的结构体序列化为安全的 <em>JSON</em> 响应体中。如果给定的结构体是数组，那么默认会使用 <code>while(1)</code>。同时他也会将 <em>Content-Type</em> 设置为 <code>application/json</code></li>
+<li>JSON: 将给定的结构体序列化为 <em>JSON</em> 到响应体。同时将 <em>Content-Type</em> 设置为 <code>application/json</code></li>
+<li>XML: 将给定的结构体序列化为 <em>XML</em> 到响应体。同时将 <em>Content-Type</em> 设置为 <code>application/xml</code></li>
+<li>YAML: 将给定的结构体序列化为 <em>YAML</em> 到响应体</li>
+<li>String: 将提供的字符串写入到响应体中</li>
+<li>Redirect: 重定向</li>
+<li>Data: 将数据写入响应流中，并更新 <strong>HTTP</strong> 码</li>
+<li>File: 高效的将指定的文件写入到响应流中</li>
+<li>SSEvent: 向响应流中写入一个 <strong>Server-Sent</strong> 事件</li>
+<li>Stream: </li>
+</ul>
+<h3 id="内容协定"><a href="#内容协定" class="headerlink" title="内容协定"></a>内容协定</h3><p>此部分是关于 <strong>HTTP</strong> 接受内容的</p>
+<h3 id="GOLANG-ORG-X-NET-CONTEXT"><a href="#GOLANG-ORG-X-NET-CONTEXT" class="headerlink" title="GOLANG.ORG/X/NET/CONTEXT"></a>GOLANG.ORG/X/NET/CONTEXT</h3><p>此部分是 <em>gin.Context</em> 实现 <code>golang.org/x/net/context</code> 相关接口的</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/go/" rel="tag"># go</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/05/26/freelancer001/" rel="prev" title="自由职业日记001 - 第三日">
+      <i class="fa fa-chevron-left"></i> 自由职业日记001 - 第三日
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preface"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Contents"><span class="nav-number">2.</span> <span class="nav-text">Contents</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Context"><span class="nav-number">2.1.</span> <span class="nav-text">Context</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#常量部分"><span class="nav-number">2.1.1.</span> <span class="nav-text">常量部分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例化相关部分"><span class="nav-number">2.1.2.</span> <span class="nav-text">实例化相关部分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#流程控制部分"><span class="nav-number">2.1.3.</span> <span class="nav-text">流程控制部分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#错误管理部分"><span class="nav-number">2.1.4.</span> <span class="nav-text">错误管理部分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#元数据管理部分"><span class="nav-number">2.1.5.</span> <span class="nav-text">元数据管理部分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输入数据部分"><span class="nav-number">2.1.6.</span> <span class="nav-text">输入数据部分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#响应渲染部分"><span class="nav-number">2.1.7.</span> <span class="nav-text">响应渲染部分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内容协定"><span class="nav-number">2.1.8.</span> <span class="nav-text">内容协定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GOLANG-ORG-X-NET-CONTEXT"><span class="nav-number">2.1.9.</span> <span class="nav-text">GOLANG.ORG/X/NET/CONTEXT</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">ado</p>
+  <div class="site-description" itemprop="description">me, robot.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">69</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ado</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
