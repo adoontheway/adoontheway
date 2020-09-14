@@ -28,12 +28,10 @@
 <meta property="og:site_name" content="Ados">
 <meta property="og:description" content="Golang的字节流操作实验">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://adoontheway.gitee.io/2019/05/23/gobinary/binarytest.png">
 <meta property="og:updated_time" content="2020-08-26T06:16:59.085Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Golang 字节流">
 <meta name="twitter:description" content="Golang的字节流操作实验">
-<meta name="twitter:image" content="https://adoontheway.gitee.io/2019/05/23/gobinary/binarytest.png">
 
 <link rel="canonical" href="https://adoontheway.gitee.io/2019/05/23/gobinary/">
 
@@ -244,7 +242,7 @@
 <p>可以看出，即使有类型推断，即使是非0的数字都是没法写入字节数组里面的；</p>
 <p><em>bool</em>值通过类型推断赋值的是可以写入字节数组。</p>
 <p>写入之后的byte数组</p>
-<p><img src="./binarytest.png" alt="预览"></p>
+<p><img data-src="./binarytest.png" alt="预览"></p>
 <p>据<em>binary.Write</em> 的 <strong>api</strong> 描述，<em>Data</em> 必须是一个固定尺寸的值或者是固定尺寸的<em>slice</em>，或者是一个指针。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//Data must be a fixed-size value or a slice of fixed-size</span><br><span class="line">// values, or a pointer to such data.</span><br><span class="line">func Write(w io.Writer, order ByteOrder, data interface&#123;&#125;) error</span><br></pre></td></tr></table></figure>
 
@@ -471,19 +469,6 @@
 
 
 
-<script>
-if (document.querySelectorAll('pre.mermaid').length) {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
-    mermaid.initialize({
-      theme    : 'forest',
-      logLevel : 3,
-      flowchart: { curve     : 'linear' },
-      gantt    : { axisFormat: '%m/%d/%Y' },
-      sequence : { actorMargin: 50 }
-    });
-  }, window.mermaid);
-}
-</script>
 
 
   

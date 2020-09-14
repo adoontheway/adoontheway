@@ -21,19 +21,17 @@
   </script>
 
   <meta name="description" content="tcp通讯协议加密联调，初步进展">
-<meta name="keywords" content="aes,rsa,nodejs,c++,cryptjs,openssl">
+<meta name="keywords" content="c++,aes,rsa,nodejs,cryptjs,openssl">
 <meta property="og:type" content="article">
 <meta property="og:title" content="cryptjs vs openssl 加解密(下篇)">
 <meta property="og:url" content="https://adoontheway.gitee.io/2019/07/13/rsafirstresult/index.html">
 <meta property="og:site_name" content="Ados">
 <meta property="og:description" content="tcp通讯协议加密联调，初步进展">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://adoontheway.gitee.io/2019/07/13/rsafirstresult/crypto.png">
 <meta property="og:updated_time" content="2020-08-26T06:16:59.097Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="cryptjs vs openssl 加解密(下篇)">
 <meta name="twitter:description" content="tcp通讯协议加密联调，初步进展">
-<meta name="twitter:image" content="https://adoontheway.gitee.io/2019/07/13/rsafirstresult/crypto.png">
 
 <link rel="canonical" href="https://adoontheway.gitee.io/2019/07/13/rsafirstresult/">
 
@@ -254,7 +252,7 @@
 </ul>
 <p>前端其实加密后的数据和openssl加密后的数据其实隔了一层Biginteger，所以把这一层认为补齐就可以了。</p>
 <p>效果如下：</p>
-<p><img src="./crypto.png" alt="result"></p>
+<p><img data-src="./crypto.png" alt="result"></p>
 
     </div>
 
@@ -264,10 +262,10 @@
 
       <footer class="post-footer">
           <div class="post-tags">
+              <a href="/tags/c/" rel="tag"># c++</a>
               <a href="/tags/aes/" rel="tag"># aes</a>
               <a href="/tags/rsa/" rel="tag"># rsa</a>
               <a href="/tags/nodejs/" rel="tag"># nodejs</a>
-              <a href="/tags/c/" rel="tag"># c++</a>
               <a href="/tags/cryptjs/" rel="tag"># cryptjs</a>
               <a href="/tags/openssl/" rel="tag"># openssl</a>
           </div>
@@ -473,19 +471,6 @@
 
 
 
-<script>
-if (document.querySelectorAll('pre.mermaid').length) {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
-    mermaid.initialize({
-      theme    : 'forest',
-      logLevel : 3,
-      flowchart: { curve     : 'linear' },
-      gantt    : { axisFormat: '%m/%d/%Y' },
-      sequence : { actorMargin: 50 }
-    });
-  }, window.mermaid);
-}
-</script>
 
 
   

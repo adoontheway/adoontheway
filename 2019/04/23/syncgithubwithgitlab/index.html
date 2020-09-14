@@ -28,12 +28,10 @@
 <meta property="og:site_name" content="Ados">
 <meta property="og:description" content="之前在 Github 中导入了一个 Gitlab 项目，但是在 Gitlab 项目有更新的时候， Github 没有更新，所以尝试一下。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://adoontheway.gitee.io/2019/04/23/syncgithubwithgitlab/mirrorrepos.png">
 <meta property="og:updated_time" content="2020-08-26T06:16:59.101Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="同步Gitlab项目到Github">
 <meta name="twitter:description" content="之前在 Github 中导入了一个 Gitlab 项目，但是在 Gitlab 项目有更新的时候， Github 没有更新，所以尝试一下。">
-<meta name="twitter:image" content="https://adoontheway.gitee.io/2019/04/23/syncgithubwithgitlab/mirrorrepos.png">
 
 <link rel="canonical" href="https://adoontheway.gitee.io/2019/04/23/syncgithubwithgitlab/">
 
@@ -237,7 +235,7 @@
 <li><p>点击<strong>Mirror repository</strong>按钮</p>
 </li>
 <li><p>会在<strong>Mirrored repositories</strong>中生成一条新的记录</p>
-<p><img src="./mirrorrepos.png" alt="mirrored repos"></p>
+<p><img data-src="./mirrorrepos.png" alt="mirrored repos"></p>
 </li>
 <li><p>点击垃圾桶旁边的刷新按钮</p>
 </li>
@@ -462,19 +460,6 @@
 
 
 
-<script>
-if (document.querySelectorAll('pre.mermaid').length) {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
-    mermaid.initialize({
-      theme    : 'forest',
-      logLevel : 3,
-      flowchart: { curve     : 'linear' },
-      gantt    : { axisFormat: '%m/%d/%Y' },
-      sequence : { actorMargin: 50 }
-    });
-  }, window.mermaid);
-}
-</script>
 
 
   

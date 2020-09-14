@@ -28,12 +28,10 @@
 <meta property="og:site_name" content="Ados">
 <meta property="og:description" content="每天进步一点点，locust的hello world">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://adoontheway.gitee.io/2019/11/21/everydayprogress002/locust.png">
 <meta property="og:updated_time" content="2020-08-26T06:16:59.065Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="每天进步一点点002-locust,pprof">
 <meta name="twitter:description" content="每天进步一点点，locust的hello world">
-<meta name="twitter:image" content="https://adoontheway.gitee.io/2019/11/21/everydayprogress002/locust.png">
 
 <link rel="canonical" href="https://adoontheway.gitee.io/2019/11/21/everydayprogress002/">
 
@@ -227,7 +225,7 @@
 <blockquote>
 <p>导入 pprof 包的时候会默认给httphandler注册pprof相关的函数，所以如果自己的业务http server先启动的话，会导致端口冲突，pprof相关接口用不了，所以要先启动pprof的http服务，再启动自己的业务http服务</p>
 </blockquote>
-<h2 id="Result"><a href="#Result" class="headerlink" title="Result"></a>Result</h2><p>最终效果图如下:<br><img src="./locust.png" alt="locust">  </p>
+<h2 id="Result"><a href="#Result" class="headerlink" title="Result"></a>Result</h2><p>最终效果图如下:<br><img data-src="./locust.png" alt="locust">  </p>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
 <li><a href="https://docs.locust.io/en/stable/installation.html" rel="external nofollow noopener noreferrer" target="_blank">locust入门文档</a> : 包括了从入门到精通</li>
 </ul>
@@ -446,19 +444,6 @@
 
 
 
-<script>
-if (document.querySelectorAll('pre.mermaid').length) {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
-    mermaid.initialize({
-      theme    : 'forest',
-      logLevel : 3,
-      flowchart: { curve     : 'linear' },
-      gantt    : { axisFormat: '%m/%d/%Y' },
-      sequence : { actorMargin: 50 }
-    });
-  }, window.mermaid);
-}
-</script>
 
 
   

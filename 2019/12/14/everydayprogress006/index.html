@@ -28,13 +28,10 @@
 <meta property="og:site_name" content="Ados">
 <meta property="og:description" content="今天尝试在windows上搭建etcd集群环境">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://adoontheway.gitee.io/2019/12/14/everydayprogress006/etcd1.png">
-<meta property="og:image" content="https://adoontheway.gitee.io/2019/12/14/everydayprogress006/etcd2.png">
 <meta property="og:updated_time" content="2020-08-26T06:16:59.070Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="每天进步一点点006-etcd windows集群环境">
 <meta name="twitter:description" content="今天尝试在windows上搭建etcd集群环境">
-<meta name="twitter:image" content="https://adoontheway.gitee.io/2019/12/14/everydayprogress006/etcd1.png">
 
 <link rel="canonical" href="https://adoontheway.gitee.io/2019/12/14/everydayprogress006/">
 
@@ -230,7 +227,7 @@
 
 <h2 id="启动脚本"><a href="#启动脚本" class="headerlink" title="启动脚本"></a>启动脚本</h2><figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">etcd --config-file=F:/software/etcd-v3.<span class="number">4</span>.<span class="number">0</span>-windows-amd64/etcd01.yml</span><br><span class="line"><span class="built_in">pause</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="启动结果"><a href="#启动结果" class="headerlink" title="启动结果"></a>启动结果</h2><p><img src="./etcd1.png" alt="启动结果1"><br>查看一下结果：<br><img src="./etcd2.png" alt="启动结果2"><br>最后一个false是啥意思:</p>
+<h2 id="启动结果"><a href="#启动结果" class="headerlink" title="启动结果"></a>启动结果</h2><p><img data-src="./etcd1.png" alt="启动结果1"><br>查看一下结果：<br><img data-src="./etcd2.png" alt="启动结果2"><br>最后一个false是啥意思:</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">etcdctl <span class="built_in">help</span> member list</span><br></pre></td></tr></table></figure>
 
 <blockquote>
@@ -462,19 +459,6 @@
 
 
 
-<script>
-if (document.querySelectorAll('pre.mermaid').length) {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
-    mermaid.initialize({
-      theme    : 'forest',
-      logLevel : 3,
-      flowchart: { curve     : 'linear' },
-      gantt    : { axisFormat: '%m/%d/%Y' },
-      sequence : { actorMargin: 50 }
-    });
-  }, window.mermaid);
-}
-</script>
 
 
   

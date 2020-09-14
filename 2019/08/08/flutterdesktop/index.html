@@ -28,12 +28,10 @@
 <meta property="og:site_name" content="Ados">
 <meta property="og:description" content="想做一个协议测试工具">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://adoontheway.gitee.io/2019/08/08/flutterdesktop/preview.png">
 <meta property="og:updated_time" content="2020-08-26T06:16:59.082Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Flutter Windows 桌面应用">
 <meta name="twitter:description" content="想做一个协议测试工具">
-<meta name="twitter:image" content="https://adoontheway.gitee.io/2019/08/08/flutterdesktop/preview.png">
 
 <link rel="canonical" href="https://adoontheway.gitee.io/2019/08/08/flutterdesktop/">
 
@@ -232,7 +230,7 @@
 <li>成功后运行 <strong>flutter precache –windows</strong></li>
 <li>这个时候在其中运行 <strong>flutter run</strong> 会发现，ta-da，成功了</li>
 </ul>
-<h2 id="Result"><a href="#Result" class="headerlink" title="Result"></a>Result</h2><p><img src="./preview.png" alt="preview"></p>
+<h2 id="Result"><a href="#Result" class="headerlink" title="Result"></a>Result</h2><p><img data-src="./preview.png" alt="preview"></p>
 <p>这个只是一个beta功能，所以还是有一些问题的，例如，拉伸窗口的时候，窗口没有真正的windows窗口那么自然，缓冲的背景是一片黑色；需要修改native 窗口的title的话还需要手动去cc和cpp文件里面改，等等。</p>
 <p>但是，目前来讲，能用就好。</p>
 
@@ -448,19 +446,6 @@
 
 
 
-<script>
-if (document.querySelectorAll('pre.mermaid').length) {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
-    mermaid.initialize({
-      theme    : 'forest',
-      logLevel : 3,
-      flowchart: { curve     : 'linear' },
-      gantt    : { axisFormat: '%m/%d/%Y' },
-      sequence : { actorMargin: 50 }
-    });
-  }, window.mermaid);
-}
-</script>
 
 
   

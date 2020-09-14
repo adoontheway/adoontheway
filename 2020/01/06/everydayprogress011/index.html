@@ -28,12 +28,10 @@
 <meta property="og:site_name" content="Ados">
 <meta property="og:description" content="利用 Samba 在 Centos 与 Windows 之间共享文件">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://adoontheway.gitee.io/2020/01/06/everydayprogress011/1.png">
 <meta property="og:updated_time" content="2020-08-26T06:16:59.081Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="每天进步一点点011 - Samba在Centos与Windows之间共享文件">
 <meta name="twitter:description" content="利用 Samba 在 Centos 与 Windows 之间共享文件">
-<meta name="twitter:image" content="https://adoontheway.gitee.io/2020/01/06/everydayprogress011/1.png">
 
 <link rel="canonical" href="https://adoontheway.gitee.io/2020/01/06/everydayprogress011/">
 
@@ -263,7 +261,7 @@
 </li>
 </ul>
 <h2 id="预览"><a href="#预览" class="headerlink" title="预览"></a>预览</h2><p>此时，可以在 Windows 上看到共享的文件夹了。  </p>
-<p><img src="./1.png" alt="效果图"></p>
+<p><img data-src="./1.png" alt="效果图"></p>
 <h1 id="Attentions"><a href="#Attentions" class="headerlink" title="Attentions"></a>Attentions</h1><ul>
 <li><strong>Linux</strong>上操作基本上都要用 <strong>sudo</strong> 操作，不然会报其他的问题</li>
 <li><strong>smbpasswd</strong> 添加用户需要是一个有效的系统用户</li>
@@ -486,19 +484,6 @@
 
 
 
-<script>
-if (document.querySelectorAll('pre.mermaid').length) {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
-    mermaid.initialize({
-      theme    : 'forest',
-      logLevel : 3,
-      flowchart: { curve     : 'linear' },
-      gantt    : { axisFormat: '%m/%d/%Y' },
-      sequence : { actorMargin: 50 }
-    });
-  }, window.mermaid);
-}
-</script>
 
 
   

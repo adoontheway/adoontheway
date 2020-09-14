@@ -28,12 +28,10 @@
 <meta property="og:site_name" content="Ados">
 <meta property="og:description" content="mongodb 和 MongoDB权威指南 的相关笔记">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://adobeattheworld.github.io/images/objidtime.png">
 <meta property="og:updated_time" content="2020-08-26T06:16:59.090Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mongo相关">
 <meta name="twitter:description" content="mongodb 和 MongoDB权威指南 的相关笔记">
-<meta name="twitter:image" content="https://adobeattheworld.github.io/images/objidtime.png">
 
 <link rel="canonical" href="https://adoontheway.gitee.io/2019/05/16/mongoindex/">
 
@@ -222,7 +220,7 @@
 <h1 id="Content"><a href="#Content" class="headerlink" title="Content"></a>Content</h1><h2 id="1-基本知识"><a href="#1-基本知识" class="headerlink" title="1. 基本知识"></a>1. 基本知识</h2><ul>
 <li><a href="http://www.runoob.com/mongodb/mongodb-tutorial.html" rel="external nofollow noopener noreferrer" target="_blank">MongoDB 教程</a></li>
 <li><a href="https://docs.mongodb.com/manual/" rel="external nofollow noopener noreferrer" target="_blank">MongoDB Manual</a></li>
-<li>ObjectID :  0-3 时间戳 4-6 机器标识码 7-8 进程id 9-12 随机数，单位：字节<img src="https://adobeattheworld.github.io/images/objidtime.png" alt="objid"></li>
+<li>ObjectID :  0-3 时间戳 4-6 机器标识码 7-8 进程id 9-12 随机数，单位：字节<img data-src="https://adobeattheworld.github.io/images/objidtime.png" alt="objid"></li>
 <li><strong>find</strong> 语法 <code>db.users.find({},{&quot;username&quot;:1,&quot;email&quot;:0})</code> 只需要返回 <em>username</em> 不需要返回 <em>email</em> 。</li>
 <li>batchInsert 已经废弃了，直接使用 insert 传入数组可以插入多条数据</li>
 </ul>
@@ -603,19 +601,6 @@
 
 
 
-<script>
-if (document.querySelectorAll('pre.mermaid').length) {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
-    mermaid.initialize({
-      theme    : 'forest',
-      logLevel : 3,
-      flowchart: { curve     : 'linear' },
-      gantt    : { axisFormat: '%m/%d/%Y' },
-      sequence : { actorMargin: 50 }
-    });
-  }, window.mermaid);
-}
-</script>
 
 
   

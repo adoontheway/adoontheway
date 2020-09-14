@@ -28,12 +28,10 @@
 <meta property="og:site_name" content="Ados">
 <meta property="og:description" content="最近遇到了随机数问题">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://adoontheway.gitee.io/2019/08/26/randomincpp/randtest.png">
 <meta property="og:updated_time" content="2020-08-26T06:16:59.094Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++中的随机数问题">
 <meta name="twitter:description" content="最近遇到了随机数问题">
-<meta name="twitter:image" content="https://adoontheway.gitee.io/2019/08/26/randomincpp/randtest.png">
 
 <link rel="canonical" href="https://adoontheway.gitee.io/2019/08/26/randomincpp/">
 
@@ -223,7 +221,7 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">testRandom</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i =<span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">        testRandomShuffle();</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"end of a"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i =<span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">        testrRandomShuffle();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">testRandomShuffle</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; a = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>&#125;;</span><br><span class="line">    srand(time(<span class="number">0</span>));</span><br><span class="line">    random_shuffle(a.begin(),a.end());</span><br><span class="line">    <span class="built_in">std</span>::copy(a.begin(),a.end(), <span class="built_in">std</span>::ostream_iterator&lt;<span class="keyword">int</span>&gt;(<span class="built_in">std</span>::<span class="built_in">cout</span>,<span class="string">" "</span>));</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">testrRandomShuffle</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; b = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>&#125;;</span><br><span class="line">    <span class="built_in">std</span>::random_device rd;</span><br><span class="line">    <span class="function"><span class="built_in">std</span>::mt19937 <span class="title">g</span><span class="params">(rd())</span></span>;</span><br><span class="line">    <span class="built_in">std</span>::shuffle(b.begin(), b.end(), g);</span><br><span class="line">    <span class="built_in">std</span>::copy(b.begin(),b.end(), <span class="built_in">std</span>::ostream_iterator&lt;<span class="keyword">int</span>&gt;(<span class="built_in">std</span>::<span class="built_in">cout</span>,<span class="string">" "</span>));</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>结果如下:</p>
-<p><img src="./randtest.png" alt="随机乱序测试"></p>
+<p><img data-src="./randtest.png" alt="随机乱序测试"></p>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
 <li>rand 使用的是 <a href="https://en.wikipedia.org/wiki/Linear_congruential_generator" rel="external nofollow noopener noreferrer" target="_blank">LCG算法</a></li>
 <li>mt19937 使用的是 <a href="https://en.wikipedia.org/wiki/Mersenne_Twister" rel="external nofollow noopener noreferrer" target="_blank">Mersenne Twister</a></li>
@@ -451,19 +449,6 @@
 
 
 
-<script>
-if (document.querySelectorAll('pre.mermaid').length) {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
-    mermaid.initialize({
-      theme    : 'forest',
-      logLevel : 3,
-      flowchart: { curve     : 'linear' },
-      gantt    : { axisFormat: '%m/%d/%Y' },
-      sequence : { actorMargin: 50 }
-    });
-  }, window.mermaid);
-}
-</script>
 
 
   

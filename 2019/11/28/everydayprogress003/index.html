@@ -28,12 +28,10 @@
 <meta property="og:site_name" content="Ados">
 <meta property="og:description" content="每天进步一点点，今天研究的是通过nginx来转发wss到ws">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://adoontheway.gitee.io/2019/11/28/everydayprogress003/nginx-ssl.png">
 <meta property="og:updated_time" content="2020-08-26T06:16:59.068Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="每天进步一点点003-nginx">
 <meta name="twitter:description" content="每天进步一点点，今天研究的是通过nginx来转发wss到ws">
-<meta name="twitter:image" content="https://adoontheway.gitee.io/2019/11/28/everydayprogress003/nginx-ssl.png">
 
 <link rel="canonical" href="https://adoontheway.gitee.io/2019/11/28/everydayprogress003/">
 
@@ -227,7 +225,7 @@
 <p>注意，这里不能用：  </p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl genrsa -des3 -out privkey.pem 2048</span><br></pre></td></tr></table></figure>
 
-<p>如果用了的话，再nginx验证过程中会出现读取密码错误的问题：<br><img src="./nginx-ssl.png" alt="读取密码错误">  </p>
+<p>如果用了的话，再nginx验证过程中会出现读取密码错误的问题：<br><img data-src="./nginx-ssl.png" alt="读取密码错误">  </p>
 <h3 id="生成证书请求文件"><a href="#生成证书请求文件" class="headerlink" title="生成证书请求文件"></a>生成证书请求文件</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl req -new -key privkey.pem -out cert.csr</span><br></pre></td></tr></table></figure>
 
 <p>这里会生成一个证书请求文件，如果要正式上线的话，需要用这个去向第三方商业机构申请一个数字证书了。  </p>
@@ -471,19 +469,6 @@
 
 
 
-<script>
-if (document.querySelectorAll('pre.mermaid').length) {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
-    mermaid.initialize({
-      theme    : 'forest',
-      logLevel : 3,
-      flowchart: { curve     : 'linear' },
-      gantt    : { axisFormat: '%m/%d/%Y' },
-      sequence : { actorMargin: 50 }
-    });
-  }, window.mermaid);
-}
-</script>
 
 
   

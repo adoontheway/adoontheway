@@ -28,12 +28,10 @@
 <meta property="og:site_name" content="Ados">
 <meta property="og:description" content="在centos上搭建mysql和redis开发环境遇到的一些问题记录">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://adoontheway.gitee.io/2019/05/04/dockerrediscluster/images/dockerredis-0.png">
 <meta property="og:updated_time" content="2020-08-26T06:16:59.064Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker搭建mysql和Redis开发环境">
 <meta name="twitter:description" content="在centos上搭建mysql和redis开发环境遇到的一些问题记录">
-<meta name="twitter:image" content="https://adoontheway.gitee.io/2019/05/04/dockerrediscluster/images/dockerredis-0.png">
 
 <link rel="canonical" href="https://adoontheway.gitee.io/2019/05/04/dockerrediscluster/">
 
@@ -233,7 +231,7 @@
 
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker logs redis-master</span><br><span class="line">systemctl status -l docker.service</span><br></pre></td></tr></table></figure>
 
-<p><img src="./images/dockerredis-0.png" alt="Docker Redis cluster"></p>
+<p><img data-src="./images/dockerredis-0.png" alt="Docker Redis cluster"></p>
 <h3 id="3-SELinux-is-preventing-usr-local-bin-redis-server-from-read-access-on-the-file-redis-master-conf"><a href="#3-SELinux-is-preventing-usr-local-bin-redis-server-from-read-access-on-the-file-redis-master-conf" class="headerlink" title="3. SELinux is preventing /usr/local/bin/redis-server from read access on the file redis-master.conf"></a>3. SELinux is preventing /usr/local/bin/redis-server from read access on the file redis-master.conf</h3><p>都是<strong>SELinux</strong>搞的鬼，编辑<em>/etc/sysconfig/selinux</em> 将<strong>selinux</strong>设置为<strong>disabled</strong>之后重启就可以了。</p>
 <h3 id="4-error-creating-overlay-mount-to-var-lib-docker-overlay2"><a href="#4-error-creating-overlay-mount-to-var-lib-docker-overlay2" class="headerlink" title="4. error creating overlay mount to /var/lib/docker/overlay2/"></a>4. error creating overlay mount to /var/lib/docker/overlay2/</h3><p><a href="https://colobu.com/2018/06/28/Error-response-from-daemon-error-creating-overlay-mount-to-var-lib-docker-overlay2/" rel="external nofollow noopener noreferrer" target="_blank">参考</a></p>
 <h2 id="重新建立mysql和docker容器"><a href="#重新建立mysql和docker容器" class="headerlink" title="重新建立mysql和docker容器"></a>重新建立mysql和docker容器</h2><p>上面的解决方案中清理掉了所有的docker镜像和容器</p>
@@ -468,19 +466,6 @@
 
 
 
-<script>
-if (document.querySelectorAll('pre.mermaid').length) {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
-    mermaid.initialize({
-      theme    : 'forest',
-      logLevel : 3,
-      flowchart: { curve     : 'linear' },
-      gantt    : { axisFormat: '%m/%d/%Y' },
-      sequence : { actorMargin: 50 }
-    });
-  }, window.mermaid);
-}
-</script>
 
 
   

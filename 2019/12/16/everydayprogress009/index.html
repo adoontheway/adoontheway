@@ -28,13 +28,10 @@
 <meta property="og:site_name" content="Ados">
 <meta property="og:description" content="在windows上通过golang连接rocketmq">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://adoontheway.gitee.io/2019/12/16/everydayprogress009/boost1.png">
-<meta property="og:image" content="https://adoontheway.gitee.io/2019/12/16/everydayprogress009/jsoncppbuild.png">
 <meta property="og:updated_time" content="2020-08-26T06:16:59.077Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="每天进步一点点009 - Windows上golang+rocketmq开发">
 <meta name="twitter:description" content="在windows上通过golang连接rocketmq">
-<meta name="twitter:image" content="https://adoontheway.gitee.io/2019/12/16/everydayprogress009/boost1.png">
 
 <link rel="canonical" href="https://adoontheway.gitee.io/2019/12/16/everydayprogress009/">
 
@@ -257,7 +254,7 @@
 <p>调用当前目录下的 <strong>bootstrap.bat</strong> ,成功后调用：</p>
 <figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">b2 -j8 --with-serialization --with-atomic --with-log --with-locale --with-iostreams --with-system --with-regex --with-thread --with-date_time --with-chrono --with-filesystem --build-<span class="built_in">type</span>=complete address-model=<span class="number">64</span></span><br></pre></td></tr></table></figure>
 
-<p>编译64bit的boost，漫长的等待后，总算成功了。<br><img src="./boost1.png" alt="boost1">  </p>
+<p>编译64bit的boost，漫长的等待后，总算成功了。<br><img data-src="./boost1.png" alt="boost1">  </p>
 <h2 id="编译jsoncpp"><a href="#编译jsoncpp" class="headerlink" title="编译jsoncpp"></a>编译jsoncpp</h2><p>接着编译 <strong>jsoncpp</strong>,   </p>
 <figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> jsoncpp-<span class="number">0</span>.<span class="number">10</span>.<span class="number">6</span></span><br><span class="line">devenv ./jsoncpp_lib_static.vcxproj  /Build "Release|x64" /out log.txt</span><br></pre></td></tr></table></figure>
 
@@ -271,7 +268,7 @@
 <p>切换到最新的稳定版本 <strong>1.9.2</strong>。<br>下载和安装好 <a href="https://github-production-release-asset-2e65be.s3.amazonaws.com/537699/d71dbd80-2250-11ea-94d5-dad49037009b?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20191221%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20191221T025313Z&X-Amz-Expires=300&X-Amz-Signature=94f8f388e05941eb3cfd08d7f91c2532de9daa90bd4e01865eba8f1ecde6cc60&X-Amz-SignedHeaders=host&actor_id=1528180&response-content-disposition=attachment%3B%20filename%3Dcmake-3.16.2-win64-x64.msi&response-content-type=application%2Foctet-stream" rel="external nofollow noopener noreferrer" target="_blank">cmake x64</a>。<br>启动 <em>vs2017 x86_64交叉编译环境</em> ，进入到 <strong>jsoncpp</strong> 目录，</p>
 <figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p build/debug</span><br><span class="line"><span class="built_in">cd</span> build/debug</span><br><span class="line">cmake -DCMAKE_BUILD_TYPE=release -DBUILD_STATIC_LIBS=OFF -DBUILD_SHARED_LIBS=ON  -DCMAKE_INSTALL_INCLUDEDIR=include -DARCHIVE_INSTALL_DIR=. ..</span><br></pre></td></tr></table></figure>
 
-<p>编译成功会出现如下画面：<br><img src="./jsoncppbuild.png" alt="jsoncpp build">  </p>
+<p>编译成功会出现如下画面：<br><img data-src="./jsoncppbuild.png" alt="jsoncpp build">  </p>
 <p>此时，<em>build/debug</em> 下面已经填满了。</p>
 <p>打开 <strong>JSONCPP</strong> 解决方案，全部生成会有一部分报错，管他呢，我只需要生成 <strong>jsoncpp_lib</strong> 就可以了。  </p>
 <h2 id="编译libevent"><a href="#编译libevent" class="headerlink" title="编译libevent"></a>编译libevent</h2><p>下载最新的 <strong>libevent</strong> ，切换到最新的稳定版本 <strong>release-2.1.11-stable</strong>。  </p>
@@ -501,19 +498,6 @@
 
 
 
-<script>
-if (document.querySelectorAll('pre.mermaid').length) {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
-    mermaid.initialize({
-      theme    : 'forest',
-      logLevel : 3,
-      flowchart: { curve     : 'linear' },
-      gantt    : { axisFormat: '%m/%d/%Y' },
-      sequence : { actorMargin: 50 }
-    });
-  }, window.mermaid);
-}
-</script>
 
 
   
