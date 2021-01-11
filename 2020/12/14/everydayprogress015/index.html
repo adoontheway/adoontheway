@@ -28,7 +28,7 @@
 <meta property="og:site_name" content="Ados">
 <meta property="og:description" content="近期面试中遇到的一些技术方面的问题的总结">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-12-17T07:31:11.274Z">
+<meta property="og:updated_time" content="2021-01-11T03:19:50.321Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="每天进步一点点015 - 近期面试的一些总结">
 <meta name="twitter:description" content="近期面试中遇到的一些技术方面的问题的总结">
@@ -194,7 +194,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-17 15:31:11" itemprop="dateModified" datetime="2020-12-17T15:31:11+08:00">2020-12-17</time>
+                <time title="修改时间：2021-01-11 11:19:50" itemprop="dateModified" datetime="2021-01-11T11:19:50+08:00">2021-01-11</time>
               </span>
 
           
@@ -255,9 +255,25 @@
 <p>缓存穿透：查询一个不存在的数据，因为不存在则不会写到缓存中，所以每次都会去请求 DB，如果瞬间流量过大，穿透到 DB，导致宕机。</p>
 </blockquote>
 <p>这两个都是出现在并发请求过高的时候，优化的手段是同时收到的请求合并处理就可以了。</p>
+<h3 id="Redis缓存淘汰策略"><a href="#Redis缓存淘汰策略" class="headerlink" title="Redis缓存淘汰策略"></a>Redis缓存淘汰策略</h3><p>缓存设置：</p>
+<ul>
+<li>在 redis 中，允许用户设置最大使用内存大小maxmemory，默认为0，没有指定最大缓存，如果有新的数据添加，超过最大内存，则会使redis崩溃，所以一定要设置。</li>
+<li>redis 内存数据集大小上升到一定大小的时候，就会实行数据淘汰策略。</li>
+<li>redis淘汰策略配置：maxmemory-policy voltile-lru，支持热配置  </li>
+</ul>
+<p>缓存淘汰策略：</p>
+<ol>
+<li>volatile-lru：从已设置过期时间的数据集（server.db[i].expires）中挑选最近最少使用的数据淘汰</li>
+<li>volatile-ttl：从已设置过期时间的数据集（server.db[i].expires）中挑选将要过期的数据淘汰</li>
+<li>volatile-random：从已设置过期时间的数据集（server.db[i].expires）中任意选择数据淘汰</li>
+<li>allkeys-lru：从数据集（server.db[i].dict）中挑选最近最少使用的数据淘汰</li>
+<li>allkeys-random：从数据集（server.db[i].dict）中任意选择数据淘汰</li>
+<li>no-enviction（驱逐）：禁止驱逐数据</li>
+</ol>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
-<li><a href="https://geektutu.com/post/high-performance-go.html" rel="external nofollow noopener noreferrer" target="_blank">!Go 语言高性能编程</a></li>
-<li><a href="https://geektutu.com/post/geecache-day4.html" rel="external nofollow noopener noreferrer" target="_blank">!动手写分布式缓存 - GeeCache第四天 一致性哈希(hash)</a></li>
+<li><a href="https://geektutu.com/post/high-performance-go.html" rel="external nofollow noopener noreferrer" target="_blank">Go 语言高性能编程</a></li>
+<li><a href="https://geektutu.com/post/geecache-day4.html" rel="external nofollow noopener noreferrer" target="_blank">动手写分布式缓存 - GeeCache第四天 一致性哈希(hash)</a></li>
+<li><a href="https://www.oschina.net/group/database#/detail/2302258" rel="external nofollow noopener noreferrer" target="_blank">Redis内存模型原理</a></li>
 </ul>
 
     </div>
@@ -342,7 +358,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#近期面试中遇到的一些问题的总结"><span class="nav-number">1.</span> <span class="nav-text">近期面试中遇到的一些问题的总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#规划"><span class="nav-number">1.1.</span> <span class="nav-text">规划</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题汇总"><span class="nav-number">1.2.</span> <span class="nav-text">问题汇总</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#golang的垃圾回收"><span class="nav-number">1.2.1.</span> <span class="nav-text">golang的垃圾回收</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#变量逃逸"><span class="nav-number">1.2.2.</span> <span class="nav-text">变量逃逸</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串拼接"><span class="nav-number">1.2.3.</span> <span class="nav-text">字符串拼接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内存分配的问题"><span class="nav-number">1.2.4.</span> <span class="nav-text">内存分配的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#处理channel超时"><span class="nav-number">1.2.5.</span> <span class="nav-text">处理channel超时</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#for和range"><span class="nav-number">1.2.6.</span> <span class="nav-text">for和range</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#读写锁和互斥锁"><span class="nav-number">1.2.7.</span> <span class="nav-text">读写锁和互斥锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用缓存失效算法"><span class="nav-number">1.2.8.</span> <span class="nav-text">常用缓存失效算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分布式缓存相关"><span class="nav-number">1.3.</span> <span class="nav-text">分布式缓存相关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分布式缓存节点存值问题"><span class="nav-number">1.3.1.</span> <span class="nav-text">分布式缓存节点存值问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存雪崩"><span class="nav-number">1.3.2.</span> <span class="nav-text">缓存雪崩</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一致性hash算法"><span class="nav-number">1.3.3.</span> <span class="nav-text">一致性hash算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一致性hash可能会导致的数据倾斜问题"><span class="nav-number">1.3.4.</span> <span class="nav-text">一致性hash可能会导致的数据倾斜问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存击穿和缓存穿透"><span class="nav-number">1.3.5.</span> <span class="nav-text">缓存击穿和缓存穿透</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">2.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#近期面试中遇到的一些问题的总结"><span class="nav-number">1.</span> <span class="nav-text">近期面试中遇到的一些问题的总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#规划"><span class="nav-number">1.1.</span> <span class="nav-text">规划</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题汇总"><span class="nav-number">1.2.</span> <span class="nav-text">问题汇总</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#golang的垃圾回收"><span class="nav-number">1.2.1.</span> <span class="nav-text">golang的垃圾回收</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#变量逃逸"><span class="nav-number">1.2.2.</span> <span class="nav-text">变量逃逸</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串拼接"><span class="nav-number">1.2.3.</span> <span class="nav-text">字符串拼接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内存分配的问题"><span class="nav-number">1.2.4.</span> <span class="nav-text">内存分配的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#处理channel超时"><span class="nav-number">1.2.5.</span> <span class="nav-text">处理channel超时</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#for和range"><span class="nav-number">1.2.6.</span> <span class="nav-text">for和range</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#读写锁和互斥锁"><span class="nav-number">1.2.7.</span> <span class="nav-text">读写锁和互斥锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用缓存失效算法"><span class="nav-number">1.2.8.</span> <span class="nav-text">常用缓存失效算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分布式缓存相关"><span class="nav-number">1.3.</span> <span class="nav-text">分布式缓存相关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分布式缓存节点存值问题"><span class="nav-number">1.3.1.</span> <span class="nav-text">分布式缓存节点存值问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存雪崩"><span class="nav-number">1.3.2.</span> <span class="nav-text">缓存雪崩</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一致性hash算法"><span class="nav-number">1.3.3.</span> <span class="nav-text">一致性hash算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一致性hash可能会导致的数据倾斜问题"><span class="nav-number">1.3.4.</span> <span class="nav-text">一致性hash可能会导致的数据倾斜问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存击穿和缓存穿透"><span class="nav-number">1.3.5.</span> <span class="nav-text">缓存击穿和缓存穿透</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis缓存淘汰策略"><span class="nav-number">1.3.6.</span> <span class="nav-text">Redis缓存淘汰策略</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">2.</span> <span class="nav-text">参考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -405,7 +421,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
