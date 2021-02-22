@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://adoontheway.gitee.io/"/>
-  <updated>2021-02-22T05:24:56.247Z</updated>
+  <updated>2021-02-22T05:28:30.321Z</updated>
   <id>https://adoontheway.gitee.io/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="https://adoontheway.gitee.io/2021/02/22/everydayprogress019/"/>
     <id>https://adoontheway.gitee.io/2021/02/22/everydayprogress019/</id>
     <published>2021-02-22T05:07:29.000Z</published>
-    <updated>2021-02-22T05:24:56.247Z</updated>
+    <updated>2021-02-22T05:28:30.321Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>最近在网上下载并学习了一个golang开发im的完整课程。<br>完成课程后，做一些思考和总结有利于知识的巩固与消化。</p><h1 id="Contents"><a href="#Contents" class="headerlink" title="Contents"></a>Contents</h1><p>以下是对用到的知识，技术细节，个人新的体会等的一些回顾</p><h2 id="技术实施"><a href="#技术实施" class="headerlink" title="技术实施"></a>技术实施</h2><p>基础开发语言是golang<br>数据库是使用的mysql，用到了xorm来操作mysql<br>通讯用到了websocket/json<br>分布式通讯用的是udpsocket</p><h2 id="mysql-xorm"><a href="#mysql-xorm" class="headerlink" title="mysql/xorm"></a>mysql/xorm</h2><p>突然发现去年更新的win10可以使用docker，然后将docker安装在本机，利用docker来跑mysql。<br>发现xorm真好用啊，不用去写一堆sql来建表，但是过大的自由度是随之而来的其他代价，这个需要研究一下。后续也需要研究gorm和xorm的对比。</p><h2 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h2><p>学会了model/controller/service这样的分层：</p><ul><li>model放数据定义相关的，entity之类的东西</li><li>controller也就是直接的处理器，在web中就放接口api</li><li>service用于操作数据库查询，数据处理等逻辑的，更像mvc里面的m，通过使用model来给controller提供逻辑接口</li><li>在前后端分离中是不会有view层存在的，view一般都是前端打包好的一堆静态文件，之后直接放cdn就可以了<h2 id="分布式方案"><a href="#分布式方案" class="headerlink" title="分布式方案"></a>分布式方案</h2>学会了不同的分布式方案，之前在项目中使用的是通过第三方提供的服务中心【zookeeper】来注册/发现服务，这个项目里头用的的udp来发包，简单易懂，但是个人还是有一些不理解的地方。</li></ul>]]></content>
+    <content type="html"><![CDATA[<h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>最近在网上下载并学习了一个golang开发im的完整课程。<br>完成课程后，做一些思考和总结有利于知识的巩固与消化。</p><h1 id="Contents"><a href="#Contents" class="headerlink" title="Contents"></a>Contents</h1><p>以下是对用到的知识，技术细节，个人新的体会等的一些回顾</p><h2 id="技术实施"><a href="#技术实施" class="headerlink" title="技术实施"></a>技术实施</h2><p>基础开发语言是golang<br>数据库是使用的mysql，用到了xorm来操作mysql<br>通讯用到了websocket/json<br>分布式通讯用的是udpsocket</p><h2 id="mysql-xorm"><a href="#mysql-xorm" class="headerlink" title="mysql/xorm"></a>mysql/xorm</h2><p>突然发现去年更新的win10可以使用docker，然后将docker安装在本机，利用docker来跑mysql。<br>发现xorm真好用啊，不用去写一堆sql来建表，但是过大的自由度是随之而来的其他代价，这个需要研究一下。后续也需要研究gorm和xorm的对比。</p><h2 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h2><p>学会了model/controller/service这样的分层：</p><ul><li>model放数据定义相关的，entity之类的东西</li><li>controller也就是直接的处理器，在web中就放接口api</li><li>service用于操作数据库查询，数据处理等逻辑的，更像mvc里面的m，通过使用model来给controller提供逻辑接口</li><li>在前后端分离中是不会有view层存在的，view一般都是前端打包好的一堆静态文件，之后直接放cdn就可以了<h2 id="分布式方案"><a href="#分布式方案" class="headerlink" title="分布式方案"></a>分布式方案</h2>学会了不同的分布式方案，之前在项目中使用的是通过第三方提供的服务中心【zookeeper】来注册/发现服务，这个项目里头用的的udp来发包，简单易懂，但是个人还是有一些不理解的地方。<h2 id="go-mod"><a href="#go-mod" class="headerlink" title="go mod"></a>go mod</h2>终于真正的用上了go module，在项目中使用。<br>对于当前项目子目录下的package的使用有了新的认识。</li></ul>]]></content>
     
     <summary type="html">
     
