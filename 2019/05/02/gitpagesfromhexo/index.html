@@ -219,7 +219,7 @@
 <h2 id="ISSUES"><a href="#ISSUES" class="headerlink" title="ISSUES"></a>ISSUES</h2><h3 id="1-Next版本太老"><a href="#1-Next版本太老" class="headerlink" title="1. Next版本太老"></a>1. Next版本太老</h3><p>这个是比较老的，有一年多没有更新了，最新版本是5.1.4<br><a href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow noopener noreferrer" target="_blank">iissnan/hexo-theme-next</a><br>这个比较新，版本是7.1.1<br><a href="https://github.com/theme-next/hexo-theme-next" rel="external nofollow noopener noreferrer" target="_blank">theme-next/hexo-theme-next</a></p>
 <h3 id="2-安装Next的Fancybox插件"><a href="#2-安装Next的Fancybox插件" class="headerlink" title="2. 安装Next的Fancybox插件"></a>2. 安装Next的Fancybox插件</h3><p><a href="https://github.com/theme-next/theme-next-fancybox3" rel="external nofollow noopener noreferrer" target="_blank">theme-next-fancybox3</a></p>
 <h3 id="3-blocked-mixed-content"><a href="#3-blocked-mixed-content" class="headerlink" title="3. blocked:mixed-content"></a>3. blocked:mixed-content</h3><p>添加<strong>Google Adsense</strong>依赖加载 <em>adsbygoogle.js</em> 的时候，在<strong>gitpage</strong>上出现 <em>blocked:mixed-content</em> 的错误。<br>据查是因为在<em>https</em>页面中引入了<em>http</em>资源所致。<br><strong>google adsense</strong>中嵌入<em>adsbygoogle.js</em>的脚本是这样子的</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">async</span> <span class="attr">src</span>=<span class="string">"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">async</span> <span class="attr">src</span>=<span class="string">"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>而我却以为是漏掉了<em>http</em>误加了个<em>http:</em>在地址前面。<br>话说<em>http</em>什么时候变成这个样子了的。</p>
 <h3 id="4-修改menu不生效-update-on-2019-5-10"><a href="#4-修改menu不生效-update-on-2019-5-10" class="headerlink" title="4. 修改menu不生效 [update on 2019-5-10]"></a>4. 修改menu不生效 [update on 2019-5-10]</h3><p>突然发现是在next中修改_config.xml 才生效，想起之前似乎设置了一个覆盖属性为true</p>
@@ -327,14 +327,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">75</span>
+          <span class="site-state-item-count">77</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">45</span>
+        <span class="site-state-item-count">47</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

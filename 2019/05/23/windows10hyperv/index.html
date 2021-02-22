@@ -217,7 +217,7 @@
 
       
         <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://www.ithome.com/html/win10/374942.htm" rel="external nofollow noopener noreferrer" target="_blank">Windows 10家庭版如何添加Hyper-V虚拟机？</a></p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">pushd <span class="string">"%~dp0"</span></span><br><span class="line"></span><br><span class="line">dir /b %SystemRoot%\servicing\Packages\*Hyper<span class="literal">-V</span>*.mum &gt;hyper<span class="literal">-v</span>.txt</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> /f %%i <span class="keyword">in</span> (<span class="string">'findstr /i . hyper-v.txt 2^&gt;nul'</span>) <span class="keyword">do</span> dism /online /norestart /<span class="built_in">add-package</span>:<span class="string">"%SystemRoot%\servicing\Packages\%%i"</span></span><br><span class="line"></span><br><span class="line">del hyper<span class="literal">-v</span>.txt</span><br><span class="line"></span><br><span class="line">Dism /online /<span class="built_in">enable-feature</span> /featurename:Microsoft<span class="literal">-Hyper</span><span class="literal">-V</span><span class="literal">-All</span> /LimitAccess /ALL</span><br></pre></td></tr></table></figure>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">pushd <span class="string">"%~dp0"</span></span><br><span class="line"></span><br><span class="line">dir /b %SystemRoot%\servicing\Packages\*Hyper-V*.mum &gt;hyper-v.txt</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> /f %%i <span class="keyword">in</span> (<span class="string">'findstr /i . hyper-v.txt 2^&gt;nul'</span>) <span class="keyword">do</span> dism /online /norestart /add-package:<span class="string">"%SystemRoot%\servicing\Packages\%%i"</span></span><br><span class="line"></span><br><span class="line">del hyper-v.txt</span><br><span class="line"></span><br><span class="line">Dism /online /enable-feature /featurename:Microsoft-Hyper-V-All /LimitAccess /ALL</span><br></pre></td></tr></table></figure>
 
 <p>但是开发用的VMWare Workstation与Device/Credential Guard不兼容，导致打不开VMWare。</p>
 <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p><a href="https://www.zhihu.com/question/64511903" rel="external nofollow noopener noreferrer" target="_blank">VMware Workstation 与 Device/Credential Guard 不兼容？</a></p>
@@ -324,14 +324,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">75</span>
+          <span class="site-state-item-count">77</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">45</span>
+        <span class="site-state-item-count">47</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
