@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.9.0">
+<meta name="generator" content="Hexo 5.4.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -21,17 +21,20 @@
   </script>
 
   <meta name="description" content="在centos上搭建mysql和redis开发环境遇到的一些问题记录">
-<meta name="keywords" content="docker,redis">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker搭建mysql和Redis开发环境">
 <meta property="og:url" content="https://adoontheway.gitee.io/2019/05/04/dockerrediscluster/index.html">
 <meta property="og:site_name" content="Ados">
 <meta property="og:description" content="在centos上搭建mysql和redis开发环境遇到的一些问题记录">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-08-26T06:16:59.064Z">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://adoontheway.gitee.io/2019/05/04/dockerrediscluster/images/dockerredis-0.png">
+<meta property="article:published_time" content="2019-05-04T06:25:12.000Z">
+<meta property="article:modified_time" content="2020-08-26T06:16:59.064Z">
+<meta property="article:author" content="ado">
+<meta property="article:tag" content="docker">
+<meta property="article:tag" content="redis">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Docker搭建mysql和Redis开发环境">
-<meta name="twitter:description" content="在centos上搭建mysql和redis开发环境遇到的一些问题记录">
+<meta name="twitter:image" content="https://adoontheway.gitee.io/2019/05/04/dockerrediscluster/images/dockerredis-0.png">
 
 <link rel="canonical" href="https://adoontheway.gitee.io/2019/05/04/dockerrediscluster/">
 
@@ -336,7 +339,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看docker-mysql镜像信息"><span class="nav-number">1.</span> <span class="nav-text">查看docker mysql镜像信息</span></a></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#问题"><span class="nav-number"></span> <span class="nav-text">问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-redis容器中的redis-conf访问被拒"><span class="nav-number">1.</span> <span class="nav-text">1. redis容器中的redis.conf访问被拒</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Fatal-error-can’t-open-config-file-‘-usr-local-etc-redis-redis-conf"><span class="nav-number">2.</span> <span class="nav-text">2. Fatal error, can’t open config file ‘/usr/local/etc/redis/redis.conf</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-SELinux-is-preventing-usr-local-bin-redis-server-from-read-access-on-the-file-redis-master-conf"><span class="nav-number">3.</span> <span class="nav-text">3. SELinux is preventing /usr/local/bin/redis-server from read access on the file redis-master.conf</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-error-creating-overlay-mount-to-var-lib-docker-overlay2"><span class="nav-number">4.</span> <span class="nav-text">4. error creating overlay mount to /var/lib/docker/overlay2/</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重新建立mysql和docker容器"><span class="nav-number"></span> <span class="nav-text">重新建立mysql和docker容器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#master"><span class="nav-number">1.</span> <span class="nav-text">master</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#slave"><span class="nav-number">2.</span> <span class="nav-text">slave</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置开机启动"><span class="nav-number">3.</span> <span class="nav-text">设置开机启动</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意"><span class="nav-number"></span> <span class="nav-text">注意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number"></span> <span class="nav-text">参考</span></a></li></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8Bdocker-mysql%E9%95%9C%E5%83%8F%E4%BF%A1%E6%81%AF"><span class="nav-number">1.</span> <span class="nav-text">查看docker mysql镜像信息</span></a></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number"></span> <span class="nav-text">问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-redis%E5%AE%B9%E5%99%A8%E4%B8%AD%E7%9A%84redis-conf%E8%AE%BF%E9%97%AE%E8%A2%AB%E6%8B%92"><span class="nav-number">1.</span> <span class="nav-text">1. redis容器中的redis.conf访问被拒</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Fatal-error-can%E2%80%99t-open-config-file-%E2%80%98-usr-local-etc-redis-redis-conf"><span class="nav-number">2.</span> <span class="nav-text">2. Fatal error, can’t open config file ‘&#x2F;usr&#x2F;local&#x2F;etc&#x2F;redis&#x2F;redis.conf</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-SELinux-is-preventing-usr-local-bin-redis-server-from-read-access-on-the-file-redis-master-conf"><span class="nav-number">3.</span> <span class="nav-text">3. SELinux is preventing &#x2F;usr&#x2F;local&#x2F;bin&#x2F;redis-server from read access on the file redis-master.conf</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-error-creating-overlay-mount-to-var-lib-docker-overlay2"><span class="nav-number">4.</span> <span class="nav-text">4. error creating overlay mount to &#x2F;var&#x2F;lib&#x2F;docker&#x2F;overlay2&#x2F;</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E6%96%B0%E5%BB%BA%E7%AB%8Bmysql%E5%92%8Cdocker%E5%AE%B9%E5%99%A8"><span class="nav-number"></span> <span class="nav-text">重新建立mysql和docker容器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#master"><span class="nav-number">1.</span> <span class="nav-text">master</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#slave"><span class="nav-number">2.</span> <span class="nav-text">slave</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8"><span class="nav-number">3.</span> <span class="nav-text">设置开机启动</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F"><span class="nav-number"></span> <span class="nav-text">注意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number"></span> <span class="nav-text">参考</span></a></li></div>
       </div>
       <!--/noindex-->
 
@@ -365,16 +368,16 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/adoontheway" title="GitHub → https://github.com/adoontheway" rel="external nofollow noopener noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+        <a href="https://github.com/adoontheway" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;adoontheway" rel="external nofollow noopener noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://gitee.com/adoontheway" title="Gitee → https://gitee.com/adoontheway" rel="external nofollow noopener noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i>Gitee</a>
+        <a href="https://gitee.com/adoontheway" title="Gitee → https:&#x2F;&#x2F;gitee.com&#x2F;adoontheway" rel="external nofollow noopener noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i>Gitee</a>
       </span>
       <span class="links-of-author-item">
-        <a href="http://cnblogs.com/adoontheway" title="Cnblogs → http://cnblogs.com/adoontheway" rel="external nofollow noopener noreferrer" target="_blank"><i class="fa fa-fw fa-cnblogs"></i>Cnblogs</a>
+        <a href="http://cnblogs.com/adoontheway" title="Cnblogs → http:&#x2F;&#x2F;cnblogs.com&#x2F;adoontheway" rel="external nofollow noopener noreferrer" target="_blank"><i class="fa fa-fw fa-cnblogs"></i>Cnblogs</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://legacy.gitbook.com/@adobeattheworld" title="Gitbook → https://legacy.gitbook.com/@adobeattheworld" rel="external nofollow noopener noreferrer" target="_blank"><i class="fa fa-fw fa-gitbook"></i>Gitbook</a>
+        <a href="https://legacy.gitbook.com/@adobeattheworld" title="Gitbook → https:&#x2F;&#x2F;legacy.gitbook.com&#x2F;@adobeattheworld" rel="external nofollow noopener noreferrer" target="_blank"><i class="fa fa-fw fa-gitbook"></i>Gitbook</a>
       </span>
   </div>
 
@@ -405,7 +408,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">ado</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Muse</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Muse</a> 强力驱动
   </div>
 
 
@@ -448,9 +451,17 @@
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/muse.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
 
 
 

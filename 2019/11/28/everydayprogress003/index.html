@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.9.0">
+<meta name="generator" content="Hexo 5.4.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -21,17 +21,20 @@
   </script>
 
   <meta name="description" content="每天进步一点点，今天研究的是通过nginx来转发wss到ws">
-<meta name="keywords" content="nginx,ws">
 <meta property="og:type" content="article">
 <meta property="og:title" content="每天进步一点点003-nginx">
 <meta property="og:url" content="https://adoontheway.gitee.io/2019/11/28/everydayprogress003/index.html">
 <meta property="og:site_name" content="Ados">
 <meta property="og:description" content="每天进步一点点，今天研究的是通过nginx来转发wss到ws">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-08-26T06:16:59.068Z">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://adoontheway.gitee.io/2019/11/28/everydayprogress003/nginx-ssl.png">
+<meta property="article:published_time" content="2019-11-28T06:23:27.000Z">
+<meta property="article:modified_time" content="2020-08-26T06:16:59.068Z">
+<meta property="article:author" content="ado">
+<meta property="article:tag" content="nginx">
+<meta property="article:tag" content="ws">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="每天进步一点点003-nginx">
-<meta name="twitter:description" content="每天进步一点点，今天研究的是通过nginx来转发wss到ws">
+<meta name="twitter:image" content="https://adoontheway.gitee.io/2019/11/28/everydayprogress003/nginx-ssl.png">
 
 <link rel="canonical" href="https://adoontheway.gitee.io/2019/11/28/everydayprogress003/">
 
@@ -339,7 +342,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Contents"><span class="nav-number">1.</span> <span class="nav-text">Contents</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#在CentOS上安装nginx"><span class="nav-number">1.1.</span> <span class="nav-text">在CentOS上安装nginx</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生成wss需要的key与证书"><span class="nav-number">1.2.</span> <span class="nav-text">生成wss需要的key与证书</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#生成密钥"><span class="nav-number">1.2.1.</span> <span class="nav-text">生成密钥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成证书请求文件"><span class="nav-number">1.2.2.</span> <span class="nav-text">生成证书请求文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成开发用的数字证书"><span class="nav-number">1.2.3.</span> <span class="nav-text">生成开发用的数字证书</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#完成"><span class="nav-number">1.2.4.</span> <span class="nav-text">完成</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内容提供"><span class="nav-number">1.3.</span> <span class="nav-text">内容提供</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#conf修改"><span class="nav-number">1.4.</span> <span class="nav-text">conf修改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#加入websocket-conf"><span class="nav-number">1.5.</span> <span class="nav-text">加入websocket.conf</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#验证"><span class="nav-number">1.6.</span> <span class="nav-text">验证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#错误追踪"><span class="nav-number">1.7.</span> <span class="nav-text">错误追踪</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结果"><span class="nav-number">1.8.</span> <span class="nav-text">结果</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">2.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Contents"><span class="nav-number">1.</span> <span class="nav-text">Contents</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8CentOS%E4%B8%8A%E5%AE%89%E8%A3%85nginx"><span class="nav-number">1.1.</span> <span class="nav-text">在CentOS上安装nginx</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E6%88%90wss%E9%9C%80%E8%A6%81%E7%9A%84key%E4%B8%8E%E8%AF%81%E4%B9%A6"><span class="nav-number">1.2.</span> <span class="nav-text">生成wss需要的key与证书</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E5%AF%86%E9%92%A5"><span class="nav-number">1.2.1.</span> <span class="nav-text">生成密钥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E8%AF%81%E4%B9%A6%E8%AF%B7%E6%B1%82%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.2.</span> <span class="nav-text">生成证书请求文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E5%BC%80%E5%8F%91%E7%94%A8%E7%9A%84%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6"><span class="nav-number">1.2.3.</span> <span class="nav-text">生成开发用的数字证书</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%8C%E6%88%90"><span class="nav-number">1.2.4.</span> <span class="nav-text">完成</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AE%B9%E6%8F%90%E4%BE%9B"><span class="nav-number">1.3.</span> <span class="nav-text">内容提供</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#conf%E4%BF%AE%E6%94%B9"><span class="nav-number">1.4.</span> <span class="nav-text">conf修改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E5%85%A5websocket-conf"><span class="nav-number">1.5.</span> <span class="nav-text">加入websocket.conf</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AA%8C%E8%AF%81"><span class="nav-number">1.6.</span> <span class="nav-text">验证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%94%99%E8%AF%AF%E8%BF%BD%E8%B8%AA"><span class="nav-number">1.7.</span> <span class="nav-text">错误追踪</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E6%9E%9C"><span class="nav-number">1.8.</span> <span class="nav-text">结果</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">2.</span> <span class="nav-text">Reference</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -368,16 +371,16 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/adoontheway" title="GitHub → https://github.com/adoontheway" rel="external nofollow noopener noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+        <a href="https://github.com/adoontheway" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;adoontheway" rel="external nofollow noopener noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://gitee.com/adoontheway" title="Gitee → https://gitee.com/adoontheway" rel="external nofollow noopener noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i>Gitee</a>
+        <a href="https://gitee.com/adoontheway" title="Gitee → https:&#x2F;&#x2F;gitee.com&#x2F;adoontheway" rel="external nofollow noopener noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i>Gitee</a>
       </span>
       <span class="links-of-author-item">
-        <a href="http://cnblogs.com/adoontheway" title="Cnblogs → http://cnblogs.com/adoontheway" rel="external nofollow noopener noreferrer" target="_blank"><i class="fa fa-fw fa-cnblogs"></i>Cnblogs</a>
+        <a href="http://cnblogs.com/adoontheway" title="Cnblogs → http:&#x2F;&#x2F;cnblogs.com&#x2F;adoontheway" rel="external nofollow noopener noreferrer" target="_blank"><i class="fa fa-fw fa-cnblogs"></i>Cnblogs</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://legacy.gitbook.com/@adobeattheworld" title="Gitbook → https://legacy.gitbook.com/@adobeattheworld" rel="external nofollow noopener noreferrer" target="_blank"><i class="fa fa-fw fa-gitbook"></i>Gitbook</a>
+        <a href="https://legacy.gitbook.com/@adobeattheworld" title="Gitbook → https:&#x2F;&#x2F;legacy.gitbook.com&#x2F;@adobeattheworld" rel="external nofollow noopener noreferrer" target="_blank"><i class="fa fa-fw fa-gitbook"></i>Gitbook</a>
       </span>
   </div>
 
@@ -408,7 +411,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">ado</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Muse</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Muse</a> 强力驱动
   </div>
 
 
@@ -451,9 +454,17 @@
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/muse.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
 
 
 

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.9.0">
+<meta name="generator" content="Hexo 5.4.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -21,17 +21,19 @@
   </script>
 
   <meta name="description" content="在Windows上安装和调试mongocxx">
-<meta name="keywords" content="c++,mongo,boost">
 <meta property="og:type" content="article">
 <meta property="og:title" content="VS2017 调试 Mongocxx">
 <meta property="og:url" content="https://adoontheway.gitee.io/2019/06/29/winmongocxx/index.html">
 <meta property="og:site_name" content="Ados">
 <meta property="og:description" content="在Windows上安装和调试mongocxx">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-08-26T06:16:59.102Z">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-06-29T10:45:16.000Z">
+<meta property="article:modified_time" content="2020-08-26T06:16:59.102Z">
+<meta property="article:author" content="ado">
+<meta property="article:tag" content="c++">
+<meta property="article:tag" content="mongo">
+<meta property="article:tag" content="boost">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="VS2017 调试 Mongocxx">
-<meta name="twitter:description" content="在Windows上安装和调试mongocxx">
 
 <link rel="canonical" href="https://adoontheway.gitee.io/2019/06/29/winmongocxx/">
 
@@ -428,7 +430,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preface"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Prerequirement"><span class="nav-number">2.</span> <span class="nav-text">Prerequirement</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-mongo-c-driver"><span class="nav-number">2.1.</span> <span class="nav-text">安装 mongo-c-driver</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Refer"><span class="nav-number">2.1.1.</span> <span class="nav-text">Refer</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装boost"><span class="nav-number">2.2.</span> <span class="nav-text">安装boost</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Refer-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">Refer</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-mongocxx"><span class="nav-number">2.3.</span> <span class="nav-text">安装 mongocxx</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#fatal-error-C1017-无效的整数常量表达式"><span class="nav-number">2.3.1.</span> <span class="nav-text">fatal error C1017: 无效的整数常量表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Refer-2"><span class="nav-number">2.3.2.</span> <span class="nav-text">Refer</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preface"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Prerequirement"><span class="nav-number">2.</span> <span class="nav-text">Prerequirement</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-mongo-c-driver"><span class="nav-number">2.1.</span> <span class="nav-text">安装 mongo-c-driver</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Refer"><span class="nav-number">2.1.1.</span> <span class="nav-text">Refer</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85boost"><span class="nav-number">2.2.</span> <span class="nav-text">安装boost</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Refer-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">Refer</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-mongocxx"><span class="nav-number">2.3.</span> <span class="nav-text">安装 mongocxx</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#fatal-error-C1017-%E6%97%A0%E6%95%88%E7%9A%84%E6%95%B4%E6%95%B0%E5%B8%B8%E9%87%8F%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">2.3.1.</span> <span class="nav-text">fatal error C1017: 无效的整数常量表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Refer-2"><span class="nav-number">2.3.2.</span> <span class="nav-text">Refer</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -457,16 +459,16 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/adoontheway" title="GitHub → https://github.com/adoontheway" rel="external nofollow noopener noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+        <a href="https://github.com/adoontheway" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;adoontheway" rel="external nofollow noopener noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://gitee.com/adoontheway" title="Gitee → https://gitee.com/adoontheway" rel="external nofollow noopener noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i>Gitee</a>
+        <a href="https://gitee.com/adoontheway" title="Gitee → https:&#x2F;&#x2F;gitee.com&#x2F;adoontheway" rel="external nofollow noopener noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i>Gitee</a>
       </span>
       <span class="links-of-author-item">
-        <a href="http://cnblogs.com/adoontheway" title="Cnblogs → http://cnblogs.com/adoontheway" rel="external nofollow noopener noreferrer" target="_blank"><i class="fa fa-fw fa-cnblogs"></i>Cnblogs</a>
+        <a href="http://cnblogs.com/adoontheway" title="Cnblogs → http:&#x2F;&#x2F;cnblogs.com&#x2F;adoontheway" rel="external nofollow noopener noreferrer" target="_blank"><i class="fa fa-fw fa-cnblogs"></i>Cnblogs</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://legacy.gitbook.com/@adobeattheworld" title="Gitbook → https://legacy.gitbook.com/@adobeattheworld" rel="external nofollow noopener noreferrer" target="_blank"><i class="fa fa-fw fa-gitbook"></i>Gitbook</a>
+        <a href="https://legacy.gitbook.com/@adobeattheworld" title="Gitbook → https:&#x2F;&#x2F;legacy.gitbook.com&#x2F;@adobeattheworld" rel="external nofollow noopener noreferrer" target="_blank"><i class="fa fa-fw fa-gitbook"></i>Gitbook</a>
       </span>
   </div>
 
@@ -497,7 +499,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">ado</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Muse</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Muse</a> 强力驱动
   </div>
 
 
@@ -540,9 +542,17 @@
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/muse.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
 
 
 

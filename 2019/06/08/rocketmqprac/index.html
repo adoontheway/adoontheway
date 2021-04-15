@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.9.0">
+<meta name="generator" content="Hexo 5.4.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -21,17 +21,17 @@
   </script>
 
   <meta name="description" content="工作中需要用到RocketMQ,所以需要了解一下">
-<meta name="keywords" content="rocketmq">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hello,RocketMQ">
 <meta property="og:url" content="https://adoontheway.gitee.io/2019/06/08/rocketmqprac/index.html">
 <meta property="og:site_name" content="Ados">
 <meta property="og:description" content="工作中需要用到RocketMQ,所以需要了解一下">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-08-26T06:16:59.097Z">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-06-08T09:01:00.000Z">
+<meta property="article:modified_time" content="2020-08-26T06:16:59.097Z">
+<meta property="article:author" content="ado">
+<meta property="article:tag" content="rocketmq">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello,RocketMQ">
-<meta name="twitter:description" content="工作中需要用到RocketMQ,所以需要了解一下">
 
 <link rel="canonical" href="https://adoontheway.gitee.io/2019/06/08/rocketmqprac/">
 
@@ -324,7 +324,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preface"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#系统要求"><span class="nav-number">1.1.</span> <span class="nav-text">系统要求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下载与安装"><span class="nav-number">1.2.</span> <span class="nav-text">下载与安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解压"><span class="nav-number">1.2.1.</span> <span class="nav-text">解压</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Maven的安装"><span class="nav-number">1.2.2.</span> <span class="nav-text">Maven的安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动Name-Server"><span class="nav-number">1.3.</span> <span class="nav-text">启动Name Server</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动Broker"><span class="nav-number">1.4.</span> <span class="nav-text">启动Broker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#发送和接受消息"><span class="nav-number">1.5.</span> <span class="nav-text">发送和接受消息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关闭服务"><span class="nav-number">1.6.</span> <span class="nav-text">关闭服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Golang的RocketMQ-client"><span class="nav-number">1.7.</span> <span class="nav-text">Golang的RocketMQ-client</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preface"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E8%A6%81%E6%B1%82"><span class="nav-number">1.1.</span> <span class="nav-text">系统要求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E4%B8%8E%E5%AE%89%E8%A3%85"><span class="nav-number">1.2.</span> <span class="nav-text">下载与安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%8E%8B"><span class="nav-number">1.2.1.</span> <span class="nav-text">解压</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Maven%E7%9A%84%E5%AE%89%E8%A3%85"><span class="nav-number">1.2.2.</span> <span class="nav-text">Maven的安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8Name-Server"><span class="nav-number">1.3.</span> <span class="nav-text">启动Name Server</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8Broker"><span class="nav-number">1.4.</span> <span class="nav-text">启动Broker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%91%E9%80%81%E5%92%8C%E6%8E%A5%E5%8F%97%E6%B6%88%E6%81%AF"><span class="nav-number">1.5.</span> <span class="nav-text">发送和接受消息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E9%97%AD%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.6.</span> <span class="nav-text">关闭服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Golang%E7%9A%84RocketMQ-client"><span class="nav-number">1.7.</span> <span class="nav-text">Golang的RocketMQ-client</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -353,16 +353,16 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/adoontheway" title="GitHub → https://github.com/adoontheway" rel="external nofollow noopener noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+        <a href="https://github.com/adoontheway" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;adoontheway" rel="external nofollow noopener noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://gitee.com/adoontheway" title="Gitee → https://gitee.com/adoontheway" rel="external nofollow noopener noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i>Gitee</a>
+        <a href="https://gitee.com/adoontheway" title="Gitee → https:&#x2F;&#x2F;gitee.com&#x2F;adoontheway" rel="external nofollow noopener noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i>Gitee</a>
       </span>
       <span class="links-of-author-item">
-        <a href="http://cnblogs.com/adoontheway" title="Cnblogs → http://cnblogs.com/adoontheway" rel="external nofollow noopener noreferrer" target="_blank"><i class="fa fa-fw fa-cnblogs"></i>Cnblogs</a>
+        <a href="http://cnblogs.com/adoontheway" title="Cnblogs → http:&#x2F;&#x2F;cnblogs.com&#x2F;adoontheway" rel="external nofollow noopener noreferrer" target="_blank"><i class="fa fa-fw fa-cnblogs"></i>Cnblogs</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://legacy.gitbook.com/@adobeattheworld" title="Gitbook → https://legacy.gitbook.com/@adobeattheworld" rel="external nofollow noopener noreferrer" target="_blank"><i class="fa fa-fw fa-gitbook"></i>Gitbook</a>
+        <a href="https://legacy.gitbook.com/@adobeattheworld" title="Gitbook → https:&#x2F;&#x2F;legacy.gitbook.com&#x2F;@adobeattheworld" rel="external nofollow noopener noreferrer" target="_blank"><i class="fa fa-fw fa-gitbook"></i>Gitbook</a>
       </span>
   </div>
 
@@ -393,7 +393,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">ado</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Muse</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Muse</a> 强力驱动
   </div>
 
 
@@ -436,9 +436,17 @@
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/muse.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
 
 
 

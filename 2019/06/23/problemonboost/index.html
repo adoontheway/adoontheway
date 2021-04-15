@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.9.0">
+<meta name="generator" content="Hexo 5.4.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -21,17 +21,18 @@
   </script>
 
   <meta name="description" content="boost开发过程中遇到的一些事情以及解决过程">
-<meta name="keywords" content="c++,boost">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Boost问题手记">
 <meta property="og:url" content="https://adoontheway.gitee.io/2019/06/23/problemonboost/index.html">
 <meta property="og:site_name" content="Ados">
 <meta property="og:description" content="boost开发过程中遇到的一些事情以及解决过程">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-08-26T06:16:59.092Z">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-06-22T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-08-26T06:16:59.092Z">
+<meta property="article:author" content="ado">
+<meta property="article:tag" content="c++">
+<meta property="article:tag" content="boost">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Boost问题手记">
-<meta name="twitter:description" content="boost开发过程中遇到的一些事情以及解决过程">
 
 <link rel="canonical" href="https://adoontheway.gitee.io/2019/06/23/problemonboost/">
 
@@ -313,7 +314,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Issues"><span class="nav-number">1.</span> <span class="nav-text">Issues</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#multiple-definition-of-‘xxxx’"><span class="nav-number">1.1.</span> <span class="nav-text">multiple definition of ‘xxxx’</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HRESULT-0X80041FE2"><span class="nav-number">1.2.</span> <span class="nav-text">HRESULT:0X80041FE2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Qt-Creator-Multiple-Definitions"><span class="nav-number">1.3.</span> <span class="nav-text">Qt Creator: Multiple Definitions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bootstrap-sh遇到各种问题"><span class="nav-number">1.4.</span> <span class="nav-text">./bootstrap.sh遇到各种问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pyconfig-h-No-such-file-or-directory"><span class="nav-number">1.5.</span> <span class="nav-text">pyconfig.h. No such file or directory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#asio找不到-undefined-reference-to-boostsystemgeneric-category-with-qt"><span class="nav-number">1.6.</span> <span class="nav-text">asio找不到 undefined-reference-to-boostsystemgeneric-category-with-qt</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#error-while-loading-shared-libraries-libboost-system-so-1-45-0-cannot-open-shared-object-file-No-such-file-or-directory"><span class="nav-number">1.7.</span> <span class="nav-text">error while loading shared libraries: libboost_system.so.1.45.0: cannot open shared object file: No such file or directory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#usr-lib64-librt-so-1-1-error-error-adding-symbols-DSO-missing-from-command-line"><span class="nav-number">1.8.</span> <span class="nav-text">/usr/lib64/librt.so.1:-1: error: error adding symbols: DSO missing from command line</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Issues"><span class="nav-number">1.</span> <span class="nav-text">Issues</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#multiple-definition-of-%E2%80%98xxxx%E2%80%99"><span class="nav-number">1.1.</span> <span class="nav-text">multiple definition of ‘xxxx’</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HRESULT-0X80041FE2"><span class="nav-number">1.2.</span> <span class="nav-text">HRESULT:0X80041FE2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Qt-Creator-Multiple-Definitions"><span class="nav-number">1.3.</span> <span class="nav-text">Qt Creator: Multiple Definitions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bootstrap-sh%E9%81%87%E5%88%B0%E5%90%84%E7%A7%8D%E9%97%AE%E9%A2%98"><span class="nav-number">1.4.</span> <span class="nav-text">.&#x2F;bootstrap.sh遇到各种问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pyconfig-h-No-such-file-or-directory"><span class="nav-number">1.5.</span> <span class="nav-text">pyconfig.h. No such file or directory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#asio%E6%89%BE%E4%B8%8D%E5%88%B0-undefined-reference-to-boostsystemgeneric-category-with-qt"><span class="nav-number">1.6.</span> <span class="nav-text">asio找不到 undefined-reference-to-boostsystemgeneric-category-with-qt</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#error-while-loading-shared-libraries-libboost-system-so-1-45-0-cannot-open-shared-object-file-No-such-file-or-directory"><span class="nav-number">1.7.</span> <span class="nav-text">error while loading shared libraries: libboost_system.so.1.45.0: cannot open shared object file: No such file or directory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#usr-lib64-librt-so-1-1-error-error-adding-symbols-DSO-missing-from-command-line"><span class="nav-number">1.8.</span> <span class="nav-text">&#x2F;usr&#x2F;lib64&#x2F;librt.so.1:-1: error: error adding symbols: DSO missing from command line</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -342,16 +343,16 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/adoontheway" title="GitHub → https://github.com/adoontheway" rel="external nofollow noopener noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+        <a href="https://github.com/adoontheway" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;adoontheway" rel="external nofollow noopener noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://gitee.com/adoontheway" title="Gitee → https://gitee.com/adoontheway" rel="external nofollow noopener noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i>Gitee</a>
+        <a href="https://gitee.com/adoontheway" title="Gitee → https:&#x2F;&#x2F;gitee.com&#x2F;adoontheway" rel="external nofollow noopener noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i>Gitee</a>
       </span>
       <span class="links-of-author-item">
-        <a href="http://cnblogs.com/adoontheway" title="Cnblogs → http://cnblogs.com/adoontheway" rel="external nofollow noopener noreferrer" target="_blank"><i class="fa fa-fw fa-cnblogs"></i>Cnblogs</a>
+        <a href="http://cnblogs.com/adoontheway" title="Cnblogs → http:&#x2F;&#x2F;cnblogs.com&#x2F;adoontheway" rel="external nofollow noopener noreferrer" target="_blank"><i class="fa fa-fw fa-cnblogs"></i>Cnblogs</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://legacy.gitbook.com/@adobeattheworld" title="Gitbook → https://legacy.gitbook.com/@adobeattheworld" rel="external nofollow noopener noreferrer" target="_blank"><i class="fa fa-fw fa-gitbook"></i>Gitbook</a>
+        <a href="https://legacy.gitbook.com/@adobeattheworld" title="Gitbook → https:&#x2F;&#x2F;legacy.gitbook.com&#x2F;@adobeattheworld" rel="external nofollow noopener noreferrer" target="_blank"><i class="fa fa-fw fa-gitbook"></i>Gitbook</a>
       </span>
   </div>
 
@@ -382,7 +383,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">ado</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Muse</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Muse</a> 强力驱动
   </div>
 
 
@@ -425,9 +426,17 @@
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/muse.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
 
 
 
