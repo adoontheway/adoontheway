@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://adoontheway.gitee.io/"/>
-  <updated>2021-02-22T05:28:30.321Z</updated>
+  <updated>2021-05-20T04:59:58.819Z</updated>
   <id>https://adoontheway.gitee.io/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>每天进步一点点019 - docker上部署jar</title>
+    <link href="https://adoontheway.gitee.io/2021/05/20/everydayprogress020/"/>
+    <id>https://adoontheway.gitee.io/2021/05/20/everydayprogress020/</id>
+    <published>2021-05-20T04:50:59.000Z</published>
+    <updated>2021-05-20T04:59:58.819Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>最近在尝试 #flutter# 开发，需要用到后端api，而原先的服务端上基于 <em>Springboot-v2</em> 的，不是完全的前后端分离项目，某些接口需要调整之后才能用，所以需要边调整 <em>api</em> 边开发<em>flutter app</em>。自己用的开发机上2014年左右的<strong>Mac Pro</strong>，同时开启过多的<strong>idea</strong>会很卡，所以想把服务端开发环境部署到<em>docker</em>上，这样就不质疑太卡。  </p><h1 id="Steps"><a href="#Steps" class="headerlink" title="Steps"></a>Steps</h1><p>以下上具体实施步骤</p><h2 id="打包"><a href="#打包" class="headerlink" title="打包"></a>打包</h2><p><em>idea</em> 中，运行’mvn:package’，得到发布的包</p><h2 id="获取java8镜像"><a href="#获取java8镜像" class="headerlink" title="获取java8镜像"></a>获取java8镜像</h2><p><code>shdocker pull java:8</code></p><h2 id="运行docker命令"><a href="#运行docker命令" class="headerlink" title="运行docker命令"></a>运行docker命令</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name yourname -p port_to_access:port_to_expose -v /local_absolute_path/hehe-2.0.0.RELEASE.jar:/usr/app.jar java:8 java -jar -Xms256m /usr/app.jar</span><br></pre></td></tr></table></figure><h1 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h1><p>后续如何更新此<em>jar</em>包，不知道能不能直接打包替换后重新启动</p>]]></content>
+    
+    <summary type="html">
+    
+      在docker上部署jar
+    
+    </summary>
+    
+    
+      <category term="docker" scheme="https://adoontheway.gitee.io/tags/docker/"/>
+    
+      <category term="java" scheme="https://adoontheway.gitee.io/tags/java/"/>
+    
+  </entry>
   
   <entry>
     <title>每天进步一点点019 - golang开发im</title>
@@ -429,32 +451,6 @@
       <category term="c++" scheme="https://adoontheway.gitee.io/tags/c/"/>
     
       <category term="mongo" scheme="https://adoontheway.gitee.io/tags/mongo/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>每天进步一点点004-httprouter middleware</title>
-    <link href="https://adoontheway.gitee.io/2019/11/29/everydayprogress004/"/>
-    <id>https://adoontheway.gitee.io/2019/11/29/everydayprogress004/</id>
-    <published>2019-11-29T03:17:44.000Z</published>
-    <updated>2020-08-26T06:16:59.070Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>昨天整 <strong>nginx</strong> 代理 <strong>wss</strong> 的事情。<br>没有前端，自己把前端的发布版本搞来部署到 <strong>nginx</strong> 上；<br>没有api服务，所以自己用 <strong>golang</strong> 写了个代理服务器，将前端的 <strong>api</strong> hack到我的代理服务器来，<br>然后这里可以灵活的代理某个服务器，顺便用 <strong>nginx</strong> 代理一下此端口，实现 <em>https</em> 支持。<br>话说 <strong>js</strong> 真心脆弱…..  </p><h1 id="Content"><a href="#Content" class="headerlink" title="Content"></a>Content</h1><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> apiserver</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line"><span class="string">"fmt"</span></span><br><span class="line"><span class="string">"github.com/julienschmidt/httprouter"</span></span><br><span class="line"><span class="string">"github.com/rs/cors"</span></span><br><span class="line"><span class="string">"io"</span></span><br><span class="line"><span class="string">"io/ioutil"</span></span><br><span class="line"><span class="string">"net/http"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> target_api <span class="keyword">string</span> = <span class="string">"http://192.168.1.91:8088"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Start</span><span class="params">(port <span class="keyword">int32</span>)</span></span>  &#123;</span><br><span class="line">router := httprouter.New()</span><br><span class="line">router.GET(<span class="string">"/GameHandle"</span>,apiHandler)</span><br><span class="line">router.GET(<span class="string">"/TokenHandle"</span>,apiHandler)</span><br><span class="line">handler := cors.Default().Handler(router)</span><br><span class="line">http.ListenAndServe(fmt.Sprintf(<span class="string">":%d"</span>,port),handler)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">apiHandler</span><span class="params">(w http.ResponseWriter,r *http.Request, ps httprouter.Params)</span></span>  &#123;</span><br><span class="line">    realUrl := target_api+r.RequestURI</span><br><span class="line">    fmt.Println(realUrl)</span><br><span class="line">    resp,err := http.Get(realUrl)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        fmt.Fprint(w,err)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">defer</span> resp.Body.Close()</span><br><span class="line">    body, err := ioutil.ReadAll(resp.Body)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        fmt.Fprint(w,err)</span><br><span class="line">    &#125;</span><br><span class="line">    w.Header().Set(<span class="string">"Content-Type"</span>,<span class="string">"text/plain; charset=utf-8"</span>)</span><br><span class="line">    w.Header().Set(<span class="string">"X-Powered-By"</span>,<span class="string">"Golang/httprouter"</span>)</span><br><span class="line">    w.Header().Set(<span class="string">"Content-Length"</span>,fmt.Sprintf(<span class="string">"%d"</span>,<span class="built_in">len</span>(body)))</span><br><span class="line">    <span class="comment">//w.WriteHeader(http.StatusOK)</span></span><br><span class="line">    io.WriteString(w,<span class="keyword">string</span>(body))</span><br><span class="line">    fmt.Print(<span class="keyword">string</span>(body))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="cors问题"><a href="#cors问题" class="headerlink" title="cors问题"></a>cors问题</h2><p>以上使用了 <strong>rs/cors</strong> 解决了跨域访问的问题，实际上你可以可以通过 <em>ResponseWriter().Header()</em> 去加入支持跨域访问的几个头，例如 <strong>Access-Alow-Domain</strong> 等等。  </p><h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul><li><a href="https://github.com/rs/cors" rel="external nofollow noopener noreferrer" target="_blank">cors middleware</a></li><li><a href="https://golang.org/pkg/net/http/#ResponseWriter" rel="external nofollow noopener noreferrer" target="_blank">net/http.ResponseWriter</a></li></ul>]]></content>
-    
-    <summary type="html">
-    
-      今天其实是要接着整nginx的https和wss的，昨天的有两个新的知识点需要在这里备份一下
-    
-    </summary>
-    
-    
-      <category term="go" scheme="https://adoontheway.gitee.io/tags/go/"/>
-    
-      <category term="httprouter" scheme="https://adoontheway.gitee.io/tags/httprouter/"/>
-    
-      <category term="cors" scheme="https://adoontheway.gitee.io/tags/cors/"/>
-    
-      <category term="middleware" scheme="https://adoontheway.gitee.io/tags/middleware/"/>
     
   </entry>
   
