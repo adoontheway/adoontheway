@@ -20,20 +20,20 @@
     var CONFIG = {"hostname":"adoontheway.gitee.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="MongoDB状态监视相关">
+  <meta name="description" content="Flutter状态管理学习第二部分">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MongoDB状态监视工具">
-<meta property="og:url" content="https://adoontheway.gitee.io/2019/06/12/mongomonitor/index.html">
+<meta property="og:title" content="每天进步一点点026 - Flutter状态管理之BLoC">
+<meta property="og:url" content="https://adoontheway.gitee.io/2022/02/27/everydayprogress026/index.html">
 <meta property="og:site_name" content="Ados">
-<meta property="og:description" content="MongoDB状态监视相关">
+<meta property="og:description" content="Flutter状态管理学习第二部分">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2019-06-12T12:28:01.000Z">
-<meta property="article:modified_time" content="2020-08-26T06:16:59.091Z">
+<meta property="article:published_time" content="2022-02-27T09:18:41.000Z">
+<meta property="article:modified_time" content="2022-02-27T09:53:58.803Z">
 <meta property="article:author" content="ado">
-<meta property="article:tag" content="mongo">
+<meta property="article:tag" content="flutter">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://adoontheway.gitee.io/2019/06/12/mongomonitor/">
+<link rel="canonical" href="https://adoontheway.gitee.io/2022/02/27/everydayprogress026/">
 
 
 <script id="page-configurations">
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>MongoDB状态监视工具 | Ados</title>
+  <title>每天进步一点点026 - Flutter状态管理之BLoC | Ados</title>
   
 
 
@@ -164,7 +164,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://adoontheway.gitee.io/2019/06/12/mongomonitor/">
+    <link itemprop="mainEntityOfPage" href="https://adoontheway.gitee.io/2022/02/27/everydayprogress026/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -177,7 +177,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          MongoDB状态监视工具
+          每天进步一点点026 - Flutter状态管理之BLoC
         </h1>
 
         <div class="post-meta">
@@ -186,16 +186,10 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2019-06-12 20:28:01" itemprop="dateCreated datePublished" datetime="2019-06-12T20:28:01+08:00">2019-06-12</time>
+              <time title="创建时间：2022-02-27 17:18:41 / 修改时间：17:53:58" itemprop="dateCreated datePublished" datetime="2022-02-27T17:18:41+08:00">2022-02-27</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-26 14:16:59" itemprop="dateModified" datetime="2020-08-26T14:16:59+08:00">2020-08-26</time>
-              </span>
 
           
             <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
@@ -205,7 +199,7 @@
               <span class="post-meta-item-text">阅读次数：</span>
               <span id="busuanzi_value_page_pv"></span>
             </span>
-            <div class="post-description">MongoDB状态监视相关</div>
+            <div class="post-description">Flutter状态管理学习第二部分</div>
 
         </div>
       </header>
@@ -216,67 +210,33 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>今天在研究MongDB分片集群是时候，突然发现连接到MongoDB的时候出现了这个提示：</p>
-<blockquote>
-<p>MongoDB shell version v4.0.10</p>
-<p>Enable MongoDB’s free cloud-based monitoring service, which will then receive and display<br>metrics about your deployment (disk utilization, CPU, operation statistics, etc).</p>
-<p>The monitoring data will be available on a MongoDB website with a unique URL accessible to you<br>and anyone you share the URL with. MongoDB may use this information to make product<br>improvements and to suggest MongoDB products and deployment options to you.</p>
-<p>To enable free monitoring, run the following command: db.enableFreeMonitoring()</p>
-<h2 id="To-permanently-disable-this-reminder-run-the-following-command-db-disableFreeMonitoring"><a href="#To-permanently-disable-this-reminder-run-the-following-command-db-disableFreeMonitoring" class="headerlink" title="To permanently disable this reminder, run the following command: db.disableFreeMonitoring()"></a>To permanently disable this reminder, run the following command: db.disableFreeMonitoring()</h2></blockquote>
-<p>重点在这里：</p>
-<blockquote>
-<p>运行 db.enableFreeMonitoring() 可以激活免费的监视器</p>
-</blockquote>
-<h1 id="Content"><a href="#Content" class="headerlink" title="Content"></a>Content</h1><h2 id="db-enableFreeMonitoring"><a href="#db-enableFreeMonitoring" class="headerlink" title="db.enableFreeMonitoring"></a>db.enableFreeMonitoring</h2><p>于是本着研究与好奇的心里，运行了一下：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.enableFreeMonitoring()</span><br></pre></td></tr></table></figure>
+        <h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>本来Flutter状态管理用一篇来写完的，但是看起来有点长，所以分开来记录。</p>
+<p>BLoC，Bussiness Logic Component，业务逻辑组件，参考1里面就是它的原理和介绍。</p>
+<p>在pub.dev上我们可以看到两个bloc相关的包，一个是bloc，一个是flutter_bloc。前者是bloc的dart基本实现，后者是针对flutter的整合。所以，直接用后者就可以了。</p>
+<h1 id="Contents"><a href="#Contents" class="headerlink" title="Contents"></a>Contents</h1><h2 id="Hello-BLoC"><a href="#Hello-BLoC" class="headerlink" title="Hello BLoC"></a>Hello BLoC</h2><p>以下几步就可以简单的将BLoC导入咱们的hello world计数器项目。</p>
+<h3 id="自定义-Cubit"><a href="#自定义-Cubit" class="headerlink" title="自定义 Cubit"></a>自定义 Cubit</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&#x27;package:flutter_bloc/flutter_bloc.dart&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CounterCubit</span> <span class="keyword">extends</span> <span class="title">Cubit</span>&lt;<span class="title">int</span>&gt; </span>&#123;</span><br><span class="line">  CounterCubit() : <span class="keyword">super</span>(<span class="number">0</span>);</span><br><span class="line">  <span class="keyword">void</span> increment() =&gt; emit(state + <span class="number">1</span>);</span><br><span class="line">  <span class="keyword">void</span> decrement() =&gt; emit(state - <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>结果输出：</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">     <span class="attr">"state"</span> : <span class="string">"enabled"</span>,</span><br><span class="line">     <span class="attr">"message"</span> : <span class="string">"To see your monitoring data, navigate to the unique URL below. Anyone you share the URL with will also be able to view this page. You can disable monitoring at any time by running db.disableFreeMonitoring()."</span>,</span><br><span class="line">     <span class="attr">"url"</span> : <span class="string">"https://cloud.mongodb.com/freemonitoring/cluster/xxxxxxxx"</span>,</span><br><span class="line">     <span class="attr">"userReminder"</span> : <span class="string">""</span>,</span><br><span class="line">     <span class="attr">"ok"</span> : <span class="number">1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>咱们的CounterCubit继承的Cubit，Cubit其实只是一个抽象类，继承了BlocBase：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Cubit</span>&lt;<span class="title">State</span>&gt; <span class="keyword">extends</span> <span class="title">BlocBase</span>&lt;<span class="title">State</span>&gt; </span>&#123;</span><br><span class="line">  Cubit(State initialState) : <span class="keyword">super</span>(initialState);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>所以，核心还是在BlocBase：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">BlocBase</span>&lt;<span class="title">State</span>&gt;</span></span><br><span class="line"><span class="class">    <span class="keyword">implements</span> <span class="title">StateStreamableSource</span>&lt;<span class="title">State</span>&gt;, <span class="title">Emittable</span>&lt;<span class="title">State</span>&gt;, <span class="title">ErrorSink</span> </span></span><br></pre></td></tr></table></figure>
+<p>BlocBase就两个实现，一个是上面的Cubit，一个是Bloc</p>
+<h3 id="使用BlocBuilder进行build"><a href="#使用BlocBuilder进行build" class="headerlink" title="使用BlocBuilder进行build"></a>使用BlocBuilder进行build</h3><p>BlocBuilder是一个flutter widget，需要一个 bloc和一个 builder函数。</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 注意，此处咱们不用StatefulWidget</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CounterCubitPage</span> <span class="keyword">extends</span> <span class="title">StatelessWidget</span> </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> CounterCubitPage(&#123;Key? key&#125;) : <span class="keyword">super</span>(key: key);</span><br><span class="line"></span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">return</span> Scaffold(</span><br><span class="line">      appBar: AppBar(</span><br><span class="line">        title: <span class="keyword">const</span> Text(<span class="string">&quot;Bloc Cubit Test&quot;</span>),</span><br><span class="line">      ),</span><br><span class="line">      body: BlocBuilder&lt;CounterCubit, <span class="built_in">int</span>&gt;(</span><br><span class="line">        builder: (context, count) =&gt; Center(</span><br><span class="line">          child: Text(<span class="string">&quot;<span class="subst">$count</span>&quot;</span>),</span><br><span class="line">        ),</span><br><span class="line">      ),</span><br><span class="line">      floatingActionButton: Column(</span><br><span class="line">        mainAxisAlignment: MainAxisAlignment.end,</span><br><span class="line">        crossAxisAlignment: CrossAxisAlignment.end,</span><br><span class="line">        children: [</span><br><span class="line">          FloatingActionButton(</span><br><span class="line">            child: <span class="keyword">const</span> Icon(Icons.add),</span><br><span class="line">            onPressed: () =&gt; context.read&lt;CounterCubit&gt;().increment(),</span><br><span class="line">          ),</span><br><span class="line">          <span class="keyword">const</span> SizedBox(</span><br><span class="line">            height: <span class="number">4</span>,</span><br><span class="line">          ),</span><br><span class="line">          FloatingActionButton(</span><br><span class="line">            child: <span class="keyword">const</span> Icon(Icons.remove),</span><br><span class="line">            onPressed: () =&gt; context.read&lt;CounterCubit&gt;().decrement(),</span><br><span class="line">            heroTag: <span class="string">&quot;remove&quot;</span>,</span><br><span class="line">          ),</span><br><span class="line">        ],</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>然后，将这里的url用浏览器打开，就可以依次看到：</p>
-<ul>
-<li>Operation Execution Times : 操作执行次数，包括，读，写，命令三种操作的执行次数</li>
-<li>Disk Utilization :  磁盘的利用率，包括所有磁盘的最大利用率，所有磁盘的平均利用率</li>
-<li>Documents : 文档每秒的平均（查询返回，插入，更新，删除）率</li>
-<li>Memory ： 常驻内存，MongoDB的虚拟内存，MongoDB的映射（Mapped）内存,映射内存基本上与数据库的占用尺寸接近。 WiredTiger不会用内存来映射文件，所以这里就会是0.</li>
-<li>Network-Input/Output：流入字节数与流出字节数</li>
-<li>Opcounters ：操作计数器，采样起见平均每秒的（插入，查询，更新，删除，获取更多GetMore,命令）的执行率</li>
-<li>Opcounters-Replication ：操作计数器复制</li>
-<li>Query Targeting：查询目标<ul>
-<li>Scanned/Returned：</li>
-<li>扫描对象/返回：</li>
-</ul>
-</li>
-<li>Queues：<ul>
-<li>Readers 等待读锁定的已入队操作数</li>
-<li>Writers 等待写锁定的已入队操作数</li>
-<li>Total  所有等待锁的已入队操作数</li>
-</ul>
-</li>
-<li>System Cpu Usage：也就是系统的cup使用状态</li>
-</ul>
-<h2 id="Free-Monitoring"><a href="#Free-Monitoring" class="headerlink" title="Free Monitoring"></a>Free Monitoring</h2><p>MongoDB的<a href="https://docs.mongodb.com/manual/reference/method/js-free-monitoring/" rel="external nofollow noopener noreferrer" target="_blank">Free Monitoring</a> api主要有三个。</p>
-<ul>
-<li>db.disableFreeMonitoring() 禁用</li>
-<li>db.enableFreeMonitoring() 激活</li>
-<li>db.getFreeMonitoringStatus() 状态</li>
-</ul>
-<p>如上，都很好理解。</p>
-<p>小小的调查了一下，似乎并不支持将Free Monitoring的结果输出到指定的页面。</p>
-<h2 id="7个工具"><a href="#7个工具" class="headerlink" title="7个工具"></a>7个工具</h2><p><a href="https://www.tecmint.com/monitor-mongodb-performance/" rel="external nofollow noopener noreferrer" target="_blank">6个有用的MongDB性能监视工具</a></p>
-<h3 id="Mongostat"><a href="#Mongostat" class="headerlink" title="Mongostat"></a>Mongostat</h3><h3 id="Mongotop"><a href="#Mongotop" class="headerlink" title="Mongotop"></a>Mongotop</h3><h3 id="serverStatus"><a href="#serverStatus" class="headerlink" title="serverStatus"></a>serverStatus</h3><p>也就是</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.serverStatus()</span><br></pre></td></tr></table></figure>
 
-<p>通过搜集统计当前Mongo实例，返回数据库的状态概览。</p>
-<p>上面调查Free Monotoring是否可以修改输出地址的时候，导向的 metrics 相关属性就看到了。</p>
-<h3 id="dbStats"><a href="#dbStats" class="headerlink" title="dbStats"></a>dbStats</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.stats()</span><br></pre></td></tr></table></figure>
+<h3 id="MultiBlocProvider"><a href="#MultiBlocProvider" class="headerlink" title="MultiBlocProvider"></a>MultiBlocProvider</h3><p>如果会用到多个BLoC的时候，可以使用MultiBlocProvider进行整合。</p>
+<p>from:</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">BlocProvider&lt;BlocA&gt;(</span><br><span class="line">  create: (BuildContext context) =&gt; BlocA(),</span><br><span class="line">  child: BlocProvider&lt;BlocB&gt;(</span><br><span class="line">    create: (BuildContext context) =&gt; BlocB(),</span><br><span class="line">    child: BlocProvider&lt;BlocC&gt;(</span><br><span class="line">      create: (BuildContext context) =&gt; BlocC(),</span><br><span class="line">      child: ChildA(),</span><br><span class="line">    )</span><br><span class="line">  )</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 
-<p>返回的是指定数据库的存储统计信息</p>
-<h3 id="collStats"><a href="#collStats" class="headerlink" title="collStats"></a>collStats</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.runCommand(&#123;collStats:<span class="string">"coll"</span>, scale:1024&#125;)</span><br></pre></td></tr></table></figure>
 
-<p>与 dbStats 类似，只不过级别是集合了，输出额外的包括了集合里的对象书，集合的尺寸，集合消耗的硬盘空间，以及他相关的索引信息。</p>
-<h3 id="replSetGetStatus"><a href="#replSetGetStatus" class="headerlink" title="replSetGetStatus"></a>replSetGetStatus</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.adminCommand(&#123;replSetGetStatus:1&#125;)</span><br></pre></td></tr></table></figure>
+<p>to:</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">ultiBlocProvider(</span><br><span class="line">  providers: [</span><br><span class="line">    BlocProvider&lt;BlocA&gt;(</span><br><span class="line">      create: (BuildContext context) =&gt; BlocA(),</span><br><span class="line">    ),</span><br><span class="line">    BlocProvider&lt;BlocB&gt;(</span><br><span class="line">      create: (BuildContext context) =&gt; BlocB(),</span><br><span class="line">    ),</span><br><span class="line">    BlocProvider&lt;BlocC&gt;(</span><br><span class="line">      create: (BuildContext context) =&gt; BlocC(),</span><br><span class="line">    ),</span><br><span class="line">  ],</span><br><span class="line">  child: ChildA(),</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ol>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.didierboelens.com/2018/08/reactive-programming-streams-bloc/">响应式编程-流-bloc</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://bloclibrary.dev/#/">bloc</a></li>
+</ol>
 
     </div>
 
@@ -286,7 +246,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/mongo/" rel="tag"># mongo</a>
+              <a href="/tags/flutter/" rel="tag"># flutter</a>
           </div>
 
         
@@ -295,12 +255,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2019/06/08/rocketmqprac/" rel="prev" title="Hello,RocketMQ">
-      <i class="fa fa-chevron-left"></i> Hello,RocketMQ
+    <a href="/2022/02/27/everydayprogress025/" rel="prev" title="每天进步一点点025 - Flutter状态管理之ChangeNotifier">
+      <i class="fa fa-chevron-left"></i> 每天进步一点点025 - Flutter状态管理之ChangeNotifier
     </a></div>
       <div class="post-nav-item">
-    <a href="/2019/06/20/githelper/" rel="next" title="一些问题">
-      一些问题 <i class="fa fa-chevron-right"></i>
+    <a href="/2022/02/27/everydayprogress027/" rel="next" title="每天进步一点点027 - Flutter异步UI更新">
+      每天进步一点点027 - Flutter异步UI更新 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -360,7 +320,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preface"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#To-permanently-disable-this-reminder-run-the-following-command-db-disableFreeMonitoring"><span class="nav-number">1.1.</span> <span class="nav-text">To permanently disable this reminder, run the following command: db.disableFreeMonitoring()</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Content"><span class="nav-number">2.</span> <span class="nav-text">Content</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#db-enableFreeMonitoring"><span class="nav-number">2.1.</span> <span class="nav-text">db.enableFreeMonitoring</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Free-Monitoring"><span class="nav-number">2.2.</span> <span class="nav-text">Free Monitoring</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7%E4%B8%AA%E5%B7%A5%E5%85%B7"><span class="nav-number">2.3.</span> <span class="nav-text">7个工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Mongostat"><span class="nav-number">2.3.1.</span> <span class="nav-text">Mongostat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mongotop"><span class="nav-number">2.3.2.</span> <span class="nav-text">Mongotop</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#serverStatus"><span class="nav-number">2.3.3.</span> <span class="nav-text">serverStatus</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dbStats"><span class="nav-number">2.3.4.</span> <span class="nav-text">dbStats</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#collStats"><span class="nav-number">2.3.5.</span> <span class="nav-text">collStats</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#replSetGetStatus"><span class="nav-number">2.3.6.</span> <span class="nav-text">replSetGetStatus</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preface"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Contents"><span class="nav-number">2.</span> <span class="nav-text">Contents</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hello-BLoC"><span class="nav-number">2.1.</span> <span class="nav-text">Hello BLoC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89-Cubit"><span class="nav-number">2.1.1.</span> <span class="nav-text">自定义 Cubit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8BlocBuilder%E8%BF%9B%E8%A1%8Cbuild"><span class="nav-number">2.1.2.</span> <span class="nav-text">使用BlocBuilder进行build</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MultiBlocProvider"><span class="nav-number">2.1.3.</span> <span class="nav-text">MultiBlocProvider</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
