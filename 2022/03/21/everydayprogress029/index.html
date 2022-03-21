@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"adoontheway.gitee.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="最近看到微软的Python数据科学入门教程，学习了一下">
+<meta property="og:type" content="article">
+<meta property="og:title" content="每天进步一点点029 - Python数据科学教程的学习">
+<meta property="og:url" content="https://adoontheway.gitee.io/2022/03/21/everydayprogress029/index.html">
+<meta property="og:site_name" content="Ados">
+<meta property="og:description" content="最近看到微软的Python数据科学入门教程，学习了一下">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://adoontheway.gitee.io/2022/03/21/everydayprogress029/1.png">
+<meta property="og:image" content="https://adoontheway.gitee.io/2022/03/21/everydayprogress029/2.png">
+<meta property="og:image" content="https://adoontheway.gitee.io/2022/03/21/everydayprogress029/1647851689922.jpg">
+<meta property="article:published_time" content="2022-03-21T08:22:46.000Z">
+<meta property="article:modified_time" content="2022-03-21T08:50:42.590Z">
+<meta property="article:author" content="ado">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="conda">
+<meta property="article:tag" content="pandas">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://adoontheway.gitee.io/2022/03/21/everydayprogress029/1.png">
+
+<link rel="canonical" href="https://adoontheway.gitee.io/2022/03/21/everydayprogress029/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>每天进步一点点029 - Python数据科学教程的学习 | Ados</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Ados</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">a fullstack game worker</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/adoontheway" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="external nofollow noopener noreferrer" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://adoontheway.gitee.io/2022/03/21/everydayprogress029/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="ado">
+      <meta itemprop="description" content="me, robot.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ados">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          每天进步一点点029 - Python数据科学教程的学习
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-03-21 16:22:46 / 修改时间：16:50:42" itemprop="dateCreated datePublished" datetime="2022-03-21T16:22:46+08:00">2022-03-21</time>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+            <div class="post-description">最近看到微软的Python数据科学入门教程，学习了一下</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>最近在网站上看到了微软在 <em>github</em> 开源的机器学习，数据科学，物联网的相关教程，比较感兴趣，学到就是赚到，<br>于是跟着教程学了一下，总比闲的发慌自我压迫的好。<br>之前是直接在网页上用 <em>Jupyter Notebook</em> ，现在上改用 <em>conda</em> 然后是 <em>VS Code</em> 上使用 <em>Jupyter</em> 插件。</p>
+<h1 id="Contents"><a href="#Contents" class="headerlink" title="Contents"></a>Contents</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="comment"># 最基础的Series</span></span><br><span class="line">airports = pd.Series([</span><br><span class="line">    <span class="string">&quot;Seattle-Tacoma&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Dulles&quot;</span>,</span><br><span class="line">    <span class="string">&quot;London Heathrow&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Schiphol&quot;</span></span><br><span class="line">])</span><br><span class="line"></span><br><span class="line"><span class="comment"># shape查看数据集尺寸的</span></span><br><span class="line">airports.shape</span><br><span class="line"></span><br><span class="line"><span class="comment"># Output:(3,2)</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 基础的DataFrame的使用</span></span><br><span class="line">airports = pd.DataFrame([</span><br><span class="line">    [<span class="string">&quot;Seattle-Tacoma&quot;</span>,<span class="string">&quot;Seattle&quot;</span>,<span class="string">&quot;USA&quot;</span>],</span><br><span class="line">    [<span class="string">&quot;Dulles&quot;</span>,<span class="string">&quot;Washington&quot;</span>,<span class="string">&quot;USA&quot;</span>],</span><br><span class="line">    [<span class="string">&quot;London Heathroe&quot;</span>,<span class="string">&quot;London&quot;</span>,<span class="string">&quot;British&quot;</span>],</span><br><span class="line">    [<span class="string">&quot;Schiphol&quot;</span>,<span class="string">&quot;Amstrerdam&quot;</span>,<span class="string">&quot;Netherlands&quot;</span>],</span><br><span class="line">],columns=[<span class="string">&quot;Name&quot;</span>,<span class="string">&quot;City&quot;</span>,<span class="string">&quot;Country&quot;</span>])</span><br></pre></td></tr></table></figure>
+<p><img data-src="./1.png" alt="DataFrame"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看数据集的信息，可以看数据集有多少数据，有多少不完整的数据等</span></span><br><span class="line">airports.info()</span><br></pre></td></tr></table></figure>
+<p><img data-src="./2.png" alt="DataFrame.inf"></p>
+<p><em>loc</em>和<em>iloc</em>用于访问指定的列:loc是基于标签查找，iloc是基于索引查找</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 访问某个特定的列</span></span><br><span class="line"><span class="comment"># airports[&quot;Country&quot;]</span></span><br><span class="line"><span class="comment"># airports[[&quot;Country&quot;,&quot;City&quot;]]</span></span><br><span class="line"><span class="comment"># 二维数组访问法</span></span><br><span class="line"><span class="comment"># airports.iloc[0,1]</span></span><br><span class="line"><span class="comment"># 访问全部数据，二维坐标访问</span></span><br><span class="line"><span class="comment"># airports.iloc[:,:]</span></span><br><span class="line"><span class="comment"># airports.iloc[:,[0,2]]</span></span><br><span class="line">airports.loc[:,[<span class="string">&quot;Name&quot;</span>,<span class="string">&quot;Country&quot;</span>]]</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 从cvs导入数据，当然，也可以将数据存放到csv</span></span><br><span class="line">airports_df = pd.read_csv(<span class="string">&quot;data/airport.csv&quot;</span>,on_bad_lines=<span class="string">&quot;warn&quot;</span>,header=<span class="number">0</span>)</span><br><span class="line"><span class="comment"># 将数据存入csv3</span></span><br><span class="line">airports_df.to_csv()</span><br><span class="line">delay_df = pd.read_csv(<span class="string">&quot;data/arrive_time.csv&quot;</span>)</span><br><span class="line"><span class="comment"># drop返回新的DataFrame</span></span><br><span class="line"><span class="comment"># new_df = delay_df.drop(columns=[&quot;Actual_arr_time&quot;])</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># inplace改变原dataframe</span></span><br><span class="line">delay_df.drop(columns=[<span class="string">&quot;Actual_arr_time&quot;</span>],inplace=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 去掉空项目</span></span><br><span class="line">nonnull_df = delay_df.dropna()</span><br><span class="line"><span class="comment"># 是否修改当前DataFrame</span></span><br><span class="line"><span class="comment"># delay_df.dropna(inplace=True)</span></span><br><span class="line"><span class="comment"># 查询重复的项目</span></span><br><span class="line">delay_df.duplicated()</span><br><span class="line"><span class="comment"># 去除重复项目</span></span><br><span class="line">delay_df.drop_duplicates(inplace=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="Problems"><a href="#Problems" class="headerlink" title="Problems"></a>Problems</h1><h2 id="VS-Code插件无法更新的问题"><a href="#VS-Code插件无法更新的问题" class="headerlink" title="VS Code插件无法更新的问题"></a>VS Code插件无法更新的问题</h2><p>Jupyter插件对于VS Code是有版本要求的，我的 VS Code刚好就更新不了，于是去网上搜索了一下，发现这个是Mac版本的问题，导致Download中的 App 无法更新，我重新下载了最新版本的 VS Code，然后通过 mv 指令将它移动到 Applications 下面，就ok了。</p>
+<h2 id="Jupyter中conda配置"><a href="#Jupyter中conda配置" class="headerlink" title="Jupyter中conda配置"></a>Jupyter中conda配置</h2><p>通过 Command+Shift+P 召唤命令菜单，新建 Jupyter Notebook ，发现导入不了包，后来通过 conda 新建了一个环境，在命令行中active，install都没有用，最后发现右上角有个选择环境的入口:<br><img data-src="./1647851689922.jpg" alt="conda env chose"></p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><ol>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.bilibili.com/video/BV1nz411q7EQ?p=18&spm_id_from=pageDriver">Bilibili - 微软Python数据科学官方教程</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/microsoft/Data-Science-For-Beginners">Github - Microsoft/Data Science For Beginners</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/conda/" rel="tag"># conda</a>
+              <a href="/tags/pandas/" rel="tag"># pandas</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/02/27/everydayprogress028/" rel="prev" title="每天进步一点点028 - Flutter状态管理之Provider">
+      <i class="fa fa-chevron-left"></i> 每天进步一点点028 - Flutter状态管理之Provider
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preface"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Contents"><span class="nav-number">2.</span> <span class="nav-text">Contents</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Problems"><span class="nav-number">3.</span> <span class="nav-text">Problems</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#VS-Code%E6%8F%92%E4%BB%B6%E6%97%A0%E6%B3%95%E6%9B%B4%E6%96%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">3.1.</span> <span class="nav-text">VS Code插件无法更新的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Jupyter%E4%B8%ADconda%E9%85%8D%E7%BD%AE"><span class="nav-number">3.2.</span> <span class="nav-text">Jupyter中conda配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">4.</span> <span class="nav-text">References</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ado" src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">ado</p>
+  <div class="site-description" itemprop="description">me, robot.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">87</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/adoontheway" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;adoontheway" rel="external nofollow noopener noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://gitee.com/adoontheway" title="Gitee → https:&#x2F;&#x2F;gitee.com&#x2F;adoontheway" rel="external nofollow noopener noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i>Gitee</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="http://cnblogs.com/adoontheway" title="Cnblogs → http:&#x2F;&#x2F;cnblogs.com&#x2F;adoontheway" rel="external nofollow noopener noreferrer" target="_blank"><i class="fa fa-fw fa-cnblogs"></i>Cnblogs</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://legacy.gitbook.com/@adobeattheworld" title="Gitbook → https:&#x2F;&#x2F;legacy.gitbook.com&#x2F;@adobeattheworld" rel="external nofollow noopener noreferrer" target="_blank"><i class="fa fa-fw fa-gitbook"></i>Gitbook</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ado</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<script>
+document.querySelectorAll('.pdfobject-container').forEach(element => {
+  let url = element.dataset.target;
+  let pdfOpenParams = {
+    navpanes : 0,
+    toolbar  : 0,
+    statusbar: 0,
+    pagemode : 'thumbs',
+    view     : 'FitH'
+  };
+  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+
+  if (NexT.utils.supportsPDFs()) {
+    element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
+  } else {
+    element.innerHTML = `<iframe src="${fullURL}" style="height: ${element.dataset.height};" frameborder="0"></iframe>`;
+  }
+});
+</script>
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : '',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+
+</body>
+</html>
