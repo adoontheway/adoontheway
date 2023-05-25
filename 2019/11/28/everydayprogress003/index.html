@@ -29,7 +29,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://adoontheway.gitee.io/2019/11/28/everydayprogress003/nginx-ssl.png">
 <meta property="article:published_time" content="2019-11-28T06:23:27.000Z">
-<meta property="article:modified_time" content="2020-08-26T06:16:59.068Z">
+<meta property="article:modified_time" content="2023-05-25T10:26:16.025Z">
 <meta property="article:author" content="ado">
 <meta property="article:tag" content="nginx">
 <meta property="article:tag" content="ws">
@@ -197,7 +197,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-26 14:16:59" itemprop="dateModified" datetime="2020-08-26T14:16:59+08:00">2020-08-26</time>
+                <time title="修改时间：2023-05-25 18:26:16" itemprop="dateModified" datetime="2023-05-25T18:26:16+08:00">2023-05-25</time>
               </span>
 
           
@@ -219,44 +219,37 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="Contents"><a href="#Contents" class="headerlink" title="Contents"></a>Contents</h1><h2 id="在CentOS上安装nginx"><a href="#在CentOS上安装nginx" class="headerlink" title="在CentOS上安装nginx"></a>在CentOS上安装nginx</h2><p>去官网<a href="https://nginx.org" rel="external nofollow noopener noreferrer" target="_blank">nginx.org</a>按照文档安装好<strong>nginx</strong>。<br>注意，<a href="https://www.nginx.com" rel="external nofollow noopener noreferrer" target="_blank">nginx.com</a>是卖商业版nginx的。<br>安装成功之后，直接运行nginx就可以了，nginx的配置文件在 <strong>/etc/nginx</strong> 中。<br>需要注意的是 <strong>nginx</strong> 需用以超级用户是身份启动，不然的话 <strong>nginx</strong> 相关日志会报错，没有权限访问，即使改了对应文件夹的权限也没用。<br>我这里是启动失败的，输出日志是 <strong>80</strong> 端口被占用了，但是打开 <em>localhost:80</em> ，赫然显示的欢迎使用nginx，奇葩。<br>发送个停止服务的命令试试：  </p>
+        <h1 id="Contents"><a href="#Contents" class="headerlink" title="Contents"></a>Contents</h1><h2 id="在CentOS上安装nginx"><a href="#在CentOS上安装nginx" class="headerlink" title="在CentOS上安装nginx"></a>在CentOS上安装nginx</h2><p>去官网<a target="_blank" rel="external nofollow noopener noreferrer" href="https://nginx.org">nginx.org</a>按照文档安装好<strong>nginx</strong>。<br>注意，<a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.nginx.com">nginx.com</a>是卖商业版nginx的。<br>安装成功之后，直接运行nginx就可以了，nginx的配置文件在 <strong>/etc/nginx</strong> 中。<br>需要注意的是 <strong>nginx</strong> 需用以超级用户是身份启动，不然的话 <strong>nginx</strong> 相关日志会报错，没有权限访问，即使改了对应文件夹的权限也没用。<br>我这里是启动失败的，输出日志是 <strong>80</strong> 端口被占用了，但是打开 <em>localhost:80</em> ，赫然显示的欢迎使用nginx，奇葩。<br>发送个停止服务的命令试试：  </p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nginx -s stop</span><br></pre></td></tr></table></figure>
-
 <p>嗯， <strong>localhost:80</strong> 访问不了了，说明是对的。</p>
 <h2 id="生成wss需要的key与证书"><a href="#生成wss需要的key与证书" class="headerlink" title="生成wss需要的key与证书"></a>生成wss需要的key与证书</h2><h3 id="生成密钥"><a href="#生成密钥" class="headerlink" title="生成密钥"></a>生成密钥</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl genrsa -out privkey.pem 2048</span><br></pre></td></tr></table></figure>
-
 <p>注意，这里不能用：  </p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl genrsa -des3 -out privkey.pem 2048</span><br></pre></td></tr></table></figure>
-
 <p>如果用了的话，再nginx验证过程中会出现读取密码错误的问题：<br><img data-src="./nginx-ssl.png" alt="读取密码错误">  </p>
 <h3 id="生成证书请求文件"><a href="#生成证书请求文件" class="headerlink" title="生成证书请求文件"></a>生成证书请求文件</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl req -new -key privkey.pem -out cert.csr</span><br></pre></td></tr></table></figure>
-
 <p>这里会生成一个证书请求文件，如果要正式上线的话，需要用这个去向第三方商业机构申请一个数字证书了。  </p>
 <h3 id="生成开发用的数字证书"><a href="#生成开发用的数字证书" class="headerlink" title="生成开发用的数字证书"></a>生成开发用的数字证书</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl req -new -x509 -key privkey.pem -out cacert.pem -days 1095</span><br></pre></td></tr></table></figure>
-
 <p>以上可以生成一个自己开发用的证书了。</p>
 <h3 id="完成"><a href="#完成" class="headerlink" title="完成"></a>完成</h3><p>现在就可以使用 <strong>privkey.pem</strong> 和 <strong>cacert.pem</strong> 了</p>
 <h2 id="内容提供"><a href="#内容提供" class="headerlink" title="内容提供"></a>内容提供</h2><p>将所需要的内容从git上拉取到 <strong>/usr/share/nginx/html/</strong> 下面，这样需要在nginx展示的内容都放到这个子文件夹下面，假设叫 <strong>sample</strong> 吧。  </p>
 <h2 id="conf修改"><a href="#conf修改" class="headerlink" title="conf修改"></a>conf修改</h2><p>阅读了一遍 <strong>etc/nginx/nginx.conf</strong> ，知道了log的存放地址，看到了所有其他子配置都存放在 <strong>/etc/nginx/config.d/</strong> 下面。<br>先修改 <strong>default.conf</strong> :</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">location / &#123;</span><br><span class="line">    root /usr/share/nginx/html/sample; #修改静态资源路径</span><br><span class="line">    index index.html index.htm;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">location &#x2F; &#123;</span><br><span class="line">    root &#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html&#x2F;sample; #修改静态资源路径</span><br><span class="line">    index index.html index.htm;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="加入websocket-conf"><a href="#加入websocket-conf" class="headerlink" title="加入websocket.conf"></a>加入websocket.conf</h2><p>然后我也有新增一个 <strong>websocket.conf</strong>:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">map $http_upgrade $connection_upgrade &#123;</span><br><span class="line">    default upgrade;</span><br><span class="line">    &apos;&apos; close;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">upstream websocket &#123;</span><br><span class="line">    server localhost:8282; # appserver_ip:ws_port</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">     server_name test.enzhico.net;</span><br><span class="line">     listen 443 ssl;</span><br><span class="line">     location / &#123;</span><br><span class="line">         proxy_pass http://192.168.1.110;</span><br><span class="line">         proxy_read_timeout 300s;</span><br><span class="line">         proxy_send_timeout 300s;</span><br><span class="line"></span><br><span class="line">         proxy_set_header Host $host;</span><br><span class="line">         proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line"></span><br><span class="line">         proxy_http_version 1.1;</span><br><span class="line">         proxy_set_header Upgrade $http_upgrade;</span><br><span class="line">         proxy_set_header Connection $connection_upgrade;</span><br><span class="line">     &#125;</span><br><span class="line">    ssl_certificate /home/ado/works/cacert.pem; #前面生成的证书</span><br><span class="line">    ssl_certificate_key /home/ado/works/privkey.pem; #前面生成的密钥</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">map $http_upgrade $connection_upgrade &#123;</span><br><span class="line">    default upgrade;</span><br><span class="line">    &#39;&#39; close;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">upstream websocket &#123;</span><br><span class="line">    server localhost:8282; # appserver_ip:ws_port</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">     server_name test.enzhico.net;</span><br><span class="line">     listen 443 ssl;</span><br><span class="line">     location &#x2F; &#123;</span><br><span class="line">         proxy_pass http:&#x2F;&#x2F;192.168.1.110;</span><br><span class="line">         proxy_read_timeout 300s;</span><br><span class="line">         proxy_send_timeout 300s;</span><br><span class="line"></span><br><span class="line">         proxy_set_header Host $host;</span><br><span class="line">         proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line"></span><br><span class="line">         proxy_http_version 1.1;</span><br><span class="line">         proxy_set_header Upgrade $http_upgrade;</span><br><span class="line">         proxy_set_header Connection $connection_upgrade;</span><br><span class="line">     &#125;</span><br><span class="line">    ssl_certificate &#x2F;home&#x2F;ado&#x2F;works&#x2F;cacert.pem; #前面生成的证书</span><br><span class="line">    ssl_certificate_key &#x2F;home&#x2F;ado&#x2F;works&#x2F;privkey.pem; #前面生成的密钥</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h2><p>重启 <strong>nginx</strong>：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nginx -s reload</span><br></pre></td></tr></table></figure>
-
 <p>然后刷新页面就可以看到结果了。  </p>
 <h2 id="错误追踪"><a href="#错误追踪" class="headerlink" title="错误追踪"></a>错误追踪</h2><p>当然，我这个配置的过程中不是那么的顺利，nginx页面找不到的问题通过以下查看nginx的错误日志得到的：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo tail -100f /var/<span class="built_in">log</span>/nginx/error.log</span><br></pre></td></tr></table></figure>
-
 <h2 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h2><p>目前暂时就进行到这里</p>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
-<li><a href="http://nginx.org/en/linux_packages.html#RHEL-CentOS" rel="external nofollow noopener noreferrer" target="_blank">RHEL/CentOS上安装nginx</a>  </li>
-<li><a href="https://www.xncoding.com/2018/03/12/fullstack/nginx-websocket.html" rel="external nofollow noopener noreferrer" target="_blank">nginx反向代理WebSocket</a></li>
-<li><a href="https://nginx.org/en/docs" rel="external nofollow noopener noreferrer" target="_blank">nginx入门手册</a></li>
-<li><a href="https://blog.csdn.net/liangzhao_jay/article/details/8797423" rel="external nofollow noopener noreferrer" target="_blank">openssl生成pem数字证书</a></li>
-<li><a href="https://stackoverflow.com/questions/9380403/what-does-ssl-ctx-use-privatekey-file-problems-getting-password-error-indica" rel="external nofollow noopener noreferrer" target="_blank">what-does-ssl-ctx-use-privatekey-file-problems-getting-password-error-indica</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="http://nginx.org/en/linux_packages.html#RHEL-CentOS">RHEL/CentOS上安装nginx</a>  </li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.xncoding.com/2018/03/12/fullstack/nginx-websocket.html">nginx反向代理WebSocket</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://nginx.org/en/docs">nginx入门手册</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.csdn.net/liangzhao_jay/article/details/8797423">openssl生成pem数字证书</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://stackoverflow.com/questions/9380403/what-does-ssl-ctx-use-privatekey-file-problems-getting-password-error-indica">what-does-ssl-ctx-use-privatekey-file-problems-getting-password-error-indica</a></li>
 </ul>
 
     </div>
@@ -357,14 +350,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">91</span>
+          <span class="site-state-item-count">92</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-count">58</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -451,7 +444,7 @@
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="//unpkg.com/lozad@1.16.0/dist/lozad.min.js"></script>
+  <script src="//fastly.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

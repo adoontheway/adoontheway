@@ -28,7 +28,7 @@
 <meta property="og:description" content="MongoDB状态监视相关">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-06-12T12:28:01.000Z">
-<meta property="article:modified_time" content="2020-08-26T06:16:59.091Z">
+<meta property="article:modified_time" content="2023-05-25T10:26:16.070Z">
 <meta property="article:author" content="ado">
 <meta property="article:tag" content="mongo">
 <meta name="twitter:card" content="summary">
@@ -194,7 +194,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-26 14:16:59" itemprop="dateModified" datetime="2020-08-26T14:16:59+08:00">2020-08-26</time>
+                <time title="修改时间：2023-05-25 18:26:16" itemprop="dateModified" datetime="2023-05-25T18:26:16+08:00">2023-05-25</time>
               </span>
 
           
@@ -228,10 +228,12 @@
 <p>运行 db.enableFreeMonitoring() 可以激活免费的监视器</p>
 </blockquote>
 <h1 id="Content"><a href="#Content" class="headerlink" title="Content"></a>Content</h1><h2 id="db-enableFreeMonitoring"><a href="#db-enableFreeMonitoring" class="headerlink" title="db.enableFreeMonitoring"></a>db.enableFreeMonitoring</h2><p>于是本着研究与好奇的心里，运行了一下：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.enableFreeMonitoring()</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.enableFreeMonitoring() </span><br></pre></td></tr></table></figure>
 
 <p>结果输出：</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">     <span class="attr">"state"</span> : <span class="string">"enabled"</span>,</span><br><span class="line">     <span class="attr">"message"</span> : <span class="string">"To see your monitoring data, navigate to the unique URL below. Anyone you share the URL with will also be able to view this page. You can disable monitoring at any time by running db.disableFreeMonitoring()."</span>,</span><br><span class="line">     <span class="attr">"url"</span> : <span class="string">"https://cloud.mongodb.com/freemonitoring/cluster/xxxxxxxx"</span>,</span><br><span class="line">     <span class="attr">"userReminder"</span> : <span class="string">""</span>,</span><br><span class="line">     <span class="attr">"ok"</span> : <span class="number">1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">     <span class="attr">&quot;state&quot;</span> : <span class="string">&quot;enabled&quot;</span>,</span><br><span class="line">     <span class="attr">&quot;message&quot;</span> : <span class="string">&quot;To see your monitoring data, navigate to the unique URL below. Anyone you share the URL with will also be able to view this page. You can disable monitoring at any time by running db.disableFreeMonitoring().&quot;</span>,</span><br><span class="line">     <span class="attr">&quot;url&quot;</span> : <span class="string">&quot;https://cloud.mongodb.com/freemonitoring/cluster/xxxxxxxx&quot;</span>,</span><br><span class="line">     <span class="attr">&quot;userReminder&quot;</span> : <span class="string">&quot;&quot;</span>,</span><br><span class="line">     <span class="attr">&quot;ok&quot;</span> : <span class="number">1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
 
 <p>然后，将这里的url用浏览器打开，就可以依次看到：</p>
 <ul>
@@ -255,7 +257,7 @@
 </li>
 <li>System Cpu Usage：也就是系统的cup使用状态</li>
 </ul>
-<h2 id="Free-Monitoring"><a href="#Free-Monitoring" class="headerlink" title="Free Monitoring"></a>Free Monitoring</h2><p>MongoDB的<a href="https://docs.mongodb.com/manual/reference/method/js-free-monitoring/" rel="external nofollow noopener noreferrer" target="_blank">Free Monitoring</a> api主要有三个。</p>
+<h2 id="Free-Monitoring"><a href="#Free-Monitoring" class="headerlink" title="Free Monitoring"></a>Free Monitoring</h2><p>MongoDB的<a target="_blank" rel="external nofollow noopener noreferrer" href="https://docs.mongodb.com/manual/reference/method/js-free-monitoring/">Free Monitoring</a> api主要有三个。</p>
 <ul>
 <li>db.disableFreeMonitoring() 禁用</li>
 <li>db.enableFreeMonitoring() 激活</li>
@@ -263,7 +265,7 @@
 </ul>
 <p>如上，都很好理解。</p>
 <p>小小的调查了一下，似乎并不支持将Free Monitoring的结果输出到指定的页面。</p>
-<h2 id="7个工具"><a href="#7个工具" class="headerlink" title="7个工具"></a>7个工具</h2><p><a href="https://www.tecmint.com/monitor-mongodb-performance/" rel="external nofollow noopener noreferrer" target="_blank">6个有用的MongDB性能监视工具</a></p>
+<h2 id="7个工具"><a href="#7个工具" class="headerlink" title="7个工具"></a>7个工具</h2><p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.tecmint.com/monitor-mongodb-performance/">6个有用的MongDB性能监视工具</a></p>
 <h3 id="Mongostat"><a href="#Mongostat" class="headerlink" title="Mongostat"></a>Mongostat</h3><h3 id="Mongotop"><a href="#Mongotop" class="headerlink" title="Mongotop"></a>Mongotop</h3><h3 id="serverStatus"><a href="#serverStatus" class="headerlink" title="serverStatus"></a>serverStatus</h3><p>也就是</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.serverStatus()</span><br></pre></td></tr></table></figure>
 
@@ -272,10 +274,12 @@
 <h3 id="dbStats"><a href="#dbStats" class="headerlink" title="dbStats"></a>dbStats</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.stats()</span><br></pre></td></tr></table></figure>
 
 <p>返回的是指定数据库的存储统计信息</p>
-<h3 id="collStats"><a href="#collStats" class="headerlink" title="collStats"></a>collStats</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.runCommand(&#123;collStats:<span class="string">"coll"</span>, scale:1024&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="collStats"><a href="#collStats" class="headerlink" title="collStats"></a>collStats</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.runCommand(&#123;collStats:<span class="string">&quot;coll&quot;</span>, scale:1024&#125;)</span><br></pre></td></tr></table></figure>
 
 <p>与 dbStats 类似，只不过级别是集合了，输出额外的包括了集合里的对象书，集合的尺寸，集合消耗的硬盘空间，以及他相关的索引信息。</p>
 <h3 id="replSetGetStatus"><a href="#replSetGetStatus" class="headerlink" title="replSetGetStatus"></a>replSetGetStatus</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.adminCommand(&#123;replSetGetStatus:1&#125;)</span><br></pre></td></tr></table></figure>
+
+
 
 
     </div>
@@ -375,14 +379,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">91</span>
+          <span class="site-state-item-count">92</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-count">58</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -469,7 +473,7 @@
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="//unpkg.com/lozad@1.16.0/dist/lozad.min.js"></script>
+  <script src="//fastly.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

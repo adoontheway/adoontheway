@@ -28,7 +28,7 @@
 <meta property="og:description" content="c++中使用sqlite">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-07-23T01:47:16.000Z">
-<meta property="article:modified_time" content="2020-08-26T06:16:59.100Z">
+<meta property="article:modified_time" content="2023-05-25T10:26:16.079Z">
 <meta property="article:author" content="ado">
 <meta property="article:tag" content="c++">
 <meta name="twitter:card" content="summary">
@@ -194,7 +194,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-26 14:16:59" itemprop="dateModified" datetime="2020-08-26T14:16:59+08:00">2020-08-26</time>
+                <time title="修改时间：2023-05-25 18:26:16" itemprop="dateModified" datetime="2023-05-25T18:26:16+08:00">2023-05-25</time>
               </span>
 
           
@@ -217,15 +217,15 @@
 
       
         <h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>需要使用Sqlite，所以研究一下</p>
-<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="https://www.sqlite.org/docs.html" rel="external nofollow noopener noreferrer" target="_blank">sqlite docs</a></p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.sqlite.org/docs.html">sqlite docs</a></p>
 <p>上面文档里面基本都有，安装，api的使用。</p>
-<h1 id="Steps"><a href="#Steps" class="headerlink" title="Steps"></a>Steps</h1><h2 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h2><p><a href="https://www.sqlite.org/download.html" rel="external nofollow noopener noreferrer" target="_blank">download</a> 从这个页面下载安装报，我选择的是 sqlite-autoconf-3290000.tar,gz。</p>
+<h1 id="Steps"><a href="#Steps" class="headerlink" title="Steps"></a>Steps</h1><h2 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h2><p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.sqlite.org/download.html">download</a> 从这个页面下载安装报，我选择的是 sqlite-autoconf-3290000.tar,gz。</p>
 <p>解压之后依次运行：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./configure</span><br><span class="line">make</span><br></pre></td></tr></table></figure>
 
 <p>就可以安装成功。</p>
 <h2 id="Usecase"><a href="#Usecase" class="headerlink" title="Usecase"></a>Usecase</h2><p>此时可以在项目中使用了。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span>  <span class="meta-string">"sqlite3.h"</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span>  <span class="meta-string">&quot;sqlite3.h&quot;</span></span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 
     </div>
@@ -325,14 +325,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">91</span>
+          <span class="site-state-item-count">92</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-count">58</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -419,7 +419,7 @@
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="//unpkg.com/lozad@1.16.0/dist/lozad.min.js"></script>
+  <script src="//fastly.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

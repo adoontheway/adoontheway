@@ -28,7 +28,7 @@
 <meta property="og:description" content="在Windows上安装和调试mongocxx">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-06-29T10:45:16.000Z">
-<meta property="article:modified_time" content="2020-08-26T06:16:59.102Z">
+<meta property="article:modified_time" content="2023-05-25T10:26:16.081Z">
 <meta property="article:author" content="ado">
 <meta property="article:tag" content="c++">
 <meta property="article:tag" content="mongo">
@@ -196,7 +196,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-26 14:16:59" itemprop="dateModified" datetime="2020-08-26T14:16:59+08:00">2020-08-26</time>
+                <time title="修改时间：2023-05-25 18:26:16" itemprop="dateModified" datetime="2023-05-25T18:26:16+08:00">2023-05-25</time>
               </span>
 
           
@@ -220,18 +220,18 @@
       
         <h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>今天遇到了个问题，需要调试mongocxx</p>
 <h1 id="Prerequirement"><a href="#Prerequirement" class="headerlink" title="Prerequirement"></a>Prerequirement</h1><h2 id="安装-mongo-c-driver"><a href="#安装-mongo-c-driver" class="headerlink" title="安装 mongo-c-driver"></a>安装 mongo-c-driver</h2><ul>
-<li><p>通过 <u>git clone <a href="https://github.com/mongodb/mongo-c-driver.git" rel="external nofollow noopener noreferrer" target="_blank">https://github.com/mongodb/mongo-c-driver.git</a></u> 克隆mongo-c-driver 源代码</p>
+<li><p>通过 <u>git clone <a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/mongodb/mongo-c-driver.git">https://github.com/mongodb/mongo-c-driver.git</a></u> 克隆mongo-c-driver 源代码</p>
 </li>
 <li><p>checkout 最新的<strong>tag 1.14.0</strong></p>
 </li>
 <li><p>在代码的根目录下新建目录cmake-build</p>
 </li>
 <li><p>在其中运行 </p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cmake -G <span class="string">"Visual Studio 15 2017 Win64"</span> \</span><br><span class="line">  <span class="string">"-DCMAKE_INSTALL_PREFIX=C:\mongo-c-driver"</span> \</span><br><span class="line">  <span class="string">"-DCMAKE_PREFIX_PATH=C:\mongo-c-driver"</span> \</span><br><span class="line">  ..</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cmake -G <span class="string">&quot;Visual Studio 15 2017 Win64&quot;</span> \</span><br><span class="line">  <span class="string">&quot;-DCMAKE_INSTALL_PREFIX=C:\mongo-c-driver&quot;</span> \</span><br><span class="line">  <span class="string">&quot;-DCMAKE_PREFIX_PATH=C:\mongo-c-driver&quot;</span> \</span><br><span class="line">  ..</span><br></pre></td></tr></table></figure>
 
 <p>需要注意的是，将VS 的版版本调整到当前系统安装的 VS，不然会找不到 MSBuild.exe。</p>
 <p>成功的话会最后会提示以下信息:</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-- Compiling against Windows SSPI</span><br><span class="line">-- Configuring <span class="keyword">done</span></span><br><span class="line">-- Generating <span class="keyword">done</span></span><br><span class="line">-- Build files have been written to: F:/workspace/mongo-c-driver/cmake-build</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-- Compiling against Windows SSPI</span><br><span class="line">-- Configuring <span class="keyword">done</span></span><br><span class="line">-- Generating <span class="keyword">done</span></span><br><span class="line">-- Build files have been written to: F:/workspace/mongo-c-driver/cmake-build</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>使用 VS 打开 <strong>cmake-build/ALL-BUILD.vcxproj</strong>，生成</p>
 </li>
@@ -245,9 +245,9 @@
 </li>
 </ul>
 <p>至此，mongo-c-driver 在windows上基本安装成功。</p>
-<h3 id="Refer"><a href="#Refer" class="headerlink" title="Refer"></a>Refer</h3><p><a href="http://mongoc.org/libmongoc/current/installing.html#building-windows" rel="external nofollow noopener noreferrer" target="_blank">Installing the MongoDB C Driver (libmongoc) and BSON library (libbson)</a></p>
+<h3 id="Refer"><a href="#Refer" class="headerlink" title="Refer"></a>Refer</h3><p><a target="_blank" rel="external nofollow noopener noreferrer" href="http://mongoc.org/libmongoc/current/installing.html#building-windows">Installing the MongoDB C Driver (libmongoc) and BSON library (libbson)</a></p>
 <h2 id="安装boost"><a href="#安装boost" class="headerlink" title="安装boost"></a>安装boost</h2><ul>
-<li><p>git clone <a href="https://github.com/boostorg/boost.git" rel="external nofollow noopener noreferrer" target="_blank">https://github.com/boostorg/boost.git</a></p>
+<li><p>git clone <a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/boostorg/boost.git">https://github.com/boostorg/boost.git</a></p>
 </li>
 <li><p>git chekout boost-1.66.0</p>
 </li>
@@ -265,7 +265,7 @@
 </li>
 </ul>
 <p>以上步骤就说明安装成功了，只要在VS里面引入include和库路径就可以了。</p>
-<h3 id="Refer-1"><a href="#Refer-1" class="headerlink" title="Refer"></a>Refer</h3><p><a href="https://github.com/boostorg/boost/wiki/Getting-Started" rel="external nofollow noopener noreferrer" target="_blank">Installing Boost</a></p>
+<h3 id="Refer-1"><a href="#Refer-1" class="headerlink" title="Refer"></a>Refer</h3><p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/boostorg/boost/wiki/Getting-Started">Installing Boost</a></p>
 <h2 id="安装-mongocxx"><a href="#安装-mongocxx" class="headerlink" title="安装 mongocxx"></a>安装 mongocxx</h2><p>windows上 mongocxx 需要依赖VS 14（2015）以及boost1.6.0：</p>
 <table>
 <thead>
@@ -302,7 +302,7 @@
 </tr>
 </tbody></table>
 <p>直接编译：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cmake -G <span class="string">"Visual Studio 15 2017 Win64"</span> -DCMAKE_INSTALL_PREFIX=C:\mongo-cxx-driver -DCMAKE_PREFIX_PATH=C:\mongo-c-driver -DCMAKE_CXX_STANDARD=17 -DCMAK</span><br><span class="line">E_CXX_FLAGS=<span class="string">"/Zc:__cplusplus"</span> -DCMAKE_BUILD_TYPE=Release ..</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cmake -G <span class="string">&quot;Visual Studio 15 2017 Win64&quot;</span> -DCMAKE_INSTALL_PREFIX=C:\mongo-cxx-driver -DCMAKE_PREFIX_PATH=C:\mongo-c-driver -DCMAKE_CXX_STANDARD=17 -DCMAK</span><br><span class="line">E_CXX_FLAGS=<span class="string">&quot;/Zc:__cplusplus&quot;</span> -DCMAKE_BUILD_TYPE=Release ..</span><br></pre></td></tr></table></figure>
 
 <p>发生了错误：</p>
 <blockquote>
@@ -339,12 +339,12 @@
 </blockquote>
 <p>我的VS 版本是 15.9.7 ，所以是可以用 <code>_ENABLE_EXTENDED_ALIGNED_STORAGE</code>  的。</p>
 <p>在CMakeLists.txt 中加入:</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span>(CMAKE_CXX_FLAGS <span class="string">"$&#123;CMAKE_CXX_FLAGS&#125; -D _ENABLE_EXTENDED_ALIGNED_STORAGE"</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span>(CMAKE_CXX_FLAGS <span class="string">&quot;$&#123;CMAKE_CXX_FLAGS&#125; -D _ENABLE_EXTENDED_ALIGNED_STORAGE&quot;</span>)</span><br></pre></td></tr></table></figure>
 
 <p>接着All_Build，还在报错。。。</p>
 <p>算了，Windows真不友好…..</p>
-<h3 id="Refer-2"><a href="#Refer-2" class="headerlink" title="Refer"></a>Refer</h3><p><a href="http://mongocxx.org/mongocxx-v3/installation/" rel="external nofollow noopener noreferrer" target="_blank">Installing the mongocxx driver</a></p>
-<p><a href="https://jira.mongodb.org/browse/CDRIVER-3022" rel="external nofollow noopener noreferrer" target="_blank">mongo-c-driver-1.14.0: wrong version in pkg-config files</a></p>
+<h3 id="Refer-2"><a href="#Refer-2" class="headerlink" title="Refer"></a>Refer</h3><p><a target="_blank" rel="external nofollow noopener noreferrer" href="http://mongocxx.org/mongocxx-v3/installation/">Installing the mongocxx driver</a></p>
+<p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://jira.mongodb.org/browse/CDRIVER-3022">mongo-c-driver-1.14.0: wrong version in pkg-config files</a></p>
 
     </div>
 
@@ -445,14 +445,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">91</span>
+          <span class="site-state-item-count">92</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-count">58</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -539,7 +539,7 @@
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="//unpkg.com/lozad@1.16.0/dist/lozad.min.js"></script>
+  <script src="//fastly.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

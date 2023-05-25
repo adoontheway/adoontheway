@@ -28,7 +28,7 @@
 <meta property="og:description" content="开始研读 Gin 代码">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-09-01T03:42:29.000Z">
-<meta property="article:modified_time" content="2020-09-03T04:28:23.744Z">
+<meta property="article:modified_time" content="2023-05-25T10:26:16.057Z">
 <meta property="article:author" content="ado">
 <meta property="article:tag" content="go">
 <meta property="article:tag" content="gin">
@@ -195,7 +195,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-03 12:28:23" itemprop="dateModified" datetime="2020-09-03T12:28:23+08:00">2020-09-03</time>
+                <time title="修改时间：2023-05-25 18:26:16" itemprop="dateModified" datetime="2023-05-25T18:26:16+08:00">2023-05-25</time>
               </span>
 
           
@@ -227,7 +227,6 @@
 <h1 id="Contents"><a href="#Contents" class="headerlink" title="Contents"></a>Contents</h1><p>研究 <strong>gin</strong> 是从他的源代码根目录开始的，第一个文件是 <strong>auth.go</strong>，在 <strong>auth.go</strong> 的第一个 <strong><em>public</em></strong> 方法 <em>BasicAuthForRealm</em> 中看到了 <em>gin.Context</em> 的使用，于是导航到 <em>gin.Context</em> 看看</p>
 <h2 id="Context"><a href="#Context" class="headerlink" title="Context"></a>Context</h2><p><strong>Context</strong> 是 <em>gin</em> 的核心之一。他是用来在中间件之间传递变量，管理流程，比如验证请求的 <strong>JSON</strong> 数据和渲染 <strong>JSON</strong> 响应。</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Context <span class="keyword">struct</span> &#123;</span><br><span class="line">	writermem responseWriter<span class="comment">//定义在reponse_wirter.go中，内嵌了http.ResponseWriter，有size和status属性</span></span><br><span class="line">	Request   *http.Request<span class="comment">//当前http请求</span></span><br><span class="line">	Writer    ResponseWriter<span class="comment">//使用gin封装的ResponseWriter，不是http.ResponseWriter</span></span><br><span class="line">	Params   Params<span class="comment">//get请求中url携带的get参数，是一个k/v对，定义在tree.go中</span></span><br><span class="line">	handlers HandlersChain<span class="comment">//中间件链，是一个[]HandlerFunc类型，定义在gin.go中，HandlerFunc类型定义是 func(*Context)</span></span><br><span class="line">	index    <span class="keyword">int8</span><span class="comment">//索引，用于记录中间件的执行深度，当执行到abortIndex的时候不接着往下执行，在Context的Next方法中变更的</span></span><br><span class="line">	engine *Engine<span class="comment">//gin框架的实例，包含了muxer，中间件和各种配置的设置，通过Engine.New()/Engine.Default()来创建</span></span><br><span class="line">	Keys <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">interface</span>&#123;&#125;<span class="comment">//context专门给每个请求提供的k/v对，通过Context的Get/Set相关方法来操作</span></span><br><span class="line">	Errors errorMsgs<span class="comment">//这是一个[]*Error类型，此类型定义在errors.go中，提供给所有使用此Context的处理器/中间件来添加错误信息的</span></span><br><span class="line">	Accepted []<span class="keyword">string</span><span class="comment">//用于定义所有可接受的格式，通过Context.SetAccepted方法来操作</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <h3 id="常量部分"><a href="#常量部分" class="headerlink" title="常量部分"></a>常量部分</h3><p><strong>Context.go</strong> 的代码注释和逻辑分块做的非常好，他的代码是按照逻辑进行分块的。<br>第一部分肯定是常量定义，首先声明的几个变量都是来自 <code>gin-gonic/gin/binding</code>的；<br>接着是 <strong><em>abortIndex = math.MaxInt8/2</em></strong> 也就是最大中间件深度，也就是个数；  </p>
 <h3 id="实例化相关部分"><a href="#实例化相关部分" class="headerlink" title="实例化相关部分"></a>实例化相关部分</h3><ul>
 <li>reset: 私有方法，看名字就知道是重置 <strong>Context</strong></li>
@@ -397,14 +396,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">91</span>
+          <span class="site-state-item-count">92</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-count">58</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -491,7 +490,7 @@
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="//unpkg.com/lozad@1.16.0/dist/lozad.min.js"></script>
+  <script src="//fastly.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

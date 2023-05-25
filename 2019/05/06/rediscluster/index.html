@@ -28,7 +28,7 @@
 <meta property="og:description" content="连接Redis Cluster遇到问题汇总">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-05-06T05:49:06.000Z">
-<meta property="article:modified_time" content="2020-08-26T06:16:59.096Z">
+<meta property="article:modified_time" content="2023-05-25T10:26:16.074Z">
 <meta property="article:author" content="ado">
 <meta property="article:tag" content="docker">
 <meta property="article:tag" content="redis">
@@ -196,7 +196,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-26 14:16:59" itemprop="dateModified" datetime="2020-08-26T14:16:59+08:00">2020-08-26</time>
+                <time title="修改时间：2023-05-25 18:26:16" itemprop="dateModified" datetime="2023-05-25T18:26:16+08:00">2023-05-25</time>
               </span>
 
           
@@ -220,12 +220,12 @@
       
         <h2 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h2><p>最近在搭游戏框架，需要用 <strong>redis</strong> 来存一些缓存数据。</p>
 <p>于是就打算利用之前搭建好的 <strong>redis docker</strong>容器。</p>
-<p><a href="https://adobeattheworld.github.io/2019/05/04/dockerrediscluster/" rel="external nofollow noopener noreferrer" target="_blank">Docker搭建mysql和Redis开发环境</a></p>
+<p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://adobeattheworld.github.io/2019/05/04/dockerrediscluster/">Docker搭建mysql和Redis开发环境</a></p>
 <p>进展不是很顺利，所以把过程记录下来。</p>
 <h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><p>代码方面使用的是 <strong>golang</strong>。</p>
-<p>连接的三方库是 <a href="https://github.com/gomodule/redigo/" rel="external nofollow noopener noreferrer" target="_blank">gomodule/redigo</a></p>
+<p>连接的三方库是 <a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/gomodule/redigo/">gomodule/redigo</a></p>
 <p>测试代码如下：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> test</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"github.com/gomodule/redigo/redis"</span></span><br><span class="line">	<span class="string">"testing"</span></span><br><span class="line">	<span class="string">"time"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestRedis</span><span class="params">(t *testing.T)</span></span>&#123;</span><br><span class="line">	readTimeOut := redis.DialReadTimeout(time.Second*<span class="number">3</span>)</span><br><span class="line">	connectTimeOut := redis.DialConnectTimeout(time.Second*<span class="number">10</span>)</span><br><span class="line">	writeTimeOut := redis.DialWriteTimeout(time.Second*<span class="number">3</span>)</span><br><span class="line">	conn, err := redis.Dial(<span class="string">"tcp"</span>,<span class="string">"192.168.2.127:7001"</span>,readTimeOut,connectTimeOut,writeTimeOut)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		 fmt.Println(<span class="string">"Dial Failed:"</span>,err)</span><br><span class="line">		 t.FailNow()</span><br><span class="line">	&#125;</span><br><span class="line">	err = conn.Send(<span class="string">"SET"</span>,<span class="string">"foo"</span>,<span class="string">"bar"</span>)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">"Set Failed:"</span>,err)</span><br><span class="line">		t.FailNow()</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> test</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">	<span class="string">&quot;github.com/gomodule/redigo/redis&quot;</span></span><br><span class="line">	<span class="string">&quot;testing&quot;</span></span><br><span class="line">	<span class="string">&quot;time&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestRedis</span><span class="params">(t *testing.T)</span></span>&#123;</span><br><span class="line">	readTimeOut := redis.DialReadTimeout(time.Second*<span class="number">3</span>)</span><br><span class="line">	connectTimeOut := redis.DialConnectTimeout(time.Second*<span class="number">10</span>)</span><br><span class="line">	writeTimeOut := redis.DialWriteTimeout(time.Second*<span class="number">3</span>)</span><br><span class="line">	conn, err := redis.Dial(<span class="string">&quot;tcp&quot;</span>,<span class="string">&quot;192.168.2.127:7001&quot;</span>,readTimeOut,connectTimeOut,writeTimeOut)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		 fmt.Println(<span class="string">&quot;Dial Failed:&quot;</span>,err)</span><br><span class="line">		 t.FailNow()</span><br><span class="line">	&#125;</span><br><span class="line">	err = conn.Send(<span class="string">&quot;SET&quot;</span>,<span class="string">&quot;foo&quot;</span>,<span class="string">&quot;bar&quot;</span>)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">&quot;Set Failed:&quot;</span>,err)</span><br><span class="line">		t.FailNow()</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <h2 id="Steps"><a href="#Steps" class="headerlink" title="Steps"></a>Steps</h2><p>首先遇到的是这个问题：</p>
 <p><em>connectex: No connection could be made because the target machine actively refused it.</em></p>
@@ -248,7 +248,7 @@
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install procps</span><br></pre></td></tr></table></figure>
 
 <p>然后先后通过修改代码中的<strong>ip</strong>地址为<strong>master</strong>的地址</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis.Dial(<span class="string">"tcp"</span>,<span class="string">"172.17.0.2:6379"</span>,readTimeOut,connectTimeOut,writeTimeOut)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis.Dial(<span class="string">&quot;tcp&quot;</span>,<span class="string">&quot;172.17.0.2:6379&quot;</span>,readTimeOut,connectTimeOut,writeTimeOut)</span><br></pre></td></tr></table></figure>
 
 <p>报了 <u>i/o timeout</u> 。</p>
 <p>仔细看了一下启动命令，发现是没有做主机到容器之间的端口映射。</p>
@@ -266,10 +266,10 @@
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod -R 777 masterdata</span><br></pre></td></tr></table></figure>
 
 <p>然后用以下方式启动:</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo docker run --name redis-master --privileged=<span class="literal">true</span> -p 7001:6379 -v <span class="variable">$PWD</span>/masterdata:/data -v <span class="variable">$PWD</span>/masterdata/master.log:/var/<span class="built_in">log</span>/redis/redis.log -d redis redis-server /data/redis-master.conf</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo docker run --name redis-master --privileged=<span class="literal">true</span> -p 7001:6379 -v <span class="variable">$PWD</span>/masterdata:/data -v <span class="variable">$PWD</span>/masterdata/master.log:/var/<span class="built_in">log</span>/redis/redis.log -d redis redis-server /data/redis-master.conf</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>有报错，使用 <em>sudo docker logs redis-master</em> 查看容器日志，发现：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">*** FATAL CONFIG FILE ERROR ***</span><br><span class="line">Reading the configuration file, at line 174</span><br><span class="line">&gt;&gt;&gt; <span class="string">'logfile "/usr/local/log/redis.log"'</span></span><br><span class="line">Can<span class="string">'t open the log file: No such file or directory</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">*** FATAL CONFIG FILE ERROR ***</span><br><span class="line">Reading the configuration file, at line 174</span><br><span class="line">&gt;&gt;&gt; <span class="string">&#x27;logfile &quot;/usr/local/log/redis.log&quot;&#x27;</span></span><br><span class="line">Can<span class="string">&#x27;t open the log file: No such file or directory</span></span><br></pre></td></tr></table></figure>
 
 <p>这是读取 <strong>redis-master.conf</strong> 第174日志文件配置出的错，也就是上面命令行的日志文件映射出错了。</p>
 <p>最终的运行命令如下：</p>
@@ -285,8 +285,9 @@
 <p><strong>redis-slave</strong>同理：apt</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo docker run -it -v <span class="variable">$PWD</span>/slave1/redis-slave1.conf:/usr/<span class="built_in">local</span>/etc/redis/redis.conf -v <span class="variable">$PWD</span>/slave1/slave1.log:/usr/<span class="built_in">local</span>/<span class="built_in">log</span>/redis.log -p 7002:6379 --link redis-master:master --name redis-slave1 redis</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo docker run -d --restart=always -v <span class="variable">$PWD</span>/slave2/redis-slave2.conf:/usr/<span class="built_in">local</span>/etc/redis/redis.conf -v <span class="variable">$PWD</span>/slave2/slave2.log:/usr/<span class="built_in">local</span>/<span class="built_in">log</span>/redis.log -p 7003:6379 --link redis-master:master --name redis-slave2 redis</span><br></pre></td></tr></table></figure>
 
+
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo docker run -d --restart=always -v <span class="variable">$PWD</span>/slave2/redis-slave2.conf:/usr/<span class="built_in">local</span>/etc/redis/redis.conf -v <span class="variable">$PWD</span>/slave2/slave2.log:/usr/<span class="built_in">local</span>/<span class="built_in">log</span>/redis.log -p 7003:6379 --link redis-master:master --name redis-slave2 redis</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -387,14 +388,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">91</span>
+          <span class="site-state-item-count">92</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-count">58</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -481,7 +482,7 @@
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="//unpkg.com/lozad@1.16.0/dist/lozad.min.js"></script>
+  <script src="//fastly.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

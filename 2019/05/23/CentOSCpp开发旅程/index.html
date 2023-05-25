@@ -28,7 +28,7 @@
 <meta property="og:description" content="在CentOS上开发C++应用遇到的问题和解决过程记录">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-05-22T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-08-26T06:16:59.055Z">
+<meta property="article:modified_time" content="2023-05-25T10:26:16.017Z">
 <meta property="article:author" content="ado">
 <meta property="article:tag" content="c++">
 <meta property="article:tag" content="linux">
@@ -195,7 +195,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-26 14:16:59" itemprop="dateModified" datetime="2020-08-26T14:16:59+08:00">2020-08-26</time>
+                <time title="修改时间：2023-05-25 18:26:16" itemprop="dateModified" datetime="2023-05-25T18:26:16+08:00">2023-05-25</time>
               </span>
 
           
@@ -222,12 +222,9 @@
 
 <p>这个命令安装的是 <em>cmake 2.x</em> 版本，<br>而<strong>doxygen</strong>依赖的是 <em>cmake 3.x</em> ，<br>所以我们要安装的是</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -i cmake3</span><br></pre></td></tr></table></figure>
-
-<p><strong>doxygen</strong>源代码的编译还依赖了其他一些库:<em>flex</em>, <em>bison</em>，这些可以直接通过<em>yum</em>安装的。<br><a href="http://www.doxygen.nl/download.html" rel="external nofollow noopener noreferrer" target="_blank">官方安装教程</a></p>
+<p><strong>doxygen</strong>源代码的编译还依赖了其他一些库:<em>flex</em>, <em>bison</em>，这些可以直接通过<em>yum</em>安装的。<br><a target="_blank" rel="external nofollow noopener noreferrer" href="http://www.doxygen.nl/download.html">官方安装教程</a></p>
 <h2 id="Issues"><a href="#Issues" class="headerlink" title="Issues"></a>Issues</h2><h3 id="“font”-is-an-unregitered-media-type"><a href="#“font”-is-an-unregitered-media-type" class="headerlink" title="“font” is an unregitered media type"></a>“font” is an unregitered media type</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo update-desktop-database</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">grep MimeType /usr/share/applications/org.gnome.font-viewer.desktop</span><br></pre></td></tr></table></figure>
-
 <p>需要重启terminal</p>
 <h3 id="安装mysql-connector-c-报错，找不到openssl"><a href="#安装mysql-connector-c-报错，找不到openssl" class="headerlink" title="安装mysql-connector-c++报错，找不到openssl"></a>安装mysql-connector-c++报错，找不到openssl</h3><p>因为没有装openssl-devel</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y openssl-devel</span><br></pre></td></tr></table></figure>
@@ -237,49 +234,42 @@
 <li>openssl是执行码部分</li>
 <li>openssl-devel包含了头文件，头文件参考，某些库文件等开发相关的东西</li>
 </ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmake ./mysql-connector-c++-8.0.12-src -DWITH_JDBC=ON -DCMAKE_INSTALL_PREFIX=/usr/local/mysql</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cmake ./mysql-connector-c++-8.0.12-src -DWITH_JDBC=ON -DCMAKE_INSTALL_PREFIX=/usr/local/mysql</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmake --build . --config release --target install</span><br></pre></td></tr></table></figure>
-
-<p>还是没有用，阅读官网文件发现jdbc需要编译的话，需要去手动通过<em>git submodule</em>去更新，于是放弃了当前不知谁提供的<em>mysql-connector-c++-8.0.12src*</em>,去github上找到了对应的  <a href="https://github.com/mysql/mysql-connector-cpp.git" rel="external nofollow noopener noreferrer" target="_blank">mysql-connector-cpp on github</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/mysql/mysql-connector-cpp.git</span><br><span class="line">cd mysql-connector-app</span><br><span class="line">git checkout 8.0.12</span><br><span class="line">git submodule update --init</span><br></pre></td></tr></table></figure>
+<p>还是没有用，阅读官网文件发现jdbc需要编译的话，需要去手动通过<em>git submodule</em>去更新，于是放弃了当前不知谁提供的<em>mysql-connector-c++-8.0.12src*</em>,去github上找到了对应的  <a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/mysql/mysql-connector-cpp.git">mysql-connector-cpp on github</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;mysql&#x2F;mysql-connector-cpp.git</span><br><span class="line">cd mysql-connector-app</span><br><span class="line">git checkout 8.0.12</span><br><span class="line">git submodule update --init</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum what provides libxxx*</span><br></pre></td></tr></table></figure>
 
 <p>又出了Could not find “libmysqlclient_r.a libmysqlclient.a”的问题</p>
-<p>参考:  <a href="https://dev.mysql.com/doc/connector-cpp/8.0/en/connector-cpp-source-configuration-options.html" rel="external nofollow noopener noreferrer" target="_blank">mysql-connector-cpp官网安装文档</a></p>
+<p>参考:  <a target="_blank" rel="external nofollow noopener noreferrer" href="https://dev.mysql.com/doc/connector-cpp/8.0/en/connector-cpp-source-configuration-options.html">mysql-connector-cpp官网安装文档</a></p>
 <h3 id="xxxxxqconfig-pri’-has-modification-time-4711-s-in-the-future"><a href="#xxxxxqconfig-pri’-has-modification-time-4711-s-in-the-future" class="headerlink" title="xxxxxqconfig.pri’ has modification time 4711 s in the future"></a>xxxxxqconfig.pri’ has modification time 4711 s in the future</h3><p>报这个错误的原因是因为vmware镜像是别人导出来的，然后本地的一些文件修改时间早于当前时间。<br>这次遇到的主要是QT/gcc_64/mkspec下一个文件以及QT/gcc_64/mkspecs/modules下面的所有文件，<br>针对单个文件运行</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch -m *.pri</span><br></pre></td></tr></table></figure>
-
 <p>文件夹下面的文件：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch -m *.*</span><br></pre></td></tr></table></figure>
-
 <p>qt creator运行一下clean就可以正常build了。</p>
 <h3 id="qt-no-such-file-or-directory"><a href="#qt-no-such-file-or-directory" class="headerlink" title="qt: no such file or directory"></a>qt: no such file or directory</h3><p><em>qt</em> 找不到某些头文件，但是在项目预览中明显是有的；<br>查看 <em>.pro</em> 文件，<em>HEADERS*里面也是有的；<br>但是 *INCLUDEPATH</em> 里面没有，在 <em>INCLUDEPATH</em> 里面加入相对路径之后就好了。</p>
 <h3 id="qt-creator-no-rule-to-make-target"><a href="#qt-creator-no-rule-to-make-target" class="headerlink" title="qt creator: no rule to make target"></a>qt creator: no rule to make target</h3><p>复制别的项目，修改了项目的一些文件名，<strong>build</strong> 时出现了这个错误，<strong>clean</strong> 和重启 <strong>qt</strong> 都还存在这个问题。<br>删除<strong>QT Creator</strong> 编译生成的<em>build-[xxx]-Desktop_Qt_5_10_0_GCC_64bit-Debug</em>然后重新编译就可以了，<br>这个只是一个缓存问题。</p>
 <h3 id="qt-creator断点问题"><a href="#qt-creator断点问题" class="headerlink" title="qt creator断点问题"></a>qt creator断点问题</h3><p>qt creator断点进入的代码错误，这是因为进入的是so，而so里面的共享库代码是老版本的，导致用新库去调试项目的时候进入的方法对不上。我遇到的实际情况是，本来应该是调用一个返回stuct指针的方法，返回了一个值为4的int64，从而导致这个指针的地址直接是4而导致在访问这个struct的时候内存出错。</p>
-<h3 id="cannot-open-shared-object-file-No-such-file-or-directory"><a href="#cannot-open-shared-object-file-No-such-file-or-directory" class="headerlink" title="cannot open shared object file:No  such file or directory"></a>cannot open shared object file:No  such file or directory</h3><p><a href="https://www.cnblogs.com/youxin/p/5116243.html" rel="external nofollow noopener noreferrer" target="_blank">参考</a><br>Qt Creator构建出来的可执行文件找不到一些系统里面安装了的三方库，根据参考链接的提醒，去 <em>/etc/ld.so.conf</em> 中加入so坐在的路径即可。<br>但是我看到 <em>/etc/ld.so.conf</em> 的内容是这样的:</p>
+<h3 id="cannot-open-shared-object-file-No-such-file-or-directory"><a href="#cannot-open-shared-object-file-No-such-file-or-directory" class="headerlink" title="cannot open shared object file:No  such file or directory"></a>cannot open shared object file:No  such file or directory</h3><p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.cnblogs.com/youxin/p/5116243.html">参考</a><br>Qt Creator构建出来的可执行文件找不到一些系统里面安装了的三方库，根据参考链接的提醒，去 <em>/etc/ld.so.conf</em> 中加入so坐在的路径即可。<br>但是我看到 <em>/etc/ld.so.conf</em> 的内容是这样的:</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">include ld.so.conf.d<span class="comment">/*.conf</span></span><br></pre></td></tr></table></figure>
-
 <p>也就是这个文件其实就比遍历了 <em>ld.so.conf.d</em> 下的所有文件，<br>这些文件都是三方库的路径配置文件。<br>于是我在这个文件夹下面加了我的 <em>mongo.conf</em> ,然后在其中写入我的 <em>mongocxx.so._noabi</em> 的路径，然后执行：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ldconfig</span><br></pre></td></tr></table></figure>
-
 <p>搞定。</p>
 <h3 id="was-not-declared-in-this-scope"><a href="#was-not-declared-in-this-scope" class="headerlink" title="was not declared in this scope"></a>was not declared in this scope</h3><p>经查证是形成了环形依赖</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//a.h</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"b.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//b.h</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"c.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//c.h</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"a.h"</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//a.h</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;b.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//b.h</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;c.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//c.h</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;a.h&quot;</span></span></span><br></pre></td></tr></table></figure>
 
 <h3 id="jump-to-case-label-fpermissive"><a href="#jump-to-case-label-fpermissive" class="headerlink" title="jump to case label -fpermissive"></a>jump to case label -fpermissive</h3><p>作用域问题</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span>  a 1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> b 2</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span>(hehe)&#123;</span><br><span class="line"><span class="keyword">case</span> a:</span><br><span class="line"><span class="comment">//bibobibobibo...</span></span><br><span class="line"><span class="keyword">break</span></span><br><span class="line"><span class="keyword">case</span> b:</span><br><span class="line"><span class="comment">//bibobibobibo</span></span><br><span class="line"><span class="keyword">break</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in"><span class="keyword">switch</span></span>(hehe)&#123;</span><br><span class="line"><span class="keyword">case</span> a:</span><br><span class="line"><span class="comment">//bibobibobibo...</span></span><br><span class="line"><span class="keyword">break</span></span><br><span class="line"><span class="keyword">case</span> b:</span><br><span class="line"><span class="comment">//bibobibobibo</span></span><br><span class="line"><span class="keyword">break</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>上面由于case语句没有明确的大括号来标注他的作用范围，导致了很奇怪的问题，jump to case label只是其中之一，如果case语句里面有同名临时变量的话，也会产生redefined的问题，按照他的提示去掉redefined的定义后，还是会报其他错。解决方案就是把case语句的作用域用大括号包含起来，一直到break。<br>这个不像其他语言，case默认到break都是他的作用范围。</p>
 <h3 id="std-vector-reverse-vs-resize"><a href="#std-vector-reverse-vs-resize" class="headerlink" title="std::vector reverse vs resize"></a>std::vector reverse vs resize</h3><p>reverse是预留<br>resize是重新分配大小</p>
-<h3 id="vector-push-back是拷贝，不是引用传递"><a href="#vector-push-back是拷贝，不是引用传递" class="headerlink" title="vector.push_back是拷贝，不是引用传递"></a>vector.push_back是拷贝，不是引用传递</h3><p><a href="https://blog.csdn.net/u010003835/article/details/47442493" rel="external nofollow noopener noreferrer" target="_blank"><br>C++/STL_中的push_back方法与复制数据的问题</a></p>
+<h3 id="vector-push-back是拷贝，不是引用传递"><a href="#vector-push-back是拷贝，不是引用传递" class="headerlink" title="vector.push_back是拷贝，不是引用传递"></a>vector.push_back是拷贝，不是引用传递</h3><p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.csdn.net/u010003835/article/details/47442493"><br>C++/STL_中的push_back方法与复制数据的问题</a></p>
 <h3 id="查看目录结构的插件"><a href="#查看目录结构的插件" class="headerlink" title="查看目录结构的插件"></a>查看目录结构的插件</h3><p>tree可以用来查看目录结构，但是需要安装</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum install -y tree</span><br><span class="line"></span><br><span class="line">tree -d directory..</span><br></pre></td></tr></table></figure>
 
-<h3 id="Valgrind"><a href="#Valgrind" class="headerlink" title="Valgrind"></a>Valgrind</h3><p><a href="http://senlinzhan.github.io/2017/12/31/valgrind/" rel="external nofollow noopener noreferrer" target="_blank">使用 Valgrind 检测 C++ 内存泄漏</a></p>
+<h3 id="Valgrind"><a href="#Valgrind" class="headerlink" title="Valgrind"></a>Valgrind</h3><p><a target="_blank" rel="external nofollow noopener noreferrer" href="http://senlinzhan.github.io/2017/12/31/valgrind/">使用 Valgrind 检测 C++ 内存泄漏</a></p>
 <h3 id="dlopen-‘-so‘-出-发现-undefined-symbol"><a href="#dlopen-‘-so‘-出-发现-undefined-symbol" class="headerlink" title="dlopen(‘.so‘)出 发现 undefined symbol"></a>dlopen(‘<em>.so</em>‘)出 发现 undefined symbol</h3><p>打包so的时候是没有问题的，在使用dlopen加载的时候报错undefined symbol。</p>
 <p>在一个可执行的项目中将这个so以external library的方式导入进来进行编译，发现有个类的析构函数定义的，但是没有在cpp中实现。</p>
 <p>在cpp中实现此函数之后，就正常了。</p>
@@ -383,14 +373,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">91</span>
+          <span class="site-state-item-count">92</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-count">58</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -477,7 +467,7 @@
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="//unpkg.com/lozad@1.16.0/dist/lozad.min.js"></script>
+  <script src="//fastly.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

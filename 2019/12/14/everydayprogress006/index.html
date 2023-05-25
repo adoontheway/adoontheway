@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://adoontheway.gitee.io/2019/12/14/everydayprogress006/etcd1.png">
 <meta property="og:image" content="https://adoontheway.gitee.io/2019/12/14/everydayprogress006/etcd2.png">
 <meta property="article:published_time" content="2019-12-14T12:58:53.000Z">
-<meta property="article:modified_time" content="2020-08-26T06:16:59.070Z">
+<meta property="article:modified_time" content="2023-05-25T10:26:16.026Z">
 <meta property="article:author" content="ado">
 <meta property="article:tag" content="etcd">
 <meta name="twitter:card" content="summary">
@@ -197,7 +197,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-26 14:16:59" itemprop="dateModified" datetime="2020-08-26T14:16:59+08:00">2020-08-26</time>
+                <time title="修改时间：2023-05-25 18:26:16" itemprop="dateModified" datetime="2023-05-25T18:26:16+08:00">2023-05-25</time>
               </span>
 
           
@@ -222,32 +222,31 @@
         <h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>之前的环境比较复杂：我主机是windows，centos是vmware里面的虚拟机，docker又是centos里面的。<br>之前是打算在基于centos的docker搭建一个etcd本地集群来开发用，用作测试分布式服务发现，当然也可以用作分布式数据存储。<br>分布式数据存储也可以使用redis，在分布式数据存储这一点上etcd和redis各自的优缺点是啥，需要后面调查和验证一下。<br>在此略过。</p>
 <h1 id="Contents"><a href="#Contents" class="headerlink" title="Contents"></a>Contents</h1><p>分布式服务最少都是3个起步，都是奇数个，以匹配raft选举策略，所以需要配置3个服务。</p>
 <h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><p>以下分别是1，2，3号etcd服务的配置文件：</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">etcd01</span></span><br><span class="line"><span class="attr">data-dir:</span> <span class="string">.\data\etcd01</span> </span><br><span class="line"><span class="attr">advertise-client-urls:</span> <span class="attr">http://127.0.0.1:2379</span> </span><br><span class="line"><span class="attr">listen-client-urls:</span> <span class="attr">http://127.0.0.01:2379</span> </span><br><span class="line"><span class="attr">listen-peer-urls:</span> <span class="attr">http://127.0.0.1:2380</span> </span><br><span class="line"><span class="attr">initial-advertise-peer-urls:</span> <span class="attr">http://127.0.0.1:2380</span> </span><br><span class="line"><span class="attr">initial-cluster-token:</span> <span class="string">etcd-cluster-1</span> </span><br><span class="line"><span class="attr">initial-cluster:</span> <span class="string">etcd01=http://127.0.0.1:2380,etcd02=http://127.0.0.1:2381,etcd03=http://127.0.0.1:2382</span> </span><br><span class="line"><span class="attr">initial-cluster-state:</span> <span class="string">new</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">etcd01</span></span><br><span class="line"><span class="attr">data-dir:</span> <span class="string">.\data\etcd01</span> </span><br><span class="line"><span class="attr">advertise-client-urls:</span> <span class="string">http://127.0.0.1:2379</span> </span><br><span class="line"><span class="attr">listen-client-urls:</span> <span class="string">http://127.0.0.01:2379</span> </span><br><span class="line"><span class="attr">listen-peer-urls:</span> <span class="string">http://127.0.0.1:2380</span> </span><br><span class="line"><span class="attr">initial-advertise-peer-urls:</span> <span class="string">http://127.0.0.1:2380</span> </span><br><span class="line"><span class="attr">initial-cluster-token:</span> <span class="string">etcd-cluster-1</span> </span><br><span class="line"><span class="attr">initial-cluster:</span> <span class="string">etcd01=http://127.0.0.1:2380,etcd02=http://127.0.0.1:2381,etcd03=http://127.0.0.1:2382</span> </span><br><span class="line"><span class="attr">initial-cluster-state:</span> <span class="string">new</span> </span><br></pre></td></tr></table></figure>
 
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">etcd02</span></span><br><span class="line"><span class="attr">data-dir:</span> <span class="string">.\data\etcd02</span> </span><br><span class="line"><span class="attr">advertise-client-urls:</span> <span class="attr">http://127.0.0.1:3379</span> </span><br><span class="line"><span class="attr">listen-client-urls:</span> <span class="attr">http://127.0.0.01:3379</span> </span><br><span class="line"><span class="attr">listen-peer-urls:</span> <span class="attr">http://127.0.0.1:2381</span> </span><br><span class="line"><span class="attr">initial-advertise-peer-urls:</span> <span class="attr">http://127.0.0.1:2381</span> </span><br><span class="line"><span class="attr">initial-cluster-token:</span> <span class="string">etcd-cluster-1</span> </span><br><span class="line"><span class="attr">initial-cluster:</span> <span class="string">etcd01=http://127.0.0.1:2380,etcd02=http://127.0.0.1:2381,etcd03=http://127.0.0.1:2382</span> </span><br><span class="line"><span class="attr">initial-cluster-state:</span> <span class="string">new</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">etcd02</span></span><br><span class="line"><span class="attr">data-dir:</span> <span class="string">.\data\etcd02</span> </span><br><span class="line"><span class="attr">advertise-client-urls:</span> <span class="string">http://127.0.0.1:3379</span> </span><br><span class="line"><span class="attr">listen-client-urls:</span> <span class="string">http://127.0.0.01:3379</span> </span><br><span class="line"><span class="attr">listen-peer-urls:</span> <span class="string">http://127.0.0.1:2381</span> </span><br><span class="line"><span class="attr">initial-advertise-peer-urls:</span> <span class="string">http://127.0.0.1:2381</span> </span><br><span class="line"><span class="attr">initial-cluster-token:</span> <span class="string">etcd-cluster-1</span> </span><br><span class="line"><span class="attr">initial-cluster:</span> <span class="string">etcd01=http://127.0.0.1:2380,etcd02=http://127.0.0.1:2381,etcd03=http://127.0.0.1:2382</span> </span><br><span class="line"><span class="attr">initial-cluster-state:</span> <span class="string">new</span> </span><br></pre></td></tr></table></figure>
 
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">etcd03</span></span><br><span class="line"><span class="attr">data-dir:</span> <span class="string">.\data\etcd03</span> </span><br><span class="line"><span class="attr">advertise-client-urls:</span> <span class="attr">http://127.0.0.1:4379</span> </span><br><span class="line"><span class="attr">listen-client-urls:</span> <span class="attr">http://127.0.0.01:4379</span> </span><br><span class="line"><span class="attr">listen-peer-urls:</span> <span class="attr">http://127.0.0.1:2382</span> </span><br><span class="line"><span class="attr">initial-advertise-peer-urls:</span> <span class="attr">http://127.0.0.1:2382</span> </span><br><span class="line"><span class="attr">initial-cluster-token:</span> <span class="string">etcd-cluster-1</span> </span><br><span class="line"><span class="attr">initial-cluster:</span> <span class="string">etcd01=http://127.0.0.1:2380,etcd02=http://127.0.0.1:2381,etcd03=http://127.0.0.1:2382</span> </span><br><span class="line"><span class="attr">initial-cluster-state:</span> <span class="string">new</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">etcd03</span></span><br><span class="line"><span class="attr">data-dir:</span> <span class="string">.\data\etcd03</span> </span><br><span class="line"><span class="attr">advertise-client-urls:</span> <span class="string">http://127.0.0.1:4379</span> </span><br><span class="line"><span class="attr">listen-client-urls:</span> <span class="string">http://127.0.0.01:4379</span> </span><br><span class="line"><span class="attr">listen-peer-urls:</span> <span class="string">http://127.0.0.1:2382</span> </span><br><span class="line"><span class="attr">initial-advertise-peer-urls:</span> <span class="string">http://127.0.0.1:2382</span> </span><br><span class="line"><span class="attr">initial-cluster-token:</span> <span class="string">etcd-cluster-1</span> </span><br><span class="line"><span class="attr">initial-cluster:</span> <span class="string">etcd01=http://127.0.0.1:2380,etcd02=http://127.0.0.1:2381,etcd03=http://127.0.0.1:2382</span> </span><br><span class="line"><span class="attr">initial-cluster-state:</span> <span class="string">new</span> </span><br></pre></td></tr></table></figure>
 
 <h2 id="启动脚本"><a href="#启动脚本" class="headerlink" title="启动脚本"></a>启动脚本</h2><figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">etcd --config-file=F:/software/etcd-v3.<span class="number">4</span>.<span class="number">0</span>-windows-amd64/etcd01.yml</span><br><span class="line"><span class="built_in">pause</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="启动结果"><a href="#启动结果" class="headerlink" title="启动结果"></a>启动结果</h2><p><img data-src="./etcd1.png" alt="启动结果1"><br>查看一下结果：<br><img data-src="./etcd2.png" alt="启动结果2"><br>最后一个false是啥意思:</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">etcdctl <span class="built_in">help</span> member list</span><br></pre></td></tr></table></figure>
-
 <blockquote>
 <p>NAME:<br>        member list - Lists all members in the cluster<br>USAGE:<br>        etcdctl member list [flags]<br>DESCRIPTION:<br>        When –write-out is set to simple, this command prints out comma-separated member lists for each endpoint.<br>        The items in the lists are ID, Status, Name, Peer Addrs, Client Addrs, Is Learner.</p>
 </blockquote>
 <p>最后那个boolean值得代表的意思是是否是learner,learner是区别与master与follower的角色，具体干啥的可以参考下面的参考连接。  </p>
 <h1 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h1><p>整个过程不是很顺利，首先是按照官方的文档进行操作，windows会有奇怪的问题，于是改成了配置文件操作；<br>接着是windows的权限问题，整得很头疼；<br>现在是3个etcd服务器都跑起来了，但是etcdctl又用不了，第二天换成windows cmd line又可以了，当时用的是git bash；  </p>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
-<li><a href="https://etcd.io/docs/v3.3.12/learning/learner/" rel="external nofollow noopener noreferrer" target="_blank">etcd/learner</a></li>
-<li><a href="https://github.com/etcd-io/etcd/tree/master/etcdctl" rel="external nofollow noopener noreferrer" target="_blank">etcdctl</a></li>
-<li><a href="https://blog.csdn.net/god_wot/article/details/77854093" rel="external nofollow noopener noreferrer" target="_blank">ETCD集群安装配置及简单应用</a></li>
-<li><a href="http://kailing.pub/article/index/arcid/253.html" rel="external nofollow noopener noreferrer" target="_blank">Windows下安装Etcd集群及etcd-viewer</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://etcd.io/docs/v3.3.12/learning/learner/">etcd/learner</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/etcd-io/etcd/tree/master/etcdctl">etcdctl</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.csdn.net/god_wot/article/details/77854093">ETCD集群安装配置及简单应用</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="http://kailing.pub/article/index/arcid/253.html">Windows下安装Etcd集群及etcd-viewer</a></li>
 </ul>
 <h1 id="Update"><a href="#Update" class="headerlink" title="Update"></a>Update</h1><h2 id="关于etcd与redis数据存储方面的疑问"><a href="#关于etcd与redis数据存储方面的疑问" class="headerlink" title="关于etcd与redis数据存储方面的疑问"></a>关于etcd与redis数据存储方面的疑问</h2><p>etcd是分布式存储，强调是是节点之间的通信与同步，确保个节点上数据和事务的一致性，本身的单节点写入能力不强。<br>redis节点之间强调的是数据的一致性，并不在乎事务，所以读写能力很强，且支持的存储数据结构比较丰富，以及提供了例如incr，排序之类的东西。</p>
 <h2 id="关于redis的问题"><a href="#关于redis的问题" class="headerlink" title="关于redis的问题"></a>关于redis的问题</h2><p>redis主从之间的数据同步会有延迟，前不久遇到有人用redis替代rocketmq来做某些东西。<br>正式放到外网的时候出现了bug，多方研究发现内网是单节点redis，外网是redis cluster，连接到的sential数据有一定的几率数据更新不及时。</p>
 <ul>
-<li><a href="https://www.v2ex.com/t/520367" rel="external nofollow noopener noreferrer" target="_blank">在微服务架构中是否可用 redis 代替 etcd?</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.v2ex.com/t/520367">在微服务架构中是否可用 redis 代替 etcd?</a></li>
 </ul>
 
     </div>
@@ -347,14 +346,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">91</span>
+          <span class="site-state-item-count">92</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-count">58</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -441,7 +440,7 @@
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="//unpkg.com/lozad@1.16.0/dist/lozad.min.js"></script>
+  <script src="//fastly.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

@@ -28,7 +28,7 @@
 <meta property="og:description" content="Flutter中使用protobuf的过程与遇到的问题备忘">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-08-09T01:41:04.000Z">
-<meta property="article:modified_time" content="2020-08-26T06:16:59.064Z">
+<meta property="article:modified_time" content="2023-05-25T10:26:16.022Z">
 <meta property="article:author" content="ado">
 <meta property="article:tag" content="websocket">
 <meta property="article:tag" content="dart">
@@ -196,7 +196,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-26 14:16:59" itemprop="dateModified" datetime="2020-08-26T14:16:59+08:00">2020-08-26</time>
+                <time title="修改时间：2023-05-25 18:26:16" itemprop="dateModified" datetime="2023-05-25T18:26:16+08:00">2023-05-25</time>
               </span>
 
           
@@ -220,8 +220,8 @@
       
         <h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>上一篇中提到的工具，需要使用自定义字节流协议，自定义字节流中有使用到protobuf。</p>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
-<li>Dart 官方protoc插件：<a href="https://pub.dev/packages/protoc_plugin#-installing-tab-" rel="external nofollow noopener noreferrer" target="_blank">Dart protoc-plugin</a></li>
-<li>Protobuffer 官方Dart手册 <a href="https://developers.google.com/protocol-buffers/docs/darttutorial" rel="external nofollow noopener noreferrer" target="_blank">Protocol Buffer Basics: Dart</a></li>
+<li>Dart 官方protoc插件：<a target="_blank" rel="external nofollow noopener noreferrer" href="https://pub.dev/packages/protoc_plugin#-installing-tab-">Dart protoc-plugin</a></li>
+<li>Protobuffer 官方Dart手册 <a target="_blank" rel="external nofollow noopener noreferrer" href="https://developers.google.com/protocol-buffers/docs/darttutorial">Protocol Buffer Basics: Dart</a></li>
 </ul>
 <h1 id="Content"><a href="#Content" class="headerlink" title="Content"></a>Content</h1><h2 id="添加protobuf支持"><a href="#添加protobuf支持" class="headerlink" title="添加protobuf支持"></a>添加protobuf支持</h2><p>按照Protobuffer官方手册，直接运行：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">protoc -I=<span class="variable">$SRC_DIR</span> --dart_out=<span class="variable">$DST_DIR</span> <span class="variable">$SRC_DIR</span>/addressbook.proto</span><br></pre></td></tr></table></figure>
@@ -238,22 +238,22 @@
 <p>成功之后就可以用上面的命令将 proto 生成 dart 文件。</p>
 <p>如果想要在flutter项目中使用的话，直接在pubspec.yaml的dependencies中添加：protoc_plugin: ^17.0.5，在vs code中保存会直接触发flutter package get，或者自己去项目的目录下手动运行这个命令也可以。</p>
 <p>之后就可以直接在 flutter 上导入使用了</p>
-<h2 id="添加websocket支持"><a href="#添加websocket支持" class="headerlink" title="添加websocket支持"></a>添加websocket支持</h2><p>在]dart.dev](<a href="https://pub.dev/packages/web_socket_channel#-installing-tab-" rel="external nofollow noopener noreferrer" target="_blank">https://pub.dev/packages/web_socket_channel#-installing-tab-</a>)上搜索到websocket 包，然后再pubspec.yaml中导入进来。使用方式：</p>
-<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'package:web_socket_channel/status.dart'</span> <span class="keyword">as</span> status;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'package:web_socket_channel/io.dart'</span>;</span><br><span class="line">IOWebSocketChannel _channel;</span><br><span class="line">_channel = <span class="keyword">await</span> IOWebSocketChannel.connect(addr);</span><br><span class="line">_channel.sink.add(<span class="string">'connected.'</span>);</span><br><span class="line">_channel.stream.listen((message)&#123;</span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="添加websocket支持"><a href="#添加websocket支持" class="headerlink" title="添加websocket支持"></a>添加websocket支持</h2><p>在]dart.dev](<a target="_blank" rel="external nofollow noopener noreferrer" href="https://pub.dev/packages/web_socket_channel#-installing-tab-">https://pub.dev/packages/web_socket_channel#-installing-tab-</a>)上搜索到websocket 包，然后再pubspec.yaml中导入进来。使用方式：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&#x27;package:web_socket_channel/status.dart&#x27;</span> <span class="keyword">as</span> status;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;package:web_socket_channel/io.dart&#x27;</span>;</span><br><span class="line">IOWebSocketChannel _channel;</span><br><span class="line">_channel = <span class="keyword">await</span> IOWebSocketChannel.connect(addr);</span><br><span class="line">_channel.sink.add(<span class="string">&#x27;connected.&#x27;</span>);</span><br><span class="line">_channel.stream.listen((message)&#123;</span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 
 <p>但是我的客户端连接服务端websocket服务的时候，握手就报错了：</p>
 <blockquote>
 <p> WebSocketChannelException: WebSocketException: Bad response<br>‘Sec-WebSocket-Accept’ header</p>
 </blockquote>
 <p>所以需要再vs code中调试flutter。</p>
-<h2 id="vs-code中调试flutter"><a href="#vs-code中调试flutter" class="headerlink" title="vs code中调试flutter"></a>vs code中调试flutter</h2><p>本来以为 <a href="https://github.com/Dart-Code/Dart-Code" rel="external nofollow noopener noreferrer" target="_blank">Dart-Code 插件</a> (也就是 Dart 的 vs code插件)不支持flutter desktop 调试的。</p>
+<h2 id="vs-code中调试flutter"><a href="#vs-code中调试flutter" class="headerlink" title="vs code中调试flutter"></a>vs code中调试flutter</h2><p>本来以为 <a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/Dart-Code/Dart-Code">Dart-Code 插件</a> (也就是 Dart 的 vs code插件)不支持flutter desktop 调试的。</p>
 <blockquote>
 <p>Dart-code 插件负责 Dart 语言的调试，提醒和高亮</p>
 <p>flutter 插件只负责 flutter 包提醒，以及 device获取等辅助功能，并没有直接调试 flutter项目的功能。</p>
 </blockquote>
 <p>于是找到了 Dart-code 在github上的开源地址，打算修改一下让他支持 flutter desktop 调试，因为之前写过 vs code 插件，所以改这个应该难度是不大的。</p>
-<p>但是今早来不小心搜索到了 flutter 的 maillist中的这个帖子，<a href="https://groups.google.com/forum/#!topic/flutter-desktop-embedding-dev/nxU9bsAMS3I" rel="external nofollow noopener noreferrer" target="_blank">VSCode Running Desktop App with Play button</a>，发现 Dart-code 是支持 flutter desktop 调试的，只需要在 launch.json 的 configuration 中添加如下配置即可：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"Flutter Desktop"</span>,</span><br><span class="line">    <span class="attr">"type"</span>: <span class="string">"dart"</span>,</span><br><span class="line">    <span class="attr">"request"</span>: <span class="string">"launch"</span>,</span><br><span class="line">    <span class="attr">"deviceId"</span>: <span class="string">"windows"</span>,</span><br><span class="line">    <span class="attr">"flutterMode"</span>: <span class="string">"debug"</span>,</span><br><span class="line">    <span class="attr">"env"</span> : &#123;</span><br><span class="line">        <span class="attr">"ENABLE_FLUTTER_DESKTOP"</span>:<span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<p>但是今早来不小心搜索到了 flutter 的 maillist中的这个帖子，<a target="_blank" rel="external nofollow noopener noreferrer" href="https://groups.google.com/forum/#!topic/flutter-desktop-embedding-dev/nxU9bsAMS3I">VSCode Running Desktop App with Play button</a>，发现 Dart-code 是支持 flutter desktop 调试的，只需要在 launch.json 的 configuration 中添加如下配置即可：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;Flutter Desktop&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;dart&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;request&quot;</span>: <span class="string">&quot;launch&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;deviceId&quot;</span>: <span class="string">&quot;windows&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;flutterMode&quot;</span>: <span class="string">&quot;debug&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;env&quot;</span> : &#123;</span><br><span class="line">        <span class="attr">&quot;ENABLE_FLUTTER_DESKTOP&quot;</span>:<span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
 
 <p>这样就可以直接调试 flutter desktop 了。</p>
 
@@ -356,14 +356,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">91</span>
+          <span class="site-state-item-count">92</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-count">58</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -450,7 +450,7 @@
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="//unpkg.com/lozad@1.16.0/dist/lozad.min.js"></script>
+  <script src="//fastly.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

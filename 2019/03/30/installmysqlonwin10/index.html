@@ -28,7 +28,7 @@
 <meta property="og:description" content="很久没在windows上安装过mysql了，安装一个测试用">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-03-29T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-08-26T06:16:59.089Z">
+<meta property="article:modified_time" content="2023-05-25T10:26:16.065Z">
 <meta property="article:author" content="ado">
 <meta property="article:tag" content="mysql">
 <meta name="twitter:card" content="summary">
@@ -194,7 +194,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-26 14:16:59" itemprop="dateModified" datetime="2020-08-26T14:16:59+08:00">2020-08-26</time>
+                <time title="修改时间：2023-05-25 18:26:16" itemprop="dateModified" datetime="2023-05-25T18:26:16+08:00">2023-05-25</time>
               </span>
 
           
@@ -220,21 +220,19 @@
 <h3 id="下载mysql"><a href="#下载mysql" class="headerlink" title="下载mysql"></a>下载mysql</h3><p>官网下载mysql的zip安装包解压下来居然是个完整的mysql程序目录。<br>懵逼<del>~</del><br>之前不都是安装程序么。。。</p>
 <h3 id="创建配置文件"><a href="#创建配置文件" class="headerlink" title="创建配置文件"></a>创建配置文件</h3><p>在解压后的mysql根目录下创建一个文件：<em>my.ini</em></p>
 <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[mysqld]</span></span><br><span class="line"><span class="comment"># basedir mysql的安装路径，也就是解压路径</span></span><br><span class="line"><span class="attr">basedir</span>=D:\\installers\\mysql-<span class="number">8.0</span>.<span class="number">15</span>-winx64</span><br><span class="line"><span class="comment"># 数据存放路径</span></span><br><span class="line"><span class="attr">datadir</span>=D:\\installers\\mysql-<span class="number">8.0</span>.<span class="number">15</span>-winx64\\data</span><br></pre></td></tr></table></figure>
-
 <p>注意下windows的路径需要双斜杠的。<br>压缩包里面默认是没有data文件夹的，需要自己建一个。当然，你也可以把数据文件夹建到别的地方去，只要这里配置一下就可以了（我理所当然的想的）。</p>
 <h3 id="数据文件夹的初始化"><a href="#数据文件夹的初始化" class="headerlink" title="数据文件夹的初始化"></a>数据文件夹的初始化</h3><p>调用 <em>mysqld</em> 的 <em>–initialize</em> 或者 <em>–initialize-insecure</em> 来初始化数据文件夹。区别是 <em>–initialize</em> 默认会为 <em>root</em> 生成一个随机密码。<br>运行：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; mysql-8.0.15-winx64&gt;mysqld --defaults-file=./my.ini --initialize --console</span><br><span class="line"></span><br><span class="line">2019-04-22T04:23:08.321323Z 0 [System] [MY-013169] [Server]mysql-8.0.15-winx64\bin\mysqld.exe (mysqld 8.0.15) initializing of server <span class="keyword">in</span> progress as process 16292</span><br><span class="line">2019-04-22T04:23:11.783989Z 5 [Note] [MY-010454] [Server] A temporary password is generated <span class="keyword">for</span> root@localhost: sqaOhgP)e2y9</span><br><span class="line">2019-04-22T04:23:12.855674Z 0 [System] [MY-013170] [Server] mysql-8.0.15-winx64\bin\mysqld.exe (mysqld 8.0.15) initializing of server has completed</span><br></pre></td></tr></table></figure>
-
 <p>运行完成之后会发现 <em>data</em> 文件夹里面生成了很多东西。<br>*<em>千万要记得 –defaults-file 名字不能输错，顺序要在最前面 *</em></p>
 <h3 id="启动mysql"><a href="#启动mysql" class="headerlink" title="启动mysql"></a>启动mysql</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; mysqld --console</span><br></pre></td></tr></table></figure>
 
 <h3 id="连接mysql"><a href="#连接mysql" class="headerlink" title="连接mysql"></a>连接mysql</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; mysql -u root -p</span><br></pre></td></tr></table></figure>
 
-<h3 id="改密码"><a href="#改密码" class="headerlink" title="改密码"></a>改密码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; ALTER USER &apos;root&apos;@&apos;localhost&apos; IDENTIFIED BY &apos;12345&apos;;</span><br></pre></td></tr></table></figure>
+<h3 id="改密码"><a href="#改密码" class="headerlink" title="改密码"></a>改密码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;12345&#39;;</span><br></pre></td></tr></table></figure>
 
-<h3 id="加用户"><a href="#加用户" class="headerlink" title="加用户"></a>加用户</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CREATE USER &apos;root&apos;@&apos;127.0.0.1&apos; IDENTIFIED BY &apos;12345&apos;;</span><br></pre></td></tr></table></figure>
+<h3 id="加用户"><a href="#加用户" class="headerlink" title="加用户"></a>加用户</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CREATE USER &#39;root&#39;@&#39;127.0.0.1&#39; IDENTIFIED BY &#39;12345&#39;;</span><br></pre></td></tr></table></figure>
 
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://gogs.io/docs/installation" rel="external nofollow noopener noreferrer" target="_blank">Gogs在windows下安装</a><br><a href="https://dev.mysql.com/doc/refman/8.0/en/windows-install-archive.html" rel="external nofollow noopener noreferrer" target="_blank">在Windows安装Mysql8.0</a></p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://gogs.io/docs/installation">Gogs在windows下安装</a><br><a target="_blank" rel="external nofollow noopener noreferrer" href="https://dev.mysql.com/doc/refman/8.0/en/windows-install-archive.html">在Windows安装Mysql8.0</a></p>
 
     </div>
 
@@ -333,14 +331,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">91</span>
+          <span class="site-state-item-count">92</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-count">58</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -427,7 +425,7 @@
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="//unpkg.com/lozad@1.16.0/dist/lozad.min.js"></script>
+  <script src="//fastly.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

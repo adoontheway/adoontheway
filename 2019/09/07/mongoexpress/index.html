@@ -28,7 +28,7 @@
 <meta property="og:description" content="docker-compose 快速搭建 mongodb 与 mongo-express控制台">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-09-07T09:07:48.000Z">
-<meta property="article:modified_time" content="2020-08-26T06:16:59.090Z">
+<meta property="article:modified_time" content="2023-05-25T10:26:16.068Z">
 <meta property="article:author" content="ado">
 <meta property="article:tag" content="docker">
 <meta property="article:tag" content="mongo">
@@ -195,7 +195,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-26 14:16:59" itemprop="dateModified" datetime="2020-08-26T14:16:59+08:00">2020-08-26</time>
+                <time title="修改时间：2023-05-25 18:26:16" itemprop="dateModified" datetime="2023-05-25T18:26:16+08:00">2023-05-25</time>
               </span>
 
           
@@ -218,10 +218,10 @@
 
       
         <h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><ul>
-<li><a href="https://hub.docker.com/_/mongo" rel="external nofollow noopener noreferrer" target="_blank">mongo official image</a></li>
-<li><a href="https://hub.docker.com/_/mongo-express" rel="external nofollow noopener noreferrer" target="_blank">mongo-express</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://hub.docker.com/_/mongo">mongo official image</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://hub.docker.com/_/mongo-express">mongo-express</a></li>
 </ul>
-<h1 id="Content"><a href="#Content" class="headerlink" title="Content"></a>Content</h1><h2 id="yaml-file"><a href="#yaml-file" class="headerlink" title="yaml file"></a>yaml file</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3.1'</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">    mongo:</span></span><br><span class="line"><span class="attr">        image:</span> <span class="string">mongo</span></span><br><span class="line"><span class="attr">        restart:</span> <span class="string">always</span></span><br><span class="line"><span class="attr">        ports:</span></span><br><span class="line"><span class="bullet">            -</span> <span class="number">27017</span><span class="string">:27017</span></span><br><span class="line"><span class="attr">        environment:</span></span><br><span class="line"><span class="attr">            MONGO_INITDB_ROOT_USERNAME:</span> <span class="string">root</span></span><br><span class="line"><span class="attr">            MONGO_INITDB_ROOT_PASSWORD:</span> <span class="number">12345</span></span><br><span class="line"></span><br><span class="line"><span class="attr">    mongo-express:</span></span><br><span class="line"><span class="attr">        image:</span> <span class="string">mongo-express</span></span><br><span class="line"><span class="attr">        restart:</span> <span class="string">always</span></span><br><span class="line"><span class="attr">        ports:</span></span><br><span class="line"><span class="bullet">            -</span> <span class="number">8081</span><span class="string">:8081</span></span><br><span class="line"><span class="attr">        environment:</span></span><br><span class="line"><span class="attr">            ME_CONFIG_MONGODB_ADMINUSERNAME:</span> <span class="string">root</span></span><br><span class="line"><span class="attr">            ME_CONFIG_MONGODB_ADMINPASSWORD:</span> <span class="number">12345</span></span><br><span class="line"><span class="attr">            ME_CONFIG_MONGODB_ENABLE_ADMIN:</span> <span class="string">'true'</span></span><br><span class="line"><span class="attr">            ME_CONFIG_BASICAUTH_USERNAME:</span> <span class="string">admin</span></span><br><span class="line"><span class="attr">            ME_CONFIG_BASICAUTH_PASSWORD:</span> <span class="number">12345</span></span><br></pre></td></tr></table></figure>
+<h1 id="Content"><a href="#Content" class="headerlink" title="Content"></a>Content</h1><h2 id="yaml-file"><a href="#yaml-file" class="headerlink" title="yaml file"></a>yaml file</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3.1&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">    <span class="attr">mongo:</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">mongo</span></span><br><span class="line">        <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">        <span class="attr">ports:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="number">27017</span><span class="string">:27017</span></span><br><span class="line">        <span class="attr">environment:</span></span><br><span class="line">            <span class="attr">MONGO_INITDB_ROOT_USERNAME:</span> <span class="string">root</span></span><br><span class="line">            <span class="attr">MONGO_INITDB_ROOT_PASSWORD:</span> <span class="number">12345</span></span><br><span class="line"></span><br><span class="line">    <span class="attr">mongo-express:</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">mongo-express</span></span><br><span class="line">        <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">        <span class="attr">ports:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="number">8081</span><span class="string">:8081</span></span><br><span class="line">        <span class="attr">environment:</span></span><br><span class="line">            <span class="attr">ME_CONFIG_MONGODB_ADMINUSERNAME:</span> <span class="string">root</span></span><br><span class="line">            <span class="attr">ME_CONFIG_MONGODB_ADMINPASSWORD:</span> <span class="number">12345</span></span><br><span class="line">            <span class="attr">ME_CONFIG_MONGODB_ENABLE_ADMIN:</span> <span class="string">&#x27;true&#x27;</span></span><br><span class="line">            <span class="attr">ME_CONFIG_BASICAUTH_USERNAME:</span> <span class="string">admin</span></span><br><span class="line">            <span class="attr">ME_CONFIG_BASICAUTH_PASSWORD:</span> <span class="number">12345</span></span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>ME_CONFIG_MONGODB_ENABLE_ADMIN : mongo-express是否需要登录验证</li>
@@ -239,7 +239,7 @@
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it mongo_mongo-express_1 bash</span><br><span class="line">vi config.js</span><br></pre></td></tr></table></figure>
 
 <p>在 <code>config.js</code> 中找到 <code>blacklist</code>, 将需要隐藏的表加进去：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">blacklist: [<span class="string">'admin'</span>,<span class="string">'config'</span>,<span class="string">'local'</span>],</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">blacklist: [<span class="string">&#x27;admin&#x27;</span>,<span class="string">&#x27;config&#x27;</span>,<span class="string">&#x27;local&#x27;</span>],</span><br></pre></td></tr></table></figure>
 
 <p><code>whitelist</code> 的设置刚好相反。</p>
 
@@ -341,14 +341,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">91</span>
+          <span class="site-state-item-count">92</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-count">58</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -435,7 +435,7 @@
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="//unpkg.com/lozad@1.16.0/dist/lozad.min.js"></script>
+  <script src="//fastly.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

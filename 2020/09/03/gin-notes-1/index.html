@@ -28,7 +28,7 @@
 <meta property="og:description" content="Gin学习笔记，阅读gin.go">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-09-03T04:27:36.000Z">
-<meta property="article:modified_time" content="2020-09-03T05:17:08.918Z">
+<meta property="article:modified_time" content="2023-05-25T10:26:16.048Z">
 <meta property="article:author" content="ado">
 <meta property="article:tag" content="go">
 <meta property="article:tag" content="gin">
@@ -187,10 +187,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-09-03 12:27:36 / 修改时间：13:17:08" itemprop="dateCreated datePublished" datetime="2020-09-03T12:27:36+08:00">2020-09-03</time>
+              <time title="创建时间：2020-09-03 12:27:36" itemprop="dateCreated datePublished" datetime="2020-09-03T12:27:36+08:00">2020-09-03</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-05-25 18:26:16" itemprop="dateModified" datetime="2023-05-25T18:26:16+08:00">2023-05-25</time>
+              </span>
 
           
             <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
@@ -224,20 +230,14 @@
 <li>defaultAppEngine: 在新建 <strong>Engine</strong> 实例的时候传给 <em>AppEngine</em></li>
 </ul>
 <h2 id="类型定义"><a href="#类型定义" class="headerlink" title="类型定义"></a>类型定义</h2><ul>
-<li><p>HandlerFunc: func(*Context)</p>
-</li>
-<li><p>HandlersChain: []HandlerFunc</p>
-</li>
-<li><p>RouteInfo:</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> RouteInfo <span class="keyword">struct</span> &#123;</span><br><span class="line">	Method  <span class="keyword">string</span> <span class="comment">//Http 请求方法，例如GET，POST</span></span><br><span class="line">	Path    <span class="keyword">string</span> <span class="comment">//请求的资源路径</span></span><br><span class="line">	Handler <span class="keyword">string</span> <span class="comment">//处理器的名字</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>RoutesInfo: []RouteInfo</p>
-<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2></li>
-<li><p>HandlerChain.Last(): 返回处理器链条的最后一个，一般这个都是主处理器</p>
-</li>
+<li>HandlerFunc: func(*Context)</li>
+<li>HandlersChain: []HandlerFunc</li>
+<li>RouteInfo:<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> RouteInfo <span class="keyword">struct</span> &#123;</span><br><span class="line">	Method  <span class="keyword">string</span> <span class="comment">//Http 请求方法，例如GET，POST</span></span><br><span class="line">	Path    <span class="keyword">string</span> <span class="comment">//请求的资源路径</span></span><br><span class="line">	Handler <span class="keyword">string</span> <span class="comment">//处理器的名字</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>RoutesInfo: []RouteInfo<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2></li>
+<li>HandlerChain.Last(): 返回处理器链条的最后一个，一般这个都是主处理器</li>
 </ul>
 <h2 id="Engine"><a href="#Engine" class="headerlink" title="Engine"></a>Engine</h2><p>这个是框架的核心之一，<strong>Engine</strong> 是框架的实例，他包含里 <em>muxer*， *中间价</em> 和 <em>配置的设置</em></p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Engine <span class="keyword">struct</span> &#123;</span><br><span class="line">	RouterGroup <span class="comment">// 内嵌了RouterGroup,来自 routergroup.go，用于在内部配置路由器</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 自动转反斜杠，例如请求/foo/，但是只有地址为/foo的路由，客户端将会带着状态码301(GET)或307(其他请求方法)转到/foo</span></span><br><span class="line">    RedirectTrailingSlash <span class="keyword">bool</span> </span><br><span class="line">	</span><br><span class="line">    <span class="comment">// 如果找不到处理器的话，是否自动修复请求路径</span></span><br><span class="line">    <span class="comment">// 首先会去掉多余的路径元素，如 ../或者//</span></span><br><span class="line">    <span class="comment">// 之后路由器会做一个不区分大小写的路径查询</span></span><br><span class="line">    <span class="comment">// 如果可以找到对应的路径，那么就重定向到此路径，状态码301(GET)或者307(其他)</span></span><br><span class="line">    <span class="comment">// 例如 /FOO 和 /..//Foo 都会被重定向到 /foo</span></span><br><span class="line">    <span class="comment">// RedirectTrailingSlash依赖此项设置</span></span><br><span class="line">	RedirectFixedPath <span class="keyword">bool</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果当前请求无法被路由到，激活此选项将会查找是否有其他方法的此路径的处理器</span></span><br><span class="line">    <span class="comment">// 如果找得到的话，那么会返回`Method Not Allowed`和HTTP状态码405</span></span><br><span class="line">    <span class="comment">// 如果没有其他方法的话，那么会被发放到 NotFound 处理器</span></span><br><span class="line">	HandleMethodNotAllowed <span class="keyword">bool</span></span><br><span class="line">	ForwardedByClientIP    <span class="keyword">bool</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// issue #726 #755，此选项用于整合Paas而添加以 'X-AppEngine...' 开头的请求头</span></span><br><span class="line">	AppEngine <span class="keyword">bool</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 如果激活此选项，会用url.RawPath来找请求参数</span></span><br><span class="line">	UseRawPath <span class="keyword">bool</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果激活此选项将会对path值进行unescape</span></span><br><span class="line">    <span class="comment">// 如果 UseRawPath 是 false，那么此选项是会直接生效的，因为会直接使用 url.Path ，也就是已经 unescape 了的</span></span><br><span class="line">	UnescapePathValues <span class="keyword">bool</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// Value of 'maxMemory' param that is given to http.Request's ParseMultipartForm</span></span><br><span class="line">    <span class="comment">// method call.</span></span><br><span class="line">    <span class="comment">// 赋予 http.Request 的 ParseMultipartForm 方法的 maxMemory 的值</span></span><br><span class="line">	MaxMultipartMemory <span class="keyword">int64</span></span><br><span class="line"></span><br><span class="line">	delims           render.Delims <span class="comment">// glob前后缀</span></span><br><span class="line">	secureJsonPrefix <span class="keyword">string</span> <span class="comment">// 安全JSON前缀</span></span><br><span class="line">	HTMLRender       render.HTMLRender <span class="comment">// HTML渲染器</span></span><br><span class="line">	FuncMap          template.FuncMap</span><br><span class="line">	allNoRoute       HandlersChain</span><br><span class="line">	allNoMethod      HandlersChain</span><br><span class="line">	noRoute          HandlersChain</span><br><span class="line">	noMethod         HandlersChain</span><br><span class="line">	pool             sync.Pool</span><br><span class="line">	trees            methodTrees</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Engine <span class="keyword">struct</span> &#123;</span><br><span class="line">	RouterGroup <span class="comment">// 内嵌了RouterGroup,来自 routergroup.go，用于在内部配置路由器</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 自动转反斜杠，例如请求/foo/，但是只有地址为/foo的路由，客户端将会带着状态码301(GET)或307(其他请求方法)转到/foo</span></span><br><span class="line">    RedirectTrailingSlash <span class="keyword">bool</span> </span><br><span class="line">	</span><br><span class="line">    <span class="comment">// 如果找不到处理器的话，是否自动修复请求路径</span></span><br><span class="line">    <span class="comment">// 首先会去掉多余的路径元素，如 ../或者//</span></span><br><span class="line">    <span class="comment">// 之后路由器会做一个不区分大小写的路径查询</span></span><br><span class="line">    <span class="comment">// 如果可以找到对应的路径，那么就重定向到此路径，状态码301(GET)或者307(其他)</span></span><br><span class="line">    <span class="comment">// 例如 /FOO 和 /..//Foo 都会被重定向到 /foo</span></span><br><span class="line">    <span class="comment">// RedirectTrailingSlash依赖此项设置</span></span><br><span class="line">	RedirectFixedPath <span class="keyword">bool</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果当前请求无法被路由到，激活此选项将会查找是否有其他方法的此路径的处理器</span></span><br><span class="line">    <span class="comment">// 如果找得到的话，那么会返回`Method Not Allowed`和HTTP状态码405</span></span><br><span class="line">    <span class="comment">// 如果没有其他方法的话，那么会被发放到 NotFound 处理器</span></span><br><span class="line">	HandleMethodNotAllowed <span class="keyword">bool</span></span><br><span class="line">	ForwardedByClientIP    <span class="keyword">bool</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// issue #726 #755，此选项用于整合Paas而添加以 &#x27;X-AppEngine...&#x27; 开头的请求头</span></span><br><span class="line">	AppEngine <span class="keyword">bool</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 如果激活此选项，会用url.RawPath来找请求参数</span></span><br><span class="line">	UseRawPath <span class="keyword">bool</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果激活此选项将会对path值进行unescape</span></span><br><span class="line">    <span class="comment">// 如果 UseRawPath 是 false，那么此选项是会直接生效的，因为会直接使用 url.Path ，也就是已经 unescape 了的</span></span><br><span class="line">	UnescapePathValues <span class="keyword">bool</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// Value of &#x27;maxMemory&#x27; param that is given to http.Request&#x27;s ParseMultipartForm</span></span><br><span class="line">    <span class="comment">// method call.</span></span><br><span class="line">    <span class="comment">// 赋予 http.Request 的 ParseMultipartForm 方法的 maxMemory 的值</span></span><br><span class="line">	MaxMultipartMemory <span class="keyword">int64</span></span><br><span class="line"></span><br><span class="line">	delims           render.Delims <span class="comment">// glob前后缀</span></span><br><span class="line">	secureJsonPrefix <span class="keyword">string</span> <span class="comment">// 安全JSON前缀</span></span><br><span class="line">	HTMLRender       render.HTMLRender <span class="comment">// HTML渲染器</span></span><br><span class="line">	FuncMap          template.FuncMap</span><br><span class="line">	allNoRoute       HandlersChain</span><br><span class="line">	allNoMethod      HandlersChain</span><br><span class="line">	noRoute          HandlersChain</span><br><span class="line">	noMethod         HandlersChain</span><br><span class="line">	pool             sync.Pool</span><br><span class="line">	trees            methodTrees</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -336,14 +336,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">91</span>
+          <span class="site-state-item-count">92</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-count">58</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -430,7 +430,7 @@
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="//unpkg.com/lozad@1.16.0/dist/lozad.min.js"></script>
+  <script src="//fastly.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

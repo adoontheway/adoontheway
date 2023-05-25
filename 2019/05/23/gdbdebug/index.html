@@ -28,7 +28,7 @@
 <meta property="og:description" content="GDB调试dump的日记">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-05-22T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-08-26T06:16:59.084Z">
+<meta property="article:modified_time" content="2023-05-25T10:26:16.047Z">
 <meta property="article:author" content="ado">
 <meta property="article:tag" content="c++">
 <meta property="article:tag" content="gdb">
@@ -195,7 +195,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-26 14:16:59" itemprop="dateModified" datetime="2020-08-26T14:16:59+08:00">2020-08-26</time>
+                <time title="修改时间：2023-05-25 18:26:16" itemprop="dateModified" datetime="2023-05-25T18:26:16+08:00">2023-05-25</time>
               </span>
 
           
@@ -223,11 +223,15 @@
 
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">command class: stack</span><br><span class="line"></span><br><span class="line">backtrace -- 打印所有堆栈帧</span><br><span class="line">bt -- backtrace的简写</span><br><span class="line">down -- Select and print stack frame called by this one</span><br><span class="line">frame -- Select and print a stack frame</span><br><span class="line">return -- Make selected stack frame return to its caller</span><br><span class="line">select-frame -- Select a stack frame without printing anything</span><br><span class="line">up -- Select and print stack frame that called this one</span><br></pre></td></tr></table></figure>
 
-<h3 id="Show-threads"><a href="#Show-threads" class="headerlink" title="Show threads"></a>Show threads</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(gdb) info threads</span><br></pre></td></tr></table></figure>
+<h3 id="Show-threads"><a href="#Show-threads" class="headerlink" title="Show threads"></a>Show threads</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(gdb) info threads                 </span><br></pre></td></tr></table></figure>
 
 <h3 id="Use-thread"><a href="#Use-thread" class="headerlink" title="Use thread"></a>Use thread</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(gdb) thread 1</span><br></pre></td></tr></table></figure>
 
 <h3 id="Show-all-usable-commands"><a href="#Show-all-usable-commands" class="headerlink" title="Show all usable commands"></a>Show all usable commands</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(gdb) help all</span><br></pre></td></tr></table></figure>
+
+
+
+
 
 
     </div>
@@ -328,14 +332,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">91</span>
+          <span class="site-state-item-count">92</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-count">58</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -422,7 +426,7 @@
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="//unpkg.com/lozad@1.16.0/dist/lozad.min.js"></script>
+  <script src="//fastly.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 
