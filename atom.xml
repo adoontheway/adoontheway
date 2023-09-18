@@ -5,9 +5,9 @@
   <subtitle>a fullstack game worker</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="https://adoontheway.gitee.io/"/>
+  <link href="https://adoontheway.github.io/"/>
   <updated>2023-09-18T05:07:54.443Z</updated>
-  <id>https://adoontheway.gitee.io/</id>
+  <id>https://adoontheway.github.io/</id>
   
   <author>
     <name>ado</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>每天进步一点点035 - assembleDebug太慢的问题调查</title>
-    <link href="https://adoontheway.gitee.io/2023/09/18/everydayprogress0035/"/>
-    <id>https://adoontheway.gitee.io/2023/09/18/everydayprogress0035/</id>
+    <link href="https://adoontheway.github.io/2023/09/18/everydayprogress0035/"/>
+    <id>https://adoontheway.github.io/2023/09/18/everydayprogress0035/</id>
     <published>2023-09-18T04:08:01.000Z</published>
     <updated>2023-09-18T05:07:54.443Z</updated>
     
@@ -32,20 +32,20 @@
     </summary>
     
     
-      <category term="linux" scheme="https://adoontheway.gitee.io/tags/linux/"/>
+      <category term="linux" scheme="https://adoontheway.github.io/tags/linux/"/>
     
-      <category term="go" scheme="https://adoontheway.gitee.io/tags/go/"/>
+      <category term="go" scheme="https://adoontheway.github.io/tags/go/"/>
     
-      <category term="树莓派" scheme="https://adoontheway.gitee.io/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/"/>
+      <category term="树莓派" scheme="https://adoontheway.github.io/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/"/>
     
-      <category term="raspberry pi" scheme="https://adoontheway.gitee.io/tags/raspberry-pi/"/>
+      <category term="raspberry pi" scheme="https://adoontheway.github.io/tags/raspberry-pi/"/>
     
   </entry>
   
   <entry>
     <title>每天进步一点点034 - tensorflow 在arm架构上的使用</title>
-    <link href="https://adoontheway.gitee.io/2023/09/12/everydayprogress034/"/>
-    <id>https://adoontheway.gitee.io/2023/09/12/everydayprogress034/</id>
+    <link href="https://adoontheway.github.io/2023/09/12/everydayprogress034/"/>
+    <id>https://adoontheway.github.io/2023/09/12/everydayprogress034/</id>
     <published>2023-09-12T04:26:47.000Z</published>
     <updated>2023-09-18T05:07:54.446Z</updated>
     
@@ -58,16 +58,16 @@
     </summary>
     
     
-      <category term="python" scheme="https://adoontheway.gitee.io/tags/python/"/>
+      <category term="python" scheme="https://adoontheway.github.io/tags/python/"/>
     
-      <category term="tensorflow" scheme="https://adoontheway.gitee.io/tags/tensorflow/"/>
+      <category term="tensorflow" scheme="https://adoontheway.github.io/tags/tensorflow/"/>
     
   </entry>
   
   <entry>
     <title>每天进步一点点032 - Next.js学习</title>
-    <link href="https://adoontheway.gitee.io/2023/05/17/everydayprogress032/"/>
-    <id>https://adoontheway.gitee.io/2023/05/17/everydayprogress032/</id>
+    <link href="https://adoontheway.github.io/2023/05/17/everydayprogress032/"/>
+    <id>https://adoontheway.github.io/2023/05/17/everydayprogress032/</id>
     <published>2023-05-17T02:25:06.000Z</published>
     <updated>2023-05-17T05:36:41.335Z</updated>
     
@@ -80,18 +80,18 @@
     </summary>
     
     
-      <category term="Node" scheme="https://adoontheway.gitee.io/tags/Node/"/>
+      <category term="Node" scheme="https://adoontheway.github.io/tags/Node/"/>
     
-      <category term="React" scheme="https://adoontheway.gitee.io/tags/React/"/>
+      <category term="React" scheme="https://adoontheway.github.io/tags/React/"/>
     
-      <category term="Next.js" scheme="https://adoontheway.gitee.io/tags/Next-js/"/>
+      <category term="Next.js" scheme="https://adoontheway.github.io/tags/Next-js/"/>
     
   </entry>
   
   <entry>
     <title>每天进步一点点033 - 搭一下 Stable Diffusion WebUI</title>
-    <link href="https://adoontheway.gitee.io/2023/04/04/everydayprogress033/"/>
-    <id>https://adoontheway.gitee.io/2023/04/04/everydayprogress033/</id>
+    <link href="https://adoontheway.github.io/2023/04/04/everydayprogress033/"/>
+    <id>https://adoontheway.github.io/2023/04/04/everydayprogress033/</id>
     <published>2023-04-04T05:51:42.000Z</published>
     <updated>2023-09-12T04:26:34.797Z</updated>
     
@@ -104,18 +104,18 @@
     </summary>
     
     
-      <category term="python" scheme="https://adoontheway.gitee.io/tags/python/"/>
+      <category term="python" scheme="https://adoontheway.github.io/tags/python/"/>
     
-      <category term="ai" scheme="https://adoontheway.gitee.io/tags/ai/"/>
+      <category term="ai" scheme="https://adoontheway.github.io/tags/ai/"/>
     
-      <category term="stable diffusion" scheme="https://adoontheway.gitee.io/tags/stable-diffusion/"/>
+      <category term="stable diffusion" scheme="https://adoontheway.github.io/tags/stable-diffusion/"/>
     
   </entry>
   
   <entry>
     <title>每天进步一点点031 - 尝试一下OCR</title>
-    <link href="https://adoontheway.gitee.io/2022/05/13/everydayprogress031/"/>
-    <id>https://adoontheway.gitee.io/2022/05/13/everydayprogress031/</id>
+    <link href="https://adoontheway.github.io/2022/05/13/everydayprogress031/"/>
+    <id>https://adoontheway.github.io/2022/05/13/everydayprogress031/</id>
     <published>2022-05-13T11:16:30.000Z</published>
     <updated>2023-05-25T10:26:16.038Z</updated>
     
@@ -128,20 +128,20 @@
     </summary>
     
     
-      <category term="python" scheme="https://adoontheway.gitee.io/tags/python/"/>
+      <category term="python" scheme="https://adoontheway.github.io/tags/python/"/>
     
-      <category term="hexo" scheme="https://adoontheway.gitee.io/tags/hexo/"/>
+      <category term="hexo" scheme="https://adoontheway.github.io/tags/hexo/"/>
     
-      <category term="ocr" scheme="https://adoontheway.gitee.io/tags/ocr/"/>
+      <category term="ocr" scheme="https://adoontheway.github.io/tags/ocr/"/>
     
-      <category term="pytorch" scheme="https://adoontheway.gitee.io/tags/pytorch/"/>
+      <category term="pytorch" scheme="https://adoontheway.github.io/tags/pytorch/"/>
     
   </entry>
   
   <entry>
     <title>每天进步一点点030 - 最近使用Python的一些笔记</title>
-    <link href="https://adoontheway.gitee.io/2022/03/27/everydayprogress030/"/>
-    <id>https://adoontheway.gitee.io/2022/03/27/everydayprogress030/</id>
+    <link href="https://adoontheway.github.io/2022/03/27/everydayprogress030/"/>
+    <id>https://adoontheway.github.io/2022/03/27/everydayprogress030/</id>
     <published>2022-03-27T03:58:20.000Z</published>
     <updated>2022-03-27T04:06:23.345Z</updated>
     
@@ -154,16 +154,16 @@
     </summary>
     
     
-      <category term="python" scheme="https://adoontheway.gitee.io/tags/python/"/>
+      <category term="python" scheme="https://adoontheway.github.io/tags/python/"/>
     
-      <category term="tornado" scheme="https://adoontheway.gitee.io/tags/tornado/"/>
+      <category term="tornado" scheme="https://adoontheway.github.io/tags/tornado/"/>
     
   </entry>
   
   <entry>
     <title>每天进步一点点029 - Python数据科学教程的学习</title>
-    <link href="https://adoontheway.gitee.io/2022/03/21/everydayprogress029/"/>
-    <id>https://adoontheway.gitee.io/2022/03/21/everydayprogress029/</id>
+    <link href="https://adoontheway.github.io/2022/03/21/everydayprogress029/"/>
+    <id>https://adoontheway.github.io/2022/03/21/everydayprogress029/</id>
     <published>2022-03-21T08:22:46.000Z</published>
     <updated>2022-03-27T04:43:04.389Z</updated>
     
@@ -176,18 +176,18 @@
     </summary>
     
     
-      <category term="python" scheme="https://adoontheway.gitee.io/tags/python/"/>
+      <category term="python" scheme="https://adoontheway.github.io/tags/python/"/>
     
-      <category term="conda" scheme="https://adoontheway.gitee.io/tags/conda/"/>
+      <category term="conda" scheme="https://adoontheway.github.io/tags/conda/"/>
     
-      <category term="pandas" scheme="https://adoontheway.gitee.io/tags/pandas/"/>
+      <category term="pandas" scheme="https://adoontheway.github.io/tags/pandas/"/>
     
   </entry>
   
   <entry>
     <title>每天进步一点点028 - Flutter状态管理之Provider</title>
-    <link href="https://adoontheway.gitee.io/2022/02/27/everydayprogress028/"/>
-    <id>https://adoontheway.gitee.io/2022/02/27/everydayprogress028/</id>
+    <link href="https://adoontheway.github.io/2022/02/27/everydayprogress028/"/>
+    <id>https://adoontheway.github.io/2022/02/27/everydayprogress028/</id>
     <published>2022-02-27T14:02:31.000Z</published>
     <updated>2022-03-21T08:36:38.124Z</updated>
     
@@ -200,14 +200,14 @@
     </summary>
     
     
-      <category term="flutter" scheme="https://adoontheway.gitee.io/tags/flutter/"/>
+      <category term="flutter" scheme="https://adoontheway.github.io/tags/flutter/"/>
     
   </entry>
   
   <entry>
     <title>每天进步一点点027 - Flutter异步UI更新</title>
-    <link href="https://adoontheway.gitee.io/2022/02/27/everydayprogress027/"/>
-    <id>https://adoontheway.gitee.io/2022/02/27/everydayprogress027/</id>
+    <link href="https://adoontheway.github.io/2022/02/27/everydayprogress027/"/>
+    <id>https://adoontheway.github.io/2022/02/27/everydayprogress027/</id>
     <published>2022-02-27T10:23:06.000Z</published>
     <updated>2022-02-27T10:50:14.880Z</updated>
     
@@ -220,14 +220,14 @@
     </summary>
     
     
-      <category term="flutter" scheme="https://adoontheway.gitee.io/tags/flutter/"/>
+      <category term="flutter" scheme="https://adoontheway.github.io/tags/flutter/"/>
     
   </entry>
   
   <entry>
     <title>每天进步一点点026 - Flutter状态管理之BLoC</title>
-    <link href="https://adoontheway.gitee.io/2022/02/27/everydayprogress026/"/>
-    <id>https://adoontheway.gitee.io/2022/02/27/everydayprogress026/</id>
+    <link href="https://adoontheway.github.io/2022/02/27/everydayprogress026/"/>
+    <id>https://adoontheway.github.io/2022/02/27/everydayprogress026/</id>
     <published>2022-02-27T09:18:41.000Z</published>
     <updated>2022-02-27T09:53:58.803Z</updated>
     
@@ -240,14 +240,14 @@
     </summary>
     
     
-      <category term="flutter" scheme="https://adoontheway.gitee.io/tags/flutter/"/>
+      <category term="flutter" scheme="https://adoontheway.github.io/tags/flutter/"/>
     
   </entry>
   
   <entry>
     <title>每天进步一点点025 - Flutter状态管理之ChangeNotifier</title>
-    <link href="https://adoontheway.gitee.io/2022/02/27/everydayprogress025/"/>
-    <id>https://adoontheway.gitee.io/2022/02/27/everydayprogress025/</id>
+    <link href="https://adoontheway.github.io/2022/02/27/everydayprogress025/"/>
+    <id>https://adoontheway.github.io/2022/02/27/everydayprogress025/</id>
     <published>2022-02-27T08:43:28.000Z</published>
     <updated>2022-02-27T09:21:58.639Z</updated>
     
@@ -260,14 +260,14 @@
     </summary>
     
     
-      <category term="flutter" scheme="https://adoontheway.gitee.io/tags/flutter/"/>
+      <category term="flutter" scheme="https://adoontheway.github.io/tags/flutter/"/>
     
   </entry>
   
   <entry>
     <title>每天进步一点点023 - Python真的是强大</title>
-    <link href="https://adoontheway.gitee.io/2022/01/20/everydayprogress024/"/>
-    <id>https://adoontheway.gitee.io/2022/01/20/everydayprogress024/</id>
+    <link href="https://adoontheway.github.io/2022/01/20/everydayprogress024/"/>
+    <id>https://adoontheway.github.io/2022/01/20/everydayprogress024/</id>
     <published>2022-01-20T13:54:55.000Z</published>
     <updated>2022-01-20T14:46:48.143Z</updated>
     
@@ -280,16 +280,16 @@
     </summary>
     
     
-      <category term="python" scheme="https://adoontheway.gitee.io/tags/python/"/>
+      <category term="python" scheme="https://adoontheway.github.io/tags/python/"/>
     
-      <category term="flutter" scheme="https://adoontheway.gitee.io/tags/flutter/"/>
+      <category term="flutter" scheme="https://adoontheway.github.io/tags/flutter/"/>
     
   </entry>
   
   <entry>
     <title>每天进步一点点023 - Flutter项目源码阅读笔记</title>
-    <link href="https://adoontheway.gitee.io/2021/09/13/everydayprogress023/"/>
-    <id>https://adoontheway.gitee.io/2021/09/13/everydayprogress023/</id>
+    <link href="https://adoontheway.github.io/2021/09/13/everydayprogress023/"/>
+    <id>https://adoontheway.github.io/2021/09/13/everydayprogress023/</id>
     <published>2021-09-13T02:51:11.000Z</published>
     <updated>2021-09-13T03:36:03.358Z</updated>
     
@@ -302,16 +302,16 @@
     </summary>
     
     
-      <category term="dart" scheme="https://adoontheway.gitee.io/tags/dart/"/>
+      <category term="dart" scheme="https://adoontheway.github.io/tags/dart/"/>
     
-      <category term="flutter" scheme="https://adoontheway.gitee.io/tags/flutter/"/>
+      <category term="flutter" scheme="https://adoontheway.github.io/tags/flutter/"/>
     
   </entry>
   
   <entry>
     <title>每天进步一点点022 - Electron包装网站的问题</title>
-    <link href="https://adoontheway.gitee.io/2021/08/25/everydayprogress022/"/>
-    <id>https://adoontheway.gitee.io/2021/08/25/everydayprogress022/</id>
+    <link href="https://adoontheway.github.io/2021/08/25/everydayprogress022/"/>
+    <id>https://adoontheway.github.io/2021/08/25/everydayprogress022/</id>
     <published>2021-08-25T12:02:38.000Z</published>
     <updated>2021-08-25T12:17:18.552Z</updated>
     
@@ -324,14 +324,14 @@
     </summary>
     
     
-      <category term="electron" scheme="https://adoontheway.gitee.io/tags/electron/"/>
+      <category term="electron" scheme="https://adoontheway.github.io/tags/electron/"/>
     
   </entry>
   
   <entry>
     <title>每天进步一点点021 - flutter的json转dart model问题</title>
-    <link href="https://adoontheway.gitee.io/2021/08/25/everydayprogress021/"/>
-    <id>https://adoontheway.gitee.io/2021/08/25/everydayprogress021/</id>
+    <link href="https://adoontheway.github.io/2021/08/25/everydayprogress021/"/>
+    <id>https://adoontheway.github.io/2021/08/25/everydayprogress021/</id>
     <published>2021-08-25T06:12:50.000Z</published>
     <updated>2021-08-25T06:35:36.504Z</updated>
     
@@ -344,14 +344,14 @@
     </summary>
     
     
-      <category term="flutter" scheme="https://adoontheway.gitee.io/tags/flutter/"/>
+      <category term="flutter" scheme="https://adoontheway.github.io/tags/flutter/"/>
     
   </entry>
   
   <entry>
     <title>每天进步一点点020 - docker上部署jar</title>
-    <link href="https://adoontheway.gitee.io/2021/05/20/everydayprogress020/"/>
-    <id>https://adoontheway.gitee.io/2021/05/20/everydayprogress020/</id>
+    <link href="https://adoontheway.github.io/2021/05/20/everydayprogress020/"/>
+    <id>https://adoontheway.github.io/2021/05/20/everydayprogress020/</id>
     <published>2021-05-20T04:50:59.000Z</published>
     <updated>2021-08-25T06:36:51.755Z</updated>
     
@@ -364,16 +364,16 @@
     </summary>
     
     
-      <category term="docker" scheme="https://adoontheway.gitee.io/tags/docker/"/>
+      <category term="docker" scheme="https://adoontheway.github.io/tags/docker/"/>
     
-      <category term="java" scheme="https://adoontheway.gitee.io/tags/java/"/>
+      <category term="java" scheme="https://adoontheway.github.io/tags/java/"/>
     
   </entry>
   
   <entry>
     <title>机器学习课程的第一天</title>
-    <link href="https://adoontheway.gitee.io/2021/04/21/ml001/"/>
-    <id>https://adoontheway.gitee.io/2021/04/21/ml001/</id>
+    <link href="https://adoontheway.github.io/2021/04/21/ml001/"/>
+    <id>https://adoontheway.github.io/2021/04/21/ml001/</id>
     <published>2021-04-21T01:54:27.000Z</published>
     <updated>2023-05-25T10:26:16.067Z</updated>
     
@@ -390,8 +390,8 @@
   
   <entry>
     <title>每天进步一点点019 - golang开发im</title>
-    <link href="https://adoontheway.gitee.io/2021/02/22/everydayprogress019/"/>
-    <id>https://adoontheway.gitee.io/2021/02/22/everydayprogress019/</id>
+    <link href="https://adoontheway.github.io/2021/02/22/everydayprogress019/"/>
+    <id>https://adoontheway.github.io/2021/02/22/everydayprogress019/</id>
     <published>2021-02-22T05:07:29.000Z</published>
     <updated>2023-05-25T10:26:16.037Z</updated>
     
@@ -404,16 +404,16 @@
     </summary>
     
     
-      <category term="golang" scheme="https://adoontheway.gitee.io/tags/golang/"/>
+      <category term="golang" scheme="https://adoontheway.github.io/tags/golang/"/>
     
-      <category term="xorm" scheme="https://adoontheway.gitee.io/tags/xorm/"/>
+      <category term="xorm" scheme="https://adoontheway.github.io/tags/xorm/"/>
     
   </entry>
   
   <entry>
     <title>每天进步一点点018 - 树莓派上用docker搭建mysql</title>
-    <link href="https://adoontheway.gitee.io/2021/01/28/everydayprogress018/"/>
-    <id>https://adoontheway.gitee.io/2021/01/28/everydayprogress018/</id>
+    <link href="https://adoontheway.github.io/2021/01/28/everydayprogress018/"/>
+    <id>https://adoontheway.github.io/2021/01/28/everydayprogress018/</id>
     <published>2021-01-28T11:10:52.000Z</published>
     <updated>2023-05-25T10:26:16.036Z</updated>
     
@@ -426,18 +426,18 @@
     </summary>
     
     
-      <category term="docker" scheme="https://adoontheway.gitee.io/tags/docker/"/>
+      <category term="docker" scheme="https://adoontheway.github.io/tags/docker/"/>
     
-      <category term="mysql" scheme="https://adoontheway.gitee.io/tags/mysql/"/>
+      <category term="mysql" scheme="https://adoontheway.github.io/tags/mysql/"/>
     
-      <category term="java" scheme="https://adoontheway.gitee.io/tags/java/"/>
+      <category term="java" scheme="https://adoontheway.github.io/tags/java/"/>
     
   </entry>
   
   <entry>
     <title>每天进步一点点017 - Golang与Protobuf</title>
-    <link href="https://adoontheway.gitee.io/2020/12/17/everydayprogress017/"/>
-    <id>https://adoontheway.gitee.io/2020/12/17/everydayprogress017/</id>
+    <link href="https://adoontheway.github.io/2020/12/17/everydayprogress017/"/>
+    <id>https://adoontheway.github.io/2020/12/17/everydayprogress017/</id>
     <published>2020-12-17T07:48:10.000Z</published>
     <updated>2023-05-25T10:26:16.035Z</updated>
     
@@ -450,9 +450,9 @@
     </summary>
     
     
-      <category term="protobuf" scheme="https://adoontheway.gitee.io/tags/protobuf/"/>
+      <category term="protobuf" scheme="https://adoontheway.github.io/tags/protobuf/"/>
     
-      <category term="go" scheme="https://adoontheway.gitee.io/tags/go/"/>
+      <category term="go" scheme="https://adoontheway.github.io/tags/go/"/>
     
   </entry>
   
