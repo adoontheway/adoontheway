@@ -36,5 +36,10 @@ A fullstack game/web engineer from China.
 - 😄 My daily notes here: [adoontheway's gitpage](https://adoontheway.github.io/)
 
 <!--START_SECTION:waka-->
+
+```txt
+No activity tracked
+```
+
 <!--END_SECTION:waka-->
 
