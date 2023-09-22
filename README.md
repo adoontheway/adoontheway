@@ -11,14 +11,16 @@ A fullstack game/web engineer from China.
 ![typescript](https://img.shields.io/badge/python-2/3-green)
 ![typescript](https://img.shields.io/badge/ts/js-2-yellow)
 ![typescript](https://img.shields.io/badge/golang-2-purple)
-![typescript](https://img.shields.io/badge/java-2-darkgreen)
+![typescript](https://img.shields.io/badge/java-1.7-darkgreen)
 ![typescript](https://img.shields.io/badge/lua-5.3-blue)
 ![java/springboot](https://img.shields.io/badge/java/springboot-1.7-pink)
 ![mongo/mysql](https://img.shields.io/badge/mongo/mysql-1-red)
 ![redis](https://img.shields.io/badge/redis-1-lightgreen)
-![rocketmq](https://img.shields.io/badge/rocketmq-1-lightgreen)
+![rocketmq](https://img.shields.io/badge/rocketmq-1-lightblue)
 
-![adoontheway](https://github-readme-stats.vercel.app/api?username=adoontheway&show_icons=true&theme=radical)  
+![adoontheway](https://github-readme-stats.vercel.app/api?username=adoontheway&show_icons=true&theme=radical&count_private=true&show_icons=true)  
+
+[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=adoontheway&layout=compact)](https://github.com/adoontheway/github-readme-stats)
 
 
 - 🔭 Tools:
@@ -33,7 +35,7 @@ A fullstack game/web engineer from China.
 - 👯 I like fishing, bike, driving, thinking...
 - 🤔 Current Status: I got Kids, I need Jobs.
 - 📫 How to reach me: adoontheway@gmail.com
-- 😄 My daily notes here: [adoontheway's gitpage](https://adoontheway.github.io/)
+- 😄 My daily notes here: [adoontheway.github.io](https://adoontheway.github.io/)
 
 <!--START_SECTION:waka-->
 
